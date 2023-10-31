@@ -8,6 +8,7 @@ export default function App() {
       <Text>Ilia</Text>
       <Text>Tomi Valtanen</Text>
       <Text>Jenny Kari</Text>
+      <Text>Jere Pihlajasaari</Text>
       <StatusBar style="auto" />
     </View>
   );
