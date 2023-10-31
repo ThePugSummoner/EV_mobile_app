@@ -7,6 +7,7 @@ export default function App() {
       <Text>Open up App.js to start working on your app!</Text>
       <Text>Ilia</Text>
       <Text>Tomi Valtanen</Text>
+      <Text>Jenny Kari</Text>
       <StatusBar style="auto" />
     </View>
   );
