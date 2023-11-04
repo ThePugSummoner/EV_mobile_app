@@ -3,6 +3,6 @@ import styles from '../style/style';
 
 export default Profile = ({ navigation }) => {
     return (
-        <Text>Testi vaan</Text>
+        <Text>Profile</Text>
     );
 }

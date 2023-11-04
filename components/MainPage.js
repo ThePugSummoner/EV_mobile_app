@@ -3,6 +3,6 @@ import styles from '../style/style';
 
 export default MainPage = ({ navigation }) => {
     return (
-        <Text>Testi vaan</Text>
+        <Text>My car</Text>
     );
 }
