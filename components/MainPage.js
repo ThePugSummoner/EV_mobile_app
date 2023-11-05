@@ -1,8 +1,13 @@
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import styles from '../style/style';
 
 export default MainPage = ({ navigation }) => {
     return (
-        <Text>My car</Text>
+        <View>
+            
+            <Text>My car</Text>
+            <Text>Testi</Text>
+        </View>
+
     );
 }
