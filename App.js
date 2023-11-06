@@ -59,16 +59,11 @@ export default function App() {
           <Tab.Screen name="Login" component={Login} options={{tabBarStyle: {display: 'none'}}}/>
         </>
         )}
-        {/* <Tab.Screen name="Home" component={Home} options={{tabBarStyle: {display: 'none'}}}/>
-        <Tab.Screen name="Registration" component={Registration} options={{tabBarStyle: {display: 'none'}}}/>
-        <Tab.Screen name="Login" component={Login} options={{tabBarStyle: {display: 'none'}}}/> */}
         <Tab.Screen name="Profile" component={Profile}  listeners={{
             focus: () => {
               setShowTabs(false); 
             },
-            /* blur: () => {
-              setShowTabs(true); 
-            }, */
+            
           }}/>
         <Tab.Screen name="Main Page" component={Mainpage}  listeners={{
             focus: () => {
@@ -79,9 +74,7 @@ export default function App() {
             focus: () => {
               setShowTabs(false); 
             },
-            /* blur: () => {
-              setShowTabs(true); 
-            }, */
+           
           }}/>
       </Tab.Navigator>
     </NavigationContainer>
