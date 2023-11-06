@@ -57,4 +57,37 @@ const HomeStyle = StyleSheet.create({
     }
 }) 
 
-export {HomeStyle}
+const ProfileStyle = StyleSheet.create({
+container:{
+    flex:1,
+    justifyContent:"flex-start",
+    alignItems:"stretch"
+},
+avatar:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+    borderWidth:1,
+    padding:10
+},
+avatarText:{
+    textAlign:"left",
+    width:"40%",
+},
+button:{
+    height:Dimensions.get("window").height * 0.1,
+    justifyContent:"flex-start",
+    alignItems:"center",
+    flexDirection:"row",
+    gap:10,
+    borderWidth:1,
+},
+buttonText:{
+    fontSize:20
+}
+
+
+})
+
+
+export {HomeStyle,ProfileStyle}
