@@ -10,6 +10,7 @@ import Login from './components/Login';
 import { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import CustomStackNavigator from './components/CustomStackNavigator';
 
 const Tab = createBottomTabNavigator();
 /* const Stack = createNativeStackNavigator(); */
@@ -59,12 +60,20 @@ export default function App() {
           <Tab.Screen name="Login" component={Login} options={{tabBarStyle: {display: 'none'}}}/>
         </>
         )}
-        <Tab.Screen name="Profile" component={Profile}  listeners={{
+        {/* <Tab.Screen name="Home" component={Home} options={{tabBarStyle: {display: 'none'}}}/>
+        <Tab.Screen name="Registration" component={Registration} options={{tabBarStyle: {display: 'none'}}}/>
+        <Tab.Screen name="Login" component={Login} options={{tabBarStyle: {display: 'none'}}}/> */}
+        <Tab.Screen name="Profile" component={CustomStackNavigator}  listeners={{
             focus: () => {
               setShowTabs(false); 
             },
-            
-          }}/>
+            /* blur: () => {
+              setShowTabs(true); 
+            }, */
+          }}
+          options={{ headerShown: false }}
+          
+          />
         <Tab.Screen name="Main Page" component={Mainpage}  listeners={{
             focus: () => {
               setShowTabs(false); 
