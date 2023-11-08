@@ -14,7 +14,7 @@ const CharginStationsStyle = StyleSheet.create({
     }
 })
 
-export {CharginStationsStyle}
+
 
 const HomeStyle = StyleSheet.create({
     container: {
@@ -90,4 +90,4 @@ buttonText:{
 })
 
 
-export {HomeStyle,ProfileStyle}
+export {HomeStyle,ProfileStyle,CharginStationsStyle}
