@@ -8,7 +8,7 @@ const LogoAnimation = ({ navigation }) => {
   const buttonFadeAnim = new Animated.Value(0);
 
     const [userName, setUserName] = useState('')
-    const [hasUserName, setHasUserName] = useState(true) 
+    const [hasUserName, setHasUserName] = useState(false) 
 
   useEffect(() => {
     Animated.sequence([
