@@ -8,7 +8,7 @@ const LogoAnimation = ({ navigation }) => {
   const buttonFadeAnim = new Animated.Value(0);
 
     const [userName, setUserName] = useState('')
-    const [hasUserName, setHasUserName] = useState(false) 
+    const [hasUserName, setHasUserName] = useState(false) // vaihta false/true manuaalisesti jos haluat katsoa Login/Register sivut
 
   useEffect(() => {
     Animated.sequence([
