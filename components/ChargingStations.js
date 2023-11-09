@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import MapView, { Marker, Circle } from 'react-native-maps';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Marker, Circle,animateToRegion } from 'react-native-maps';
 import * as Location from "expo-location"
 import { CharginStationsStyle } from '../style/style';
 import { Dimensions } from 'react-native';
@@ -25,6 +25,8 @@ export default ChargingStation = ({ navigation }) => {
     const [dataClose, setDataClose] = useState([])
     const [showCloseData,setShowCloseData]=useState(false)
 
+    const map = useRef(null);
+
     useEffect(() => {
         (async () => {
             try {
@@ -47,7 +49,8 @@ export default ChargingStation = ({ navigation }) => {
                         id: answer[i].id,
                         name: answer[i].tags.name,
                         latitude: answer[i].lat,
-                        longitude: answer[i].lon
+                        longitude: answer[i].lon,
+                        selected:false
                     })
                 }
                 setData(arr)
@@ -94,10 +97,19 @@ export default ChargingStation = ({ navigation }) => {
                     arr.push(mapData)
                 }
             })
+            if(arr.length===0){
+                setShowCloseData(false)
+            }
             setDataClose(arr)
         }
 
-    }, [isLoadingData, isLoading])
+    }, [isLoadingData, isLoading,latitude,longitude])
+
+    function regionChange(region){
+        setLatitude(region.latitude)
+        setLongitude(region.longitude)
+    }
+
 
     // Välimatka kahden locaation välillä metreinä.
     function haversineDistanceBetweenPoints(lat1, lon1, lat2, lon2) {
@@ -112,10 +124,30 @@ export default ChargingStation = ({ navigation }) => {
         return d;
     }
 
-
+    function handlePress(item){
+        console.log(item)
+        const arr=[]
+        data.map(data => {
+            if(data.id===item.id){
+                arr.push({...data,selected:true})
+            }else{
+                arr.push({...data,selected:false})
+            }
+        })
+        setData(arr)
+        map.current.animateToRegion({latitude:item.latitude,longitude:item.longitude,latitudeDelta:INITIAL_LATITUDE_DELTA,longitudeDelta:INITIAL_LONGITUDE_DELTA})
+    }
+    function handleCloseDataPress(){
+        if(dataClose.length===0){
+            Alert.alert("Info","There are no charging stations near you.")
+        }else{
+            setShowCloseData(true)
+        }
+    }
 
     //console.log(data, "useState")
     console.log(dataClose, "dataClose useState")
+    //console.log(data,"kaikki data")
     if (isLoading && isLoadingData) {
         return <View style={CharginStationsStyle.container}><Text>Please wait a moment</Text></View>
     } else {
@@ -124,18 +156,25 @@ export default ChargingStation = ({ navigation }) => {
             <View style={CharginStationsStyle.container}>
                 <MapView
                     style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height - Constants.statusBarHeight }}
+                    ref={map}
                     initialRegion={{
                         latitude: latitude,
                         longitude: longitude,
                         latitudeDelta: INITIAL_LATITUDE_DELTA,
                         longitudeDelta: INITIAL_LONGITUDE_DELTA
                     }}
+                    onRegionChangeComplete={region => regionChange(region)}
                     mapType='hyprid'
                     showsUserLocation={true}
                     showsMyLocationButton={true}
                     followsUserLocation={true}
                 >
-                    {data.map((marker, index) => <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }} pinColor='orange' />)}
+                    {data.map((marker, index) =>
+                     <Marker  key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}>
+                        <View style={{backgroundColor:marker.selected ? "red" : "orange"}}>
+                            <Text>joo</Text>
+                        </View>
+                            </Marker>)}
                     <Circle
                         center={{ latitude: latitude, longitude: longitude }}
                         radius={RADIUS}
@@ -145,7 +184,7 @@ export default ChargingStation = ({ navigation }) => {
                    
                 </MapView>
                 {!showCloseData ?
-                <TouchableOpacity onPress={()=>setShowCloseData(true)} style={{flex:1,position:"absolute",bottom:50,right:0,backgroundColor:"red",marginBottom:20,padding:10}}>
+                <TouchableOpacity onPress={()=>handleCloseDataPress()} style={{flex:1,position:"absolute",bottom:50,right:0,backgroundColor:"red",marginBottom:20,padding:10}}>
                     <Text style={{textAlign:"center"}}>Show list</Text>
                 </TouchableOpacity>
                 :
@@ -155,15 +194,18 @@ export default ChargingStation = ({ navigation }) => {
                         scrollEventThrottle={1}
                         showsHorizontalScrollIndicator={false}
                         style={{ flex:1, position: "absolute", bottom: 50 }}
-                        contentContainerStyle={{justifyContent:"center",alignItems:"center",paddingVertical:10,marginBottom:20,}}
+                        contentContainerStyle={{justifyContent:"center",alignItems:"center",paddingVertical:10,marginBottom:20,paddingHorizontal:20}}
                         pagingEnabled
-                        snapToInterval={300+20}  
+                        snapToInterval={300+20}
+                         
                     >
                        
                         {dataClose.map((dataClose, index) =>
-                            <View style={{ height:150,width:300, backgroundColor: "red",marginHorizontal:10 }} key={index}>
+                        <Pressable  key={index} onPress={()=>handlePress(dataClose)}>
+                            <View  style={{ height:150,width:300, backgroundColor: "red",marginHorizontal:10 }}>
                                 <Text>{dataClose.name}</Text>
-                            </View>)}
+                            </View>
+                            </Pressable>)}
                     </ScrollView>
                     
                     }
