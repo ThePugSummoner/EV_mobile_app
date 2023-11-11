@@ -26,7 +26,7 @@ export default ChargingStation = ({ navigation }) => {
     const [showCloseData,setShowCloseData]=useState(false)
 
     const map = useRef(null);
-
+    //haetaan latausasemien tiedot OpenStreetMapista
     useEffect(() => {
         (async () => {
             try {
@@ -63,6 +63,7 @@ export default ChargingStation = ({ navigation }) => {
 
     }, [])
 
+    //Käyttäjän locatio haetaan
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync()
@@ -72,12 +73,12 @@ export default ChargingStation = ({ navigation }) => {
                     console.log("Geolocation failed.")
                     return
                 }
-
-                const location = await Location.getLastKnownPositionAsync(
+               
+                const location = await Location.getCurrentPositionAsync(
                     { accuracy: Location.Accuracy.High })
                 setLatitude(location.coords.latitude)
                 setLongitude(location.coords.longitude)
-                setIsLoading(false)
+                
 
             } catch (e) {
                 alert(e)
@@ -86,9 +87,10 @@ export default ChargingStation = ({ navigation }) => {
 
 
         })()
-
+        setIsLoading(false)
     }, [])
 
+    // tarkastellaan lähimpiä asemia
     useEffect(() => {
         const arr = []
         if (isLoading !== true && isLoadingData !== true) {
@@ -105,6 +107,7 @@ export default ChargingStation = ({ navigation }) => {
 
     }, [isLoadingData, isLoading,latitude,longitude])
 
+    // liikutaan näytöllä niin päivittää sijainnin
     function regionChange(region){
         setLatitude(region.latitude)
         setLongitude(region.longitude)
@@ -124,6 +127,7 @@ export default ChargingStation = ({ navigation }) => {
         return d;
     }
 
+    // Painetaan slider itemistä niin päästään siihen "markeriin"
     function handlePress(item){
         console.log(item)
         const arr=[]
@@ -137,6 +141,8 @@ export default ChargingStation = ({ navigation }) => {
         setData(arr)
         map.current.animateToRegion({latitude:item.latitude,longitude:item.longitude,latitudeDelta:INITIAL_LATITUDE_DELTA,longitudeDelta:INITIAL_LONGITUDE_DELTA})
     }
+
+    //buttonille millä saadaa lähimmät asemat slideriin
     function handleCloseDataPress(){
         if(dataClose.length===0){
             Alert.alert("Info","There are no charging stations near you.")
