@@ -222,8 +222,11 @@ export default ChargingStation = ({ navigation }) => {
                 <BottomSheetScrollView
                 horizontal={true}
                 snapToInterval={300+20}
+                disableIntervalMomentum={true}
                 contentContainerStyle={{paddingHorizontal:20}}
                 pagingEnabled
+                decelerationRate={"fast"}
+                
 
                 >
                 {dataClose.map((dataClose, index) =>
