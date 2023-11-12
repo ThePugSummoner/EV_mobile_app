@@ -26,10 +26,8 @@ const HomeStyle = StyleSheet.create({
     containerLogin: {
         backgroundColor: '#E5D9B6',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         padding: 30,
-        paddingLeft: 60,
-        paddingRight: 60,
         borderRadius: 10
     },
     textInput: {
@@ -38,9 +36,9 @@ const HomeStyle = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         margin: 10,
-        width: 100,
+        width: 200,
         alignItems: 'center',
-        fontSize: 20,
+        fontSize: 15,
         textAlign: 'center'
     },
     input: {

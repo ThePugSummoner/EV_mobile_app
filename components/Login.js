@@ -1,53 +1,72 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { HomeStyle } from '../style/style';
+import { signIn } from "./Auth";
+import { database } from 'firebase/database';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { auth } from '../firebase/Config';
 
 export default function Login ({ navigation }) {
-  const [pin, setPin] = useState('');
-  const [error, setError] = useState('');
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-  const handlePinChange = (text) => {
-    if (/^\d+$/.test(text) && text.length <= 4) {
-      setPin(text);
-      setError('');
-    } else {
-      setError('Please enter a 4-digit PIN');
-    }
-  };
-
-  /* const handleLogin = () => {
-    if (pin.length === 4) {
-      // PIN is valid, perform login action
-      navigation.navigate('LoggedInScreen'); // Replace with actual screen name
-    } else {
-      setError('Please enter a 4-digit PIN');
-    }
-  }; */
+    const handleLogin = async () => {
+        
+      if (!email) {
+        Alert.alert('Email is required!')
+      }
+      else if (!password) {
+        Alert.alert('Password is required!')
+      }
+      else {
+        await signIn(email, password)
+          try {
+            const loginSuccess = await signIn(email, password);
+            if (loginSuccess) {
+              const user = getAuth().currentUser;
+              navigation.navigate('Main Page', { userUid: user.uid });
+            } else {
+              Alert.alert('Login failed!');
+              setEmail('')
+              setPassword('')
+            }
+          } catch (error) {
+            console.error('Error during login: ', error.message);
+            /* Alert.alert('Error during login: ', error.message); */
+          }
+        }
+      }
 
   return (
     <View style={HomeStyle.container}>
     <View style={HomeStyle.containerLogin}>
-      <Text style={{ color: '#1D1A39', marginBottom: 10, fontWeight: 'bold', fontSize: 15 }}>Enter your PIN</Text>
+      <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 10}}>Login</Text>
       <TextInput
         style={HomeStyle.textInput}
-        secureTextEntry
-        keyboardType="numeric"
-        maxLength={4}
-        value={pin}
-        onChangeText={handlePinChange}
+        placeholder="Enter your email*"
+        value={email}
+        onChangeText={(email) => setEmail(email.trim())}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
-      <Text style={{ color: 'red' }}>{error}</Text>
+      <TextInput
+        style={HomeStyle.textInput}
+        placeholder="Enter your password*"
+        value={password}
+        onChangeText={(password) => setPassword(password)}
+        secureTextEntry={true}
+      />
       <TouchableOpacity
         style={{
           backgroundColor: '#cbb26a',
           padding: 10,
           borderRadius: 5,
           alignItems: 'center',
+          margin: 10
         }}
-        /* onPress={handleLogin} */
-        onPress={() => navigation.navigate('Main Page')}
+        onPress={handleLogin}
       >
-        <Text style={{ fontSize: 20, color: '#1D1A39' }}>LOGIN</Text>
+        <Text style={{ fontSize: 20, color: '#1D1A39', fontWeight: 'bold' }}>LOGIN</Text>
       </TouchableOpacity>
       </View>
     </View>

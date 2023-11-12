@@ -8,7 +8,7 @@ const LogoAnimation = ({ navigation }) => {
   const buttonFadeAnim = new Animated.Value(0);
 
     const [userName, setUserName] = useState('')
-    const [hasUserName, setHasUserName] = useState(false) // vaihta false/true manuaalisesti jos haluat katsoa Login/Register sivut
+    const [hasUserName, setHasUserName] = useState(true) // vaihta false/true manuaalisesti jos haluat katsoa Login/Register sivut
 
   useEffect(() => {
     Animated.sequence([
@@ -50,7 +50,7 @@ const LogoAnimation = ({ navigation }) => {
             <Text style={{ fontSize: 20, color: '#1D1A39' }}>LOGIN</Text>
             </TouchableOpacity>
         :
-            <TouchableOpacity style={{backgroundColor: '#cbb26a', padding: 10, borderRadius: 5, alignItems: 'center'}} onPress={() => navigation.navigate('Registration')}>
+            <TouchableOpacity style={{backgroundColor: '#cbb26a', padding: 10, borderRadius: 5, alignItems: 'center'}} onPress={() => navigation.navigate('Register')}>
                 <Text style={{fontSize: 20, color: '#1D1A39'}}>Registration</Text>
             </TouchableOpacity>
         }

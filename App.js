@@ -5,15 +5,15 @@ import Chargingstations from './components/ChargingStations';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Registration from './components/Registration';
+import Register from './components/Register';
 import Login from './components/Login';
 import { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import CustomStackNavigator from './components/CustomStackNavigator';
 
+
 const Tab = createBottomTabNavigator();
-/* const Stack = createNativeStackNavigator(); */
 
 export default function App() {
   
@@ -55,14 +55,11 @@ export default function App() {
       > 
       {showTabs && (
         <>
-          <Tab.Screen name="Home" component={Home} options={{tabBarStyle: {display: 'none'}}}/>
-          <Tab.Screen name="Registration" component={Registration} options={{tabBarStyle: {display: 'none'}}}/>
-          <Tab.Screen name="Login" component={Login} options={{tabBarStyle: {display: 'none'}}}/>
+          <Tab.Screen name="Home" component={Home} options={{tabBarStyle: {display: 'none'}, headerShown: false}}/>
+          <Tab.Screen name="Register" component={Register} options={{tabBarStyle: {display: 'none'}, headerShown: false}}/>
+          <Tab.Screen name="Login" component={Login} options={{tabBarStyle: {display: 'none'}, headerShown: false}}/>
         </>
         )}
-        {/* <Tab.Screen name="Home" component={Home} options={{tabBarStyle: {display: 'none'}}}/>
-        <Tab.Screen name="Registration" component={Registration} options={{tabBarStyle: {display: 'none'}}}/>
-        <Tab.Screen name="Login" component={Login} options={{tabBarStyle: {display: 'none'}}}/> */}
         <Tab.Screen name="Profile" component={CustomStackNavigator}  listeners={{
             focus: () => {
               setShowTabs(false); 

@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./images/SplashVolterra.png",
+      "image": "./images/VolterraSplash.png",
       "resizeMode": "contain",
       "backgroundColor": "#1d1a39"
     },
@@ -26,5 +26,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     }
+    
   }
 }

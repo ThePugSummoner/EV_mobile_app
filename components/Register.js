@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { signUp } from "./Auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/Config";
 import { HomeStyle } from '../style/style';
 
-export default function Registration ({ navigation }) {
+export default function Register ({ navigation }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -13,10 +16,47 @@ export default function Registration ({ navigation }) {
   const [error, setError] = useState('');
 
   const handleRegister = () => {
-    
-    navigation.navigate('Main Page');
+    if(!name) {
+      Alert.alert('Name is required!')
+    }
+    else if (!email) {
+        Alert.alert('Email is required!')
+    }
+    else if (!phone) {
+      Alert.alert('Phonenumber is required!')
+    }
+    else if (!password) {
+        Alert.alert('Password is required!')
+    }
+    else if (!repeatPassword) {
+        setPassword('')
+        Alert.alert('Confirm password is required!')
+    }
+    else if (password !== repeatPassword) {
+        Alert.alert('Password do not match!')
+    }
+    else if (!pin) {
+      Alert.alert('PIN is required!')
+    }
+    else if (!repeatPin) {
+      setPassword('')
+      Alert.alert('Confirm PIN is required!')
+    }
+    else if (pin !== repeatPin) {
+      Alert.alert('PIN do not match!')
+    }
+    else {
+        signUp(name, email, password, phone, pin) 
+            onAuthStateChanged(auth, (user) => {
+                if(user) {
+                  navigation.navigate('Main Page', {userUid: user.uid})
+                }
+            })
+    }
 
   };
+
+  
 
   return (
     <ScrollView contentContainerStyle={HomeStyle.container}>
@@ -28,7 +68,7 @@ export default function Registration ({ navigation }) {
         placeholder="Name"
         placeholderTextColor="#cbb26a"
         value={name}
-        onChangeText={setName}
+        onChangeText={(name) => setName(name.trim())}
       />
 
       <TextInput
@@ -36,8 +76,9 @@ export default function Registration ({ navigation }) {
         placeholder="Email"
         placeholderTextColor="#cbb26a"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(email) => setEmail(email.trim())}
         keyboardType="email-address"
+        autoCapitalize='none'
       />
 
       <TextInput
