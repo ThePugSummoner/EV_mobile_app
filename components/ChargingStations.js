@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState,useMemo,useCallback } from 'react';
 import { Alert, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker, Circle,animateToRegion } from 'react-native-maps';
 import * as Location from "expo-location"
 import { CharginStationsStyle } from '../style/style';
 import { Dimensions } from 'react-native';
 import Constants from "expo-constants"
-
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 
 
 const INITIAL_LATITUDE = 65.0800
@@ -26,6 +28,8 @@ export default ChargingStation = ({ navigation }) => {
     const [showCloseData,setShowCloseData]=useState(false)
 
     const map = useRef(null);
+    const bottomSheetRef = useRef(null);
+
     //haetaan latausasemien tiedot OpenStreetMapista
     useEffect(() => {
         (async () => {
@@ -148,9 +152,20 @@ export default ChargingStation = ({ navigation }) => {
             Alert.alert("Info","There are no charging stations near you.")
         }else{
             setShowCloseData(true)
+            handleOpenPress()
         }
     }
+    
+    const snapPoints = useMemo(() => ["35%"], []);
 
+    const handleOpenPress = () => bottomSheetRef.current?.expand();
+
+    const handleSheetChange = useCallback((index) => {
+        console.log("handleSheetChange", index);
+        if(index===-1){
+            setShowCloseData(false)
+        }
+      }, []);
     //console.log(data, "useState")
     console.log(dataClose, "dataClose useState")
     //console.log(data,"kaikki data")
@@ -159,6 +174,8 @@ export default ChargingStation = ({ navigation }) => {
     } else {
 
         return (
+            <GestureHandlerRootView style={{ flex: 1 }}>
+            
             <View style={CharginStationsStyle.container}>
                 <MapView
                     style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height - Constants.statusBarHeight }}
@@ -194,28 +211,35 @@ export default ChargingStation = ({ navigation }) => {
                     <Text style={{textAlign:"center"}}>Show list</Text>
                 </TouchableOpacity>
                 :
-               
-                <ScrollView
-                        horizontal={true}
-                        scrollEventThrottle={1}
-                        showsHorizontalScrollIndicator={false}
-                        style={{ flex:1, position: "absolute", bottom: 50 }}
-                        contentContainerStyle={{justifyContent:"center",alignItems:"center",paddingVertical:10,marginBottom:20,paddingHorizontal:20}}
-                        pagingEnabled
-                        snapToInterval={300+20}
-                         
-                    >
-                       
-                        {dataClose.map((dataClose, index) =>
+                <BottomSheet
+                ref={bottomSheetRef}
+                index={0}
+                snapPoints={snapPoints}
+                onChange={handleSheetChange}
+                enableContentPanningGesture={false}
+                enablePanDownToClose={true}
+              >
+                <BottomSheetScrollView
+                horizontal={true}
+                snapToInterval={300+20}
+                contentContainerStyle={{paddingHorizontal:20}}
+                pagingEnabled
+
+                >
+                {dataClose.map((dataClose, index) =>
                         <Pressable  key={index} onPress={()=>handlePress(dataClose)}>
                             <View  style={{ height:150,width:300, backgroundColor: "red",marginHorizontal:10 }}>
                                 <Text>{dataClose.name}</Text>
                             </View>
                             </Pressable>)}
-                    </ScrollView>
+                </BottomSheetScrollView>
+                </BottomSheet>
+                
                     
                     }
             </View>
+            
+            </GestureHandlerRootView>
         );
     }
 }
