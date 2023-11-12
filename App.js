@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import CustomStackNavigator from './components/CustomStackNavigator';
+import ElectricityPrice from './components/ElectricityPrice';
 
 
 const Tab = createBottomTabNavigator();
@@ -45,6 +46,12 @@ export default function App() {
               ? 'lightning-bolt'
               : 'lightning-bolt-outline'
             }
+            else if (route.name === 'Electricity Price') {
+              //tälle oma iconi, testissä €
+              iconName = focused
+              ? 'currency-eur'
+              : 'currency-eur'
+            }
             return <MaterialCommunityIcons name={iconName} size={size} color={color} />
           
           },
@@ -77,6 +84,12 @@ export default function App() {
             }
           }}/>
         <Tab.Screen name="Charging Stations" component={Chargingstations}  listeners={{
+            focus: () => {
+              setShowTabs(false); 
+            },
+           
+          }}/>
+          <Tab.Screen name="Electricity Price" component={ElectricityPrice}  listeners={{
             focus: () => {
               setShowTabs(false); 
             },

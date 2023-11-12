@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import MapView, { Marker, Circle } from 'react-native-maps';
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { Alert, Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Marker, Circle, animateToRegion } from 'react-native-maps';
 import * as Location from "expo-location"
 import { CharginStationsStyle } from '../style/style';
 import { Dimensions } from 'react-native';
 import Constants from "expo-constants"
-
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Logo from "../images/SplashVolterra.png"
 
 
 const INITIAL_LATITUDE = 65.0800
@@ -23,8 +25,14 @@ export default ChargingStation = ({ navigation }) => {
     const [isLoadingData, setIsloadingData] = useState(true)
     const [data, setData] = useState([])
     const [dataClose, setDataClose] = useState([])
-    const [showCloseData,setShowCloseData]=useState(false)
+    const [showCloseData, setShowCloseData] = useState(false)
 
+    //UseRef
+    const map = useRef(null);
+    const bottomSheetRef = useRef(null);
+    const scrollViewRef = useRef(null)
+
+    //haetaan latausasemien tiedot OpenStreetMapista
     useEffect(() => {
         (async () => {
             try {
@@ -47,7 +55,8 @@ export default ChargingStation = ({ navigation }) => {
                         id: answer[i].id,
                         name: answer[i].tags.name,
                         latitude: answer[i].lat,
-                        longitude: answer[i].lon
+                        longitude: answer[i].lon,
+                        selected: false
                     })
                 }
                 setData(arr)
@@ -60,6 +69,7 @@ export default ChargingStation = ({ navigation }) => {
 
     }, [])
 
+    //Käyttäjän locatio haetaan
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync()
@@ -70,11 +80,11 @@ export default ChargingStation = ({ navigation }) => {
                     return
                 }
 
-                const location = await Location.getLastKnownPositionAsync(
+                const location = await Location.getCurrentPositionAsync(
                     { accuracy: Location.Accuracy.High })
                 setLatitude(location.coords.latitude)
                 setLongitude(location.coords.longitude)
-                setIsLoading(false)
+
 
             } catch (e) {
                 alert(e)
@@ -83,9 +93,10 @@ export default ChargingStation = ({ navigation }) => {
 
 
         })()
-
+        setIsLoading(false)
     }, [])
 
+    // tarkastellaan lähimpiä asemia
     useEffect(() => {
         const arr = []
         if (isLoading !== true && isLoadingData !== true) {
@@ -94,10 +105,20 @@ export default ChargingStation = ({ navigation }) => {
                     arr.push(mapData)
                 }
             })
+            if (arr.length === 0) {
+                setShowCloseData(false)
+            }
             setDataClose(arr)
         }
 
-    }, [isLoadingData, isLoading])
+    }, [isLoadingData, isLoading, latitude, longitude])
+
+    // liikutaan näytöllä niin päivittää sijainnin
+    function regionChange(region) {
+        setLatitude(region.latitude)
+        setLongitude(region.longitude)
+    }
+
 
     // Välimatka kahden locaation välillä metreinä.
     function haversineDistanceBetweenPoints(lat1, lon1, lat2, lon2) {
@@ -112,62 +133,130 @@ export default ChargingStation = ({ navigation }) => {
         return d;
     }
 
+    // Painetaan slider itemistä niin päästään siihen "markeriin"
+    function handlePress(item) {
+        console.log(item)
+        const arr = []
+        data.map(data => {
+            if (data.id === item.id) {
+                arr.push({ ...data, selected: true })
+            } else {
+                arr.push({ ...data, selected: false })
+            }
+        })
+        setData(arr)
+        map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
+        scrollViewRef?.current?.scrollTo({ x: 0, y: 0, animated: false })
 
+    }
+
+    //buttonille millä saadaa lähimmät asemat slideriin
+    function handleCloseDataPress() {
+        if (dataClose.length === 0) {
+            Alert.alert("Info", "There are no charging stations near you.")
+        } else {
+            setShowCloseData(true)
+            handleOpenPress()
+        }
+    }
+    //BottomSheetille snapPoint
+    const snapPoints = useMemo(() => ["35%"], []);
+    //Aukaisee BottomSheetScrollview
+    const handleOpenPress = () => bottomSheetRef.current?.expand();
+    //antaa indexin missä vaiheessa bottomSheet on -1 ei näkyvillä.
+    const handleSheetChange = useCallback((index) => {
+        console.log("handleSheetChange", index);
+        if (index === -1) {
+            setShowCloseData(false)
+        }
+    }, []);
 
     //console.log(data, "useState")
     console.log(dataClose, "dataClose useState")
+    //console.log(data,"kaikki data")
     if (isLoading && isLoadingData) {
         return <View style={CharginStationsStyle.container}><Text>Please wait a moment</Text></View>
     } else {
 
         return (
-            <View style={CharginStationsStyle.container}>
-                <MapView
-                    style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height - Constants.statusBarHeight }}
-                    initialRegion={{
-                        latitude: latitude,
-                        longitude: longitude,
-                        latitudeDelta: INITIAL_LATITUDE_DELTA,
-                        longitudeDelta: INITIAL_LONGITUDE_DELTA
-                    }}
-                    mapType='hyprid'
-                    showsUserLocation={true}
-                    showsMyLocationButton={true}
-                    followsUserLocation={true}
-                >
-                    {data.map((marker, index) => <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }} pinColor='orange' />)}
-                    <Circle
-                        center={{ latitude: latitude, longitude: longitude }}
-                        radius={RADIUS}
-                        fillColor='#6599f968'
-                    />
+            <GestureHandlerRootView style={{ flex: 1 }}>
 
-                   
-                </MapView>
-                {!showCloseData ?
-                <TouchableOpacity onPress={()=>setShowCloseData(true)} style={{flex:1,position:"absolute",bottom:50,right:0,backgroundColor:"red",marginBottom:20,padding:10}}>
-                    <Text style={{textAlign:"center"}}>Show list</Text>
-                </TouchableOpacity>
-                :
-               
-                <ScrollView
-                        horizontal={true}
-                        scrollEventThrottle={1}
-                        showsHorizontalScrollIndicator={false}
-                        style={{ flex:1, position: "absolute", bottom: 50 }}
-                        contentContainerStyle={{justifyContent:"center",alignItems:"center",paddingVertical:10,marginBottom:20,}}
-                        pagingEnabled
-                        snapToInterval={300+20}  
+                <View style={CharginStationsStyle.container}>
+                    <MapView
+                        style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height - Constants.statusBarHeight }}
+                        ref={map}
+                        initialRegion={{
+                            latitude: latitude,
+                            longitude: longitude,
+                            latitudeDelta: INITIAL_LATITUDE_DELTA,
+                            longitudeDelta: INITIAL_LONGITUDE_DELTA
+                        }}
+                        onRegionChangeComplete={region => regionChange(region)}
+                        mapType='hyprid'
+                        showsUserLocation={true}
+                        showsMyLocationButton={true}
+                        followsUserLocation={true}
                     >
-                       
-                        {dataClose.map((dataClose, index) =>
-                            <View style={{ height:150,width:300, backgroundColor: "red",marginHorizontal:10 }} key={index}>
-                                <Text>{dataClose.name}</Text>
-                            </View>)}
-                    </ScrollView>
-                    
+                        {data.map((marker, index) =>
+                            <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}>
+                                <View style={{ backgroundColor: marker.selected ? "red" : "orange" }}>
+                                    <Text>joo</Text>
+                                </View>
+                            </Marker>)}
+                        <Circle
+                            center={{ latitude: latitude, longitude: longitude }}
+                            radius={RADIUS}
+                            fillColor='#6599f968'
+                        />
+
+
+                    </MapView>
+                    {!showCloseData ?
+                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, position: "absolute", bottom: 50, right: 0, backgroundColor: "red", marginBottom: 20, padding: 10 }}>
+
+
+                            <Text style={{ textAlign: "center" }}>Show list</Text>
+                        </TouchableOpacity>
+                        :
+                        <BottomSheet
+                            ref={bottomSheetRef}
+                            index={0}
+                            snapPoints={snapPoints}
+                            onChange={handleSheetChange}
+                            enableContentPanningGesture={false}
+                            enablePanDownToClose={true}
+                            backgroundStyle={{ backgroundColor: '#ffffffff' }}
+
+                        >
+                            <BottomSheetScrollView
+                                ref={scrollViewRef}
+                                horizontal={true}
+                                snapToInterval={300 + 20}
+                                disableIntervalMomentum={true}
+                                contentContainerStyle={{ paddingHorizontal: 20 }}
+                                pagingEnabled
+                                decelerationRate={"fast"}
+
+
+                            >
+                                {dataClose.map((dataClose, index) =>
+                                    <Pressable key={index} onPress={() => handlePress(dataClose)}>
+                                        <View style={{ height: 150, width: 300, backgroundColor: "#d3d3d3e0", marginHorizontal: 10, justifyContent:"flex-start", alignItems: "center",gap:20,borderRadius:4 }}>
+                                            <View style={{ height: 80, width: 200,borderWidth:1,justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#1D1A39",borderRadius:4 }}>
+
+                                                <Image style={{ flex: 1 }} source={Logo} resizeMode='contain' />
+                                            </View>
+                                            <Text>{dataClose.name}</Text>
+                                        </View>
+                                    </Pressable>)}
+                            </BottomSheetScrollView>
+                        </BottomSheet>
+
+
                     }
-            </View>
+                </View>
+
+            </GestureHandlerRootView>
         );
     }
 }
