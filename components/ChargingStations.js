@@ -7,7 +7,6 @@ import { Dimensions } from 'react-native';
 import Constants from "expo-constants"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 
 
 const INITIAL_LATITUDE = 65.0800
@@ -27,8 +26,10 @@ export default ChargingStation = ({ navigation }) => {
     const [dataClose, setDataClose] = useState([])
     const [showCloseData,setShowCloseData]=useState(false)
 
+    //UseRef
     const map = useRef(null);
     const bottomSheetRef = useRef(null);
+    const scrollViewRef=useRef(null)
 
     //haetaan latausasemien tiedot OpenStreetMapista
     useEffect(() => {
@@ -144,6 +145,8 @@ export default ChargingStation = ({ navigation }) => {
         })
         setData(arr)
         map.current.animateToRegion({latitude:item.latitude,longitude:item.longitude,latitudeDelta:INITIAL_LATITUDE_DELTA,longitudeDelta:INITIAL_LONGITUDE_DELTA})
+        scrollViewRef?.current?.scrollTo({x: 0, y: 0, animated: false})
+        
     }
 
     //buttonille millä saadaa lähimmät asemat slideriin
@@ -155,17 +158,18 @@ export default ChargingStation = ({ navigation }) => {
             handleOpenPress()
         }
     }
-    
+    //BottomSheetille snapPoint
     const snapPoints = useMemo(() => ["35%"], []);
-
+    //Aukaisee BottomSheetScrollview
     const handleOpenPress = () => bottomSheetRef.current?.expand();
-
+    //antaa indexin missä vaiheessa bottomSheet on -1 ei näkyvillä.
     const handleSheetChange = useCallback((index) => {
         console.log("handleSheetChange", index);
         if(index===-1){
             setShowCloseData(false)
         }
       }, []);
+
     //console.log(data, "useState")
     console.log(dataClose, "dataClose useState")
     //console.log(data,"kaikki data")
@@ -220,6 +224,7 @@ export default ChargingStation = ({ navigation }) => {
                 enablePanDownToClose={true}
               >
                 <BottomSheetScrollView
+                ref={scrollViewRef}
                 horizontal={true}
                 snapToInterval={300+20}
                 disableIntervalMomentum={true}
