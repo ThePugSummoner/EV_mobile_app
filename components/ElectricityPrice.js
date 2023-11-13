@@ -48,6 +48,10 @@ export default ElectricityPrice = ({ navigation }) => {
                         
                         arr.push({startDate: prices[i].startDate, endDate: prices[i].endDate, price: prices[i].price});
                     }
+                    const newPrices = push(child(ref(db), PRICES_REF)).key;
+                    const updates = {};
+                    updates[PRICES_REF + newPrices] = arr;
+                    update(ref(db), updates);
                     console.log(arr, 'array');
                     //console.log(`Hinta nyt on ${price}`);
                    } catch (error) {
