@@ -28,41 +28,41 @@ export default ElectricPrice = ({ navigation }) => {
         })();
     }, []);
 
-    useEffect(() => {  
-        const arr = [];
-        const priceRef = ref(db, PRICES_REF);
-        onValue(priceRef, (snapshot) => {
-            const data = snapshot.val() ? snapshot.val() : {};
-            const dbPrice = {...data};
-           console.log(Object.keys(dbPrice).length,'Haku db:stä');
-            //rajapintahaku
-            if (Object.keys(dbPrice).length === 0) {
-              console.log("iffissä")
-                /* (async () => {
+    // useEffect(() => {  
+    //     const arr = [];
+    //     const priceRef = ref(db, PRICES_REF);
+    //     onValue(priceRef, (snapshot) => {
+    //         const data = snapshot.val() ? snapshot.val() : {};
+    //         const dbPrice = {...data};
+    //        console.log(Object.keys(dbPrice).length,'Haku db:stä');
+    //         //rajapintahaku
+    //         if (Object.keys(dbPrice).length === 0) {
+    //           console.log("iffissä")
+    //             /* (async () => {
                     
-                    const response = await fetch(LATEST_PRICES_ENDPOINT);
-                   try {
-                    const { prices } = await response.json();
-                    //console.log(prices, 'kokodata');
-                    for (let i = 0; i < prices.length; i++) {
+    //                 const response = await fetch(LATEST_PRICES_ENDPOINT);
+    //                try {
+    //                 const { prices } = await response.json();
+    //                 //console.log(prices, 'kokodata');
+    //                 for (let i = 0; i < prices.length; i++) {
                         
-                        arr.push({startDate: prices[i].startDate, endDate: prices[i].endDate, price: prices[i].price});
-                    }
-                    const newPrices = push(child(ref(db), PRICES_REF)).key;
-                    const updates = {};
-                    updates[PRICES_REF + newPrices] = arr;
-                    update(ref(db), updates);
-                    console.log(arr, 'array');
-                    //console.log(`Hinta nyt on ${price}`);
-                   } catch (error) {
-                    alert(error);
-                   }
-                })(); */
-             }
+    //                     arr.push({startDate: prices[i].startDate, endDate: prices[i].endDate, price: prices[i].price});
+    //                 }
+    //                 const newPrices = push(child(ref(db), PRICES_REF)).key;
+    //                 const updates = {};
+    //                 updates[PRICES_REF + newPrices] = arr;
+    //                 update(ref(db), updates);
+    //                 console.log(arr, 'array');
+    //                 //console.log(`Hinta nyt on ${price}`);
+    //                } catch (error) {
+    //                 alert(error);
+    //                }
+    //             })(); */
+    //          }
             
-        });
+    //     });
 
-    }, []);
+    // }, []);
 
   
    
