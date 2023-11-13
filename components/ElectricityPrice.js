@@ -34,9 +34,9 @@ export default ElectricityPrice = ({ navigation }) => {
         onValue(priceRef, (snapshot) => {
             const data = snapshot.val() ? snapshot.val() : {};
             const dbPrice = {...data};
-           console.log(dbPrice,'Haku db:stä');
+           console.log(Object.keys(dbPrice).length,'Haku db:stä');
             //rajapintahaku
-            if (dbPrice.length === undefined) {
+            if (Object.keys(dbPrice).length === 0) {
               
                 (async () => {
                     
