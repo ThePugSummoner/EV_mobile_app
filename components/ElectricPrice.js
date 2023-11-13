@@ -6,7 +6,7 @@ import { db, PRICES_REF } from '../firebase/Config';
 
 const LATEST_PRICES_ENDPOINT = 'https://api.porssisahko.net/v1/latest-prices.json';
 
-export default ElectricityPrice = ({ navigation }) => {
+export default ElectricPrice = ({ navigation }) => {
 
     const [hourPrice, setHourPrice] = useState();
     
@@ -37,8 +37,8 @@ export default ElectricityPrice = ({ navigation }) => {
            console.log(Object.keys(dbPrice).length,'Haku db:stä');
             //rajapintahaku
             if (Object.keys(dbPrice).length === 0) {
-              
-                (async () => {
+              console.log("iffissä")
+                /* (async () => {
                     
                     const response = await fetch(LATEST_PRICES_ENDPOINT);
                    try {
@@ -57,7 +57,7 @@ export default ElectricityPrice = ({ navigation }) => {
                    } catch (error) {
                     alert(error);
                    }
-                })();
+                })(); */
              }
             
         });
@@ -65,7 +65,7 @@ export default ElectricityPrice = ({ navigation }) => {
     }, []);
 
   
-    console.log(hourPrice);
+   
     return (
         <View style = {ElectricityPriceStyle.container}>
             

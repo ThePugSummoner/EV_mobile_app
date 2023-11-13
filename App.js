@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import CustomStackNavigator from './components/CustomStackNavigator';
-import ElectricityPrice from './components/ElectricityPrice';
+import ElectricPrice from './components/ElectricPrice';
 
 
 const Tab = createBottomTabNavigator();
@@ -89,7 +89,7 @@ export default function App() {
             },
            
           }}/>
-          <Tab.Screen name="Electricity Price" component={ElectricityPrice}  listeners={{
+          <Tab.Screen name="Electricity Price" component={ElectricPrice}  listeners={{
             focus: () => {
               setShowTabs(false); 
             },
