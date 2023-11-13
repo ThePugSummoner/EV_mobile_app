@@ -55,7 +55,7 @@ export default function App() {
             return <MaterialCommunityIcons name={iconName} size={size} color={color} />
           
           },
-          tabBarStyle: { backgroundColor: '#1D1A39' },
+          tabBarStyle: { backgroundColor: '#22203a' },
           tabBarActiveTintColor: 'khaki',
           tabBarInactiveTintColor: 'lightyellow'
         })}
