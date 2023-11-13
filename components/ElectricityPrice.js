@@ -9,7 +9,7 @@ const LATEST_PRICES_ENDPOINT = 'https://api.porssisahko.net/v1/latest-prices.jso
 export default ElectricityPrice = ({ navigation }) => {
 
     const [hourPrice, setHourPrice] = useState();
-    const [prices, setPrices] = useState([]); 
+    
 
     //tuntihinta sähkölle
     useEffect(() => {
@@ -29,34 +29,35 @@ export default ElectricityPrice = ({ navigation }) => {
     }, []);
 
     useEffect(() => {  
-        const array = [];
+        const arr = [];
         const priceRef = ref(db, PRICES_REF);
         onValue(priceRef, (snapshot) => {
             const data = snapshot.val() ? snapshot.val() : {};
             const dbPrice = {...data};
            console.log(dbPrice,'Haku db:stä');
             //rajapintahaku
-            if (dbPrice.lenght === undefined) {
-               
+            if (dbPrice.length === undefined) {
+              
                 (async () => {
+                    
                     const response = await fetch(LATEST_PRICES_ENDPOINT);
                    try {
                     const { prices } = await response.json();
                     //console.log(prices, 'kokodata');
                     for (let i = 0; i < prices.length; i++) {
                         
-                        array.push({startDate: prices[i].startDate, endDate: prices[i].endDate, price: prices[i].price});
+                        arr.push({startDate: prices[i].startDate, endDate: prices[i].endDate, price: prices[i].price});
                     }
+                    console.log(arr, 'array');
                     //console.log(`Hinta nyt on ${price}`);
                    } catch (error) {
                     alert(error);
                    }
                 })();
              }
-         
             
         });
-        console.log(array, 'array');
+
     }, []);
 
   
