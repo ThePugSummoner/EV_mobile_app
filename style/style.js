@@ -106,4 +106,37 @@ const ElectricityPriceStyle = StyleSheet.create({
     },
 })
 
-export {HomeStyle,ProfileStyle,CharginStationsStyle, ElectricityPriceStyle}
+const MainPageStyle = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#1D1A39',
+    },
+    header: {
+        flexDirection: 'row',
+        backgroundColor: '#22203a',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderColor: "#b38c1a",
+        borderRadius: 5,
+        justifyContent: 'space-evenly'
+    },
+    standInText: {
+        color: 'white',
+    },
+    carImage: {
+        alignItems: 'center',
+    },
+    battery: {
+        alignItems: 'center'
+    },
+    toggleButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 250
+    },
+    /*toggleButtonsSingular: {
+        transform: [{rotate: '90deg'}],
+    } */
+})
+
+export {HomeStyle,ProfileStyle,CharginStationsStyle, ElectricityPriceStyle, MainPageStyle}
