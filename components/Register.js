@@ -4,6 +4,15 @@ import { signUp } from "./Auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/Config";
 import { HomeStyle } from '../style/style';
+import { Picker } from '@react-native-picker/picker';
+
+
+const carOptions = [
+  { label: 'Toyota Camry', value: 'Toyota Camry', drive: 'rear' },
+  { label: 'Honda Accord', value: 'Honda Accord', drive: 'front' },
+  { label: 'Ford Fusion', value: 'Ford Fusion', drive: 'rear' },
+
+];
 
 export default function Register ({ navigation }) {
   const [name, setName] = useState('');
@@ -11,9 +20,8 @@ export default function Register ({ navigation }) {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [pin, setPin] = useState('');
-  const [repeatPin, setRepeatPin] = useState('');
   const [error, setError] = useState('');
+  const [selectedCar, setSelectedCar] = useState({});
 
   const handleRegister = () => {
     if(!name) {
@@ -35,28 +43,18 @@ export default function Register ({ navigation }) {
     else if (password !== repeatPassword) {
         Alert.alert('Password do not match!')
     }
-    else if (!pin) {
-      Alert.alert('PIN is required!')
-    }
-    else if (!repeatPin) {
-      setPassword('')
-      Alert.alert('Confirm PIN is required!')
-    }
-    else if (pin !== repeatPin) {
-      Alert.alert('PIN do not match!')
-    }
+    
     else {
-        signUp(name, email, password, phone, pin) 
+        signUp(name, email, password, phone, selectedCar) 
             onAuthStateChanged(auth, (user) => {
                 if(user) {
+                  /* addCarToUser(user.uid, selectedCar); */
                   navigation.navigate('Main Page', {userUid: user.uid})
                 }
             })
     }
 
   };
-
-  
 
   return (
     <ScrollView contentContainerStyle={HomeStyle.container}>
@@ -107,26 +105,17 @@ export default function Register ({ navigation }) {
         onChangeText={setRepeatPassword}
         secureTextEntry
       />
-
-      <TextInput
+      <Text style={{ color: '#cbb26a', marginTop: 10 }}>Select Car:</Text>
+      <Picker
+        selectedValue={selectedCar}
+        onValueChange={(itemValue) => setSelectedCar(itemValue)}
         style={HomeStyle.input}
-        placeholder="PIN"
-        placeholderTextColor="#cbb26a"
-        value={pin}
-        onChangeText={setPin}
-        keyboardType="numeric"
-        maxLength={4}
-      />
-
-      <TextInput
-        style={HomeStyle.input}
-        placeholder="Repeat PIN"
-        placeholderTextColor="#cbb26a"
-        value={repeatPin}
-        onChangeText={setRepeatPin}
-        keyboardType="numeric"
-        maxLength={4}
-      />
+      >
+        <Picker.Item label="Select a car" value="" />
+        {carOptions.map((car, index) => (
+          <Picker.Item key={index} label={car.label} value={car} />
+        ))}
+      </Picker>
 
       <Text style={{ color: 'red' }}>{error}</Text>
 

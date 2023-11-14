@@ -7,7 +7,7 @@ import { Dimensions } from 'react-native';
 import Constants from "expo-constants"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import Logo from "../images/SplashVolterra.png"
+import Logo from "../images/VolterraSplash.png"
 
 
 const INITIAL_LATITUDE = 65.0800

@@ -1,9 +1,9 @@
 import { Alert } from 'react-native';
-import { ref, set } from 'firebase/database'
+import { ref, set, get, child } from 'firebase/database'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, getAuth } from 'firebase/auth';
-import { auth, db, USERS_REF} from '../firebase/Config'
+import { auth, CARS_REF, db, USERS_REF} from '../firebase/Config'
 
-export const signUp = async (name, email, password, phone, pin) => {
+export const signUp = async (name, email, password, phone, selectedCar) => {
     try {
         await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -11,7 +11,7 @@ export const signUp = async (name, email, password, phone, pin) => {
                 name: name,
                 email: userCredential.user.email,
                 phone: phone,
-                pin: pin
+                car: selectedCar
             })
         })
     }
@@ -28,23 +28,8 @@ export const signIn = async(email, password) => {
     }
     catch (error) {
         console.log("Login failed. ", error.message)
-        /* Alert.alert("Login failed. ", error.message) */
         return false
     }
-   /*  signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      const user = getAuth().currentUser;
-      if (user) {
-        navigation.navigate('Main Page', { userUid: user.uid });
-      } else {
-        console.error('Unexpected authentication state');
-        Alert.alert('Unexpected authentication state');
-      }
-    })
-    .catch((error) => {
-      console.error('Login failed. ', error.message);
-      Alert.alert('Login failed. ', error.message);
-    }); */
 }
 
 export const logOut = async() => {
@@ -56,3 +41,21 @@ export const logOut = async() => {
         Alert.alert("Logout error. ", error.message)
     }
 }
+
+export const getUserData = async (userUid) => {
+    try {
+      const userRef = child(ref(db), `${USERS_REF}${userUid}`);
+      const snapshot = await get(userRef);
+  
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        console.error('User data not found.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error.message);
+      return null;
+    }
+  };
+
