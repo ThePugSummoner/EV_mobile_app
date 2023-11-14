@@ -28,16 +28,11 @@ export default function MainPage ({ route }) {
     
     return (
         <View style={MainPageStyle.container}>
-            <View style={MainPageStyle.header}>
-            {userData && (
-                  <>
-                    <Text style={MainPageStyle.standInText}>Welcome, {userData.name}!</Text>
-                    <Text style={MainPageStyle.standInText}>{userData.car.label}</Text>
-                  </>
-                )}
-                {/* <Text style={MainPageStyle.standInText}>Hello, {userData.name}</Text>
-                <Text style={MainPageStyle.standInText}>{userData.car.label}</Text> */}
-            </View>
+          {userData && (
+            <View style={[MainPageStyle.header, {paddingTop: 50}]}>
+              <Text style={MainPageStyle.standInText}>Welcome, {userData.name}!</Text>
+              <Text style={MainPageStyle.standInText}>Your, {userData.car.label}</Text>
+            </View> )}
             <View style={MainPageStyle.carImage}>
                 <Image source={require('../images/CarTransparent.png')} 
                     style={{width: 330, height: 230, resizeMode: 'contain'}}
@@ -55,6 +50,13 @@ export default function MainPage ({ route }) {
                 /> */}
                 <Text style={MainPageStyle.standInText}>BATTERY</Text>
             </View>
+            { userData && (
+              <>
+                <Text>{userData.car.label}</Text>
+                <Text>{userData.car.drive}</Text>
+              </>
+            )}
+            <Text></Text>
             <View style={MainPageStyle.toggleButtons}>
                 <View style={MainPageStyle.toggleButtonsSingular}>
                     <Toggle 
