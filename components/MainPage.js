@@ -4,18 +4,34 @@ import { MainPageStyle } from '../style/style';
 import BatteryGauge from 'react-battery-gauge';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { getUserData } from './Auth';
 
-export default function MainPage ({ navigation }) {
+
+export default function MainPage ({ route }) {
 
     const [toggleValueLock, setToggleValueLock] = useState(false)
     const [toggleValuePower, setToggleValuePower] = useState(false)
     const [toggleValueAirConditioner, setToggleValueAirConditioner] = useState(false)
+
+    const { userUid } = route.params;
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const data = await getUserData(userUid);
+        setUserData(data);
+        console.log(data)
+      };
+
+      fetchData();
+    }, [userUid]);
     
     return (
         <View style={MainPageStyle.container}>
             <View style={MainPageStyle.header}>
-                <Text style={MainPageStyle.standInText}>KÄYTTÄJÄN TIEDOT</Text>
-                <Text style={MainPageStyle.standInText}>AUTON NIMI</Text>
+              
+                <Text style={MainPageStyle.standInText}>Hello, {userData.name}</Text>
+                <Text style={MainPageStyle.standInText}>{userData.car.label}</Text>
             </View>
             <View style={MainPageStyle.carImage}>
                 <Image source={require('../images/CarTransparent.png')} 
