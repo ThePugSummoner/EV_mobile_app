@@ -7,6 +7,8 @@ import { Dimensions } from 'react-native';
 import Constants from "expo-constants"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Logo from "../images/Volterra.png"
+import { FontAwesome5 } from '@expo/vector-icons';
 import Logo from "../images/VolterraSplash.png"
 
 
@@ -199,9 +201,7 @@ export default ChargingStation = ({ navigation }) => {
                     >
                         {data.map((marker, index) =>
                             <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}>
-                                <View style={{ backgroundColor: marker.selected ? "red" : "orange" }}>
-                                    <Text>joo</Text>
-                                </View>
+                                <FontAwesome5 name="map-marker-alt" size={24} color={ marker.selected ? "orange" : "red" } />
                             </Marker>)}
                         <Circle
                             center={{ latitude: latitude, longitude: longitude }}
@@ -240,13 +240,14 @@ export default ChargingStation = ({ navigation }) => {
 
                             >
                                 {dataClose.map((dataClose, index) =>
-                                    <Pressable key={index} onPress={() => handlePress(dataClose)}>
-                                        <View style={{ height: 150, width: 300, backgroundColor: "#d3d3d3e0", marginHorizontal: 10, justifyContent:"flex-start", alignItems: "center",gap:20,borderRadius:4 }}>
-                                            <View style={{ height: 80, width: 200,borderWidth:1,justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#1D1A39",borderRadius:4 }}>
-
+                                    <Pressable  key={index} onPress={() => handlePress(dataClose)}>
+                                        <View style={{borderWidth:1, height: 150, width: 300, backgroundColor: "#d3d3d3e0", marginHorizontal: 10, justifyContent:"flex-start", alignItems:"flex-start",padding:10,gap:20,borderRadius:4 , flexDirection:"row-reverse"}}>
+                                        
+                                            <View style={{ height: 80, width: 100,borderWidth:1,justifyContent:"flex-start",alignItems:"center",marginTop:10,backgroundColor:"#1D1A39",borderRadius:4 }}>
                                                 <Image style={{ flex: 1 }} source={Logo} resizeMode='contain' />
                                             </View>
-                                            <Text>{dataClose.name}</Text>
+                                            <Text style={{flex:1,flexWrap:"wrap"}}>{dataClose.name}</Text>
+                                            
                                         </View>
                                     </Pressable>)}
                             </BottomSheetScrollView>
