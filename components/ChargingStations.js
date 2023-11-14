@@ -11,7 +11,6 @@ import Logo from "../images/Volterra.png"
 import { FontAwesome5 } from '@expo/vector-icons';
 
 
-
 const INITIAL_LATITUDE = 65.0800
 const INITIAL_LONGITUDE = 25.4800
 const INITIAL_LATITUDE_DELTA = 0.0922
