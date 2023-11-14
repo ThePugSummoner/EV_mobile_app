@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { ElectricityPriceStyle } from '../style/style';
 import { useEffect, useState } from 'react';
 import { child, push, ref, remove, update, onValue } from '@firebase/database';
@@ -9,8 +9,7 @@ const LATEST_PRICES_ENDPOINT = 'https://api.porssisahko.net/v1/latest-prices.jso
 export default ElectricPrice = ({ navigation }) => {
 
     const [hourPrice, setHourPrice] = useState();
-    const [allPrices,setAllPrices]=useState()
-    
+    const [allPrices,setAllPrices] = useState();
 
     //tuntihinta sähkölle
     useEffect(() => {
@@ -31,18 +30,18 @@ export default ElectricPrice = ({ navigation }) => {
 
     // 48 tunnin sähköhintojen haku
     useEffect(() => {  
-        const arr = [];
+       
         const priceRef = ref(db, PRICES_REF);
         onValue(priceRef, (snapshot) => {
             const data = snapshot.val() ? snapshot.val() : {};
             const dbPrice = {...data};
-           console.log(Object.keys(dbPrice).length,'Haku db:stä');
-           console.log(dbPrice)
+           //console.log(Object.keys(dbPrice).length,'Haku db:stä');
+           //console.log(dbPrice)
             //rajapintahaku jos db on tyhjä
             if (Object.keys(dbPrice).length === 0) {
               
                 (async () => {
-                    
+                    const arr = [];
                     const response = await fetch(LATEST_PRICES_ENDPOINT);
                    try {
                     const { prices } = await response.json();
@@ -57,7 +56,7 @@ export default ElectricPrice = ({ navigation }) => {
                     update(ref(db), updates);
                     //Lisätty useState set
                     setAllPrices(arr)
-                    console.log(arr, 'array');
+                    console.log(arr.length, 'array');
                     //console.log(`Hinta nyt on ${price}`);
                    } catch (error) {
                     alert(error);
@@ -72,8 +71,11 @@ export default ElectricPrice = ({ navigation }) => {
 
     }, []);
 
+    const removePrices = () => {
+        remove(ref(db, PRICES_REF));
+    }
   
-   console.log(allPrices,"kaikki hinnat")
+   //console.log(allPrices,"kaikki hinnat")
     return (
         <View style = {ElectricityPriceStyle.container}>
             
@@ -84,7 +86,10 @@ export default ElectricPrice = ({ navigation }) => {
                 <Text style={ElectricityPriceStyle.headline2}>Testi</Text>
 
             </View>
-
+        <View>
+            <Button title="Remove" onPress={()=> removePrices()}></Button>
+          
+        </View>
         </View>
 
     );

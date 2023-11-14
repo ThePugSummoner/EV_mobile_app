@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Image, } from 'react-native';
 import { MainPageStyle } from '../style/style';
-import BatteryGauge from 'react-battery-gauge';
+//import BatteryGauge from 'react-battery-gauge';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { getUserData } from './Auth';
