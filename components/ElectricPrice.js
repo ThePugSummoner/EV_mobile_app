@@ -78,6 +78,29 @@ export default ElectricPrice = ({ navigation }) => {
 
     const removePrices = () => {
         remove(ref(db, PRICES_REF));
+        (async () => {
+            const arr = [];
+            const response = await fetch(LATEST_PRICES_ENDPOINT);
+           try {
+            const { prices } = await response.json();
+            //console.log(prices, 'kokodata');
+            for (let i = 0; i < prices.length; i++) {
+                
+                arr.push({startDate: prices[i].startDate, endDate: prices[i].endDate, price: prices[i].price});
+            }
+            const newPrices = push(child(ref(db), PRICES_REF)).key;
+            const updates = {};
+            updates[PRICES_REF + newPrices] = arr;
+            update(ref(db), updates);
+            //Lisätty useState set
+            setAllPrices(arr)
+            
+            console.log(arr.length, 'array');
+            //console.log(`Hinta nyt on ${price}`);
+           } catch (error) {
+            alert(error);
+           }
+        })();
     }
   console.log(isLoading)
    //console.log(allPrices,"kaikki hinnat")
