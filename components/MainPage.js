@@ -29,9 +29,14 @@ export default function MainPage ({ route }) {
     return (
         <View style={MainPageStyle.container}>
             <View style={MainPageStyle.header}>
-              
-                <Text style={MainPageStyle.standInText}>Hello, {userData.name}</Text>
-                <Text style={MainPageStyle.standInText}>{userData.car.label}</Text>
+            {userData && (
+                  <>
+                    <Text style={MainPageStyle.standInText}>Welcome, {userData.name}!</Text>
+                    <Text style={MainPageStyle.standInText}>{userData.car.label}</Text>
+                  </>
+                )}
+                {/* <Text style={MainPageStyle.standInText}>Hello, {userData.name}</Text>
+                <Text style={MainPageStyle.standInText}>{userData.car.label}</Text> */}
             </View>
             <View style={MainPageStyle.carImage}>
                 <Image source={require('../images/CarTransparent.png')} 
