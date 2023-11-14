@@ -26,7 +26,7 @@ const auth = initializeAuth(app, {
 })
 export { auth }
 
-// Add database key for todolist
+
 export const CARS_REF = '/cars/'
 export const USERS_REF = '/users/'
 export const PRICES_REF = '/prices/'
