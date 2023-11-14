@@ -10,6 +10,7 @@ export default ElectricPrice = ({ navigation }) => {
 
     const [hourPrice, setHourPrice] = useState();
     const [allPrices,setAllPrices] = useState();
+    const [isLoading,setIsloading]=useState(true)
 
     //tuntihinta sähkölle
     useEffect(() => {
@@ -38,7 +39,7 @@ export default ElectricPrice = ({ navigation }) => {
            //console.log(Object.keys(dbPrice).length,'Haku db:stä');
            //console.log(dbPrice)
             //rajapintahaku jos db on tyhjä
-            if (Object.keys(dbPrice).length === 0) {
+            if (Object.keys(dbPrice).length === 0 && isLoading) {
               
                 (async () => {
                     const arr = [];
@@ -56,6 +57,7 @@ export default ElectricPrice = ({ navigation }) => {
                     update(ref(db), updates);
                     //Lisätty useState set
                     setAllPrices(arr)
+                    setIsloading(false)
                     console.log(arr.length, 'array');
                     //console.log(`Hinta nyt on ${price}`);
                    } catch (error) {
@@ -65,16 +67,19 @@ export default ElectricPrice = ({ navigation }) => {
                 //Else lisätty jossa on sitten myös useState set. Sillä laitetaan jo valmiina oleva Db data
              }else{
                 setAllPrices(dbPrice)
+                setIsloading(false)
              }
             
         });
+       
+       
 
     }, []);
 
     const removePrices = () => {
         remove(ref(db, PRICES_REF));
     }
-  
+  console.log(isLoading)
    //console.log(allPrices,"kaikki hinnat")
     return (
         <View style = {ElectricityPriceStyle.container}>
