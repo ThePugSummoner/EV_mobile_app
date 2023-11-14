@@ -9,7 +9,6 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Logo from "../images/Volterra.png"
 import { FontAwesome5 } from '@expo/vector-icons';
-/* import Logo from "../images/VolterraSplash.png" */
 
 
 const INITIAL_LATITUDE = 65.0800
