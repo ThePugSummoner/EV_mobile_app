@@ -78,7 +78,7 @@ export default function App() {
           options={{ headerShown: false }}
           
           />
-        <Tab.Screen name="Main Page" component={Mainpage}  listeners={{
+        <Tab.Screen name="Main Page" component={Mainpage} options={{headerShown:false}} listeners={{
             focus: () => {
               setShowTabs(false); 
             }
