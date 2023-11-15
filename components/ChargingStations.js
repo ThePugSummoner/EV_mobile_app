@@ -33,67 +33,13 @@ export default ChargingStation = ({ navigation }) => {
     const bottomSheetRef = useRef(null);
     const scrollViewRef = useRef(null)
 
-    //haetaan latausasemien tiedot OpenStreetMapista
+
     useEffect(() => {
-        (async () => {
-            try {
-                const api = await fetch('https://overpass-api.de/api/interpreter?', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: `[out:json][timeout:25];
-                        area(id:3602711874)->.searchArea;
-                        nwr["amenity"="charging_station"](area.searchArea);
-                        out geom;`
-                });
-                let answer = await api.json();
-                answer = answer.elements
-                const arr = []
-                for (let i = 0; i < answer.length; i++) {
-                    arr.push({
-                        id: answer[i].id,
-                        name: answer[i].tags.name,
-                        latitude: answer[i].lat,
-                        longitude: answer[i].lon,
-                        selected: false
-                    })
-                }
-                setData(arr)
-                setIsloadingData(false)
-
-            } catch (e) {
-                console.log(e)
-            }
-        })()
-
+        charginStationData()
     }, [])
 
-    //Käyttäjän locatio haetaan
     useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync()
-            try {
-                if (status !== "granted") {
-                    setIsLoading(false)
-                    console.log("Geolocation failed.")
-                    return
-                }
-
-                const location = await Location.getCurrentPositionAsync(
-                    { accuracy: Location.Accuracy.High })
-                setLatitude(location.coords.latitude)
-                setLongitude(location.coords.longitude)
-
-
-            } catch (e) {
-                alert(e)
-                setIsLoading(false)
-            }
-
-
-        })()
+        userLocationData()
         setIsLoading(false)
     }, [])
 
@@ -113,6 +59,67 @@ export default ChargingStation = ({ navigation }) => {
         }
 
     }, [isLoadingData, isLoading, latitude, longitude])
+
+    //Käyttäjän locatio haetaan
+    async function userLocationData() {
+        try {
+            let { status } = await Location.requestForegroundPermissionsAsync()
+            if (status !== "granted") {
+                setIsLoading(false)
+                console.log("Geolocation failed.")
+                return
+            }
+
+            const location = await Location.getCurrentPositionAsync(
+                { accuracy: Location.Accuracy.High })
+            setLatitude(location.coords.latitude)
+            setLongitude(location.coords.longitude)
+
+
+        } catch (e) {
+            alert(e)
+            setIsLoading(false)
+        }
+    }
+
+    //haetaan latausasemien tiedot OpenStreetMapista
+    async function charginStationData() {
+        try {
+            const api = await fetch('https://overpass-api.de/api/interpreter?', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: `[out:json][timeout:25];
+                area(id:3602711874)->.searchArea;
+                nwr["amenity"="charging_station"](area.searchArea);
+                out geom;`
+            });
+            let answer = await api.json();
+            answer = answer.elements
+            const arr = []
+            for (let i = 0; i < answer.length; i++) {
+                arr.push({
+                    id: answer[i].id,
+                    name: answer[i].tags.name===undefined ? "Sähköauton latausasema" : answer[i].tags.name,
+                    latitude: answer[i].lat,
+                    longitude: answer[i].lon,
+                    brand:answer[i].tags.brand,
+                    operator:answer[i].tags.operator,
+                    capacity:answer[i].tags.capacity,
+                    socket:answer[i].tags.socket,
+                    selected: false
+                })
+            }
+            setData(arr)
+            setIsloadingData(false)
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
 
     // liikutaan näytöllä niin päivittää sijainnin
     function regionChange(region) {
@@ -200,7 +207,7 @@ export default ChargingStation = ({ navigation }) => {
                     >
                         {data.map((marker, index) =>
                             <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}>
-                                <FontAwesome5 name="map-marker-alt" size={24} color={ marker.selected ? "orange" : "red" } />
+                                <FontAwesome5 name="map-marker-alt" size={24} color={marker.selected ? "orange" : "red"} />
                             </Marker>)}
                         <Circle
                             center={{ latitude: latitude, longitude: longitude }}
@@ -239,14 +246,14 @@ export default ChargingStation = ({ navigation }) => {
 
                             >
                                 {dataClose.map((dataClose, index) =>
-                                    <Pressable  key={index} onPress={() => handlePress(dataClose)}>
-                                        <View style={{borderWidth:1, height: 150, width: 300, backgroundColor: "#d3d3d3e0", marginHorizontal: 10, justifyContent:"flex-start", alignItems:"flex-start",padding:10,gap:20,borderRadius:4 , flexDirection:"row-reverse"}}>
-                                        
-                                            <View style={{ height: 80, width: 100,borderWidth:1,justifyContent:"flex-start",alignItems:"center",marginTop:10,backgroundColor:"#1D1A39",borderRadius:4 }}>
+                                    <Pressable key={index} onPress={() => handlePress(dataClose)}>
+                                        <View style={{ borderWidth: 1, height: 150, width: 300, backgroundColor: "#d3d3d3e0", marginHorizontal: 10, justifyContent: "flex-start", alignItems: "flex-start", padding: 10, gap: 20, borderRadius: 4, flexDirection: "row-reverse" }}>
+
+                                            <View style={{ height: 80, width: 100, borderWidth: 1, justifyContent: "flex-start", alignItems: "center", marginTop: 10, backgroundColor: "#1D1A39", borderRadius: 4 }}>
                                                 <Image style={{ flex: 1 }} source={Logo} resizeMode='contain' />
                                             </View>
-                                            <Text style={{flex:1,flexWrap:"wrap"}}>{dataClose.name}</Text>
-                                            
+                                            <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.name}</Text>
+
                                         </View>
                                     </Pressable>)}
                             </BottomSheetScrollView>
