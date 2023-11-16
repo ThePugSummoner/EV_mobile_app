@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import CustomStackNavigator from './components/CustomStackNavigator';
 import ElectricPrice from './components/ElectricPrice';
+import { setTopLevelNavigator } from './components/Auth';
 
 
 const Tab = createBottomTabNavigator();
@@ -21,7 +22,7 @@ export default function App() {
   const [showTabs, setShowTabs] = useState(true)
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={setTopLevelNavigator}>
       <Tab.Navigator
         //initialRouteName="Feed"
         sceneContainerStyle={{backgroundColor: 'transparent'}}

@@ -1,10 +1,13 @@
 import { Alert } from 'react-native';
 import { ref, set, get, child } from 'firebase/database'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, getAuth } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { auth, CARS_REF, db, USERS_REF} from '../firebase/Config'
+import { createRef } from 'react';
+
+const navigationRef = createRef();
 
 export const signUp = async (name, email, password, phone, selectedCar) => {
-    try {
+    /* try {
         await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             set(ref(db, USERS_REF + userCredential.user.uid), {
@@ -20,6 +23,27 @@ export const signUp = async (name, email, password, phone, selectedCar) => {
         console.log("Registration failed. ", error.message)
         Alert.alert("Registration failed. ", error.message)
         return false
+    } */
+
+    const authorization = getAuth(); 
+
+    try {
+        const userCredential = await createUserWithEmailAndPassword(authorization, email, password);
+        await set(ref(db, USERS_REF + userCredential.user.uid), {
+            name: name,
+            email: userCredential.user.email,
+            phone: phone,
+            car: selectedCar,
+        });
+        return true;
+    } catch (error) {
+        console.log("Registration failed.", error.message);
+        if (error.code === 'auth/email-already-in-use') {
+            Alert.alert("Registration failed. Email is already in use.");
+        } else {
+            Alert.alert("Registration failed.", error.message);
+        }
+        return false;
     }
 }
 
@@ -34,9 +58,17 @@ export const signIn = async(email, password) => {
     }
 }
 
+export const setTopLevelNavigator = (navigatorRef) => {
+    navigationRef.current = navigatorRef;
+  };
+
 export const logOut = async() => {
     try {
         await signOut(auth)
+        navigationRef.current?.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+          });
     }
     catch (error) {
         console.log("Logout error. ", error.message)
@@ -44,7 +76,7 @@ export const logOut = async() => {
     }
 }
 
-export const getUserData = async (userUid) => {
+/* export const getUserData = async (userUid) => {
     try {
       const userRef = child(ref(db), `${USERS_REF}${userUid}`);
       const snapshot = await get(userRef);
@@ -59,5 +91,30 @@ export const getUserData = async (userUid) => {
       console.error('Error fetching user data:', error.message);
       return null;
     }
+  }; */
+  export const getUserData = async () => {
+    return new Promise((resolve, reject) => {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const userId = user.uid;
+          const userRef = ref(db, USERS_REF + userId);
+  
+          get(userRef)
+            .then((snapshot) => {
+              if (snapshot.exists()) {
+                resolve(snapshot.val());
+              } else {
+                reject(new Error('User data not found.'));
+              }
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        } else {
+          reject(new Error('User not authenticated.'));
+        }
+      });
+    });
   };
-
+  

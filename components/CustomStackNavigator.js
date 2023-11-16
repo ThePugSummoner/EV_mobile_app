@@ -3,6 +3,7 @@ import Profile from './Profile';
 import ProfileInfo from './ProfileInfo';
 import CarInfo from './CarInfo';
 import CharginMenu from './ChargingMenu';
+import Home from './Home';
 
 
 const Stack = createNativeStackNavigator()

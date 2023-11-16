@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, } from 'react-native';
-import { HomeStyle, MainPageStyle } from '../style/style';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { HomeStyle, MainPageStyle, ProfileStyle } from '../style/style';
 //import BatteryGauge from 'react-battery-gauge';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { getUserData } from './Auth';
+import { getUserData, logOut } from './Auth';
 
 
-export default function MainPage ({ route }) {
+export default function MainPage ({ route, navigation }) {
 
     const [toggleValueLock, setToggleValueLock] = useState(false)
     const [toggleValuePower, setToggleValuePower] = useState(false)
@@ -25,13 +25,22 @@ export default function MainPage ({ route }) {
 
       fetchData();
     }, [userUid]);
+
+    const handleLogout = () => {
+        logOut()
+        /* navigation.navigate('Profile') */
+    }
+
     
     return (
         <View style={MainPageStyle.container}>
           {userData && (
             <View style={[MainPageStyle.header, {paddingTop: 50}]}>
               <Text style={MainPageStyle.standInText}>Welcome, {userData.name}!</Text>
-              <Text style={MainPageStyle.standInText}>Your, {userData.car.label}</Text>
+              <TouchableOpacity style={ProfileStyle.button} onPress={handleLogout}>
+                    <MaterialCommunityIcons name="logout" size={20} color="#b38c1a" />
+                    <Text style={ProfileStyle.buttonText}>Log Out</Text>
+            </TouchableOpacity>
             </View> )}
             <View style={MainPageStyle.carImage}>
                 <Image source={require('../images/CarTransparent.png')} 

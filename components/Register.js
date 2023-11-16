@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { signUp } from "./Auth";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { auth } from "../firebase/Config";
 import { HomeStyle } from '../style/style';
 import { Picker } from '@react-native-picker/picker';
@@ -23,7 +23,7 @@ export default function Register ({ navigation }) {
   const [error, setError] = useState('');
   const [selectedCar, setSelectedCar] = useState({});
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if(!name) {
       Alert.alert('Name is required!')
     }
@@ -43,14 +43,22 @@ export default function Register ({ navigation }) {
     else if (password !== repeatPassword) {
         Alert.alert('Password do not match!')
     }
-    
     else {
-        signUp(name, email, password, phone, selectedCar) 
-            onAuthStateChanged(auth, (user) => {
-                if(user) {
-                  navigation.navigate('Main Page', {userUid: user.uid})
-                }
-            })
+        try {
+          const registrationSuccess = await signUp(name, email, password, phone, selectedCar);
+          if (registrationSuccess) {
+              const user = getAuth().currentUser;
+              navigation.navigate('Main Page', { userUid: user.uid });
+          } else {
+              console.error('Registration failed!');
+          }
+        } catch (error) {      
+          if (error.code === 'auth/email-already-in-use') {
+            Alert.alert('Registration failed. Email is already in use.');
+          } else {
+            console.error('Error during registration: ', error.message);
+          }
+        }
     }
 
   };
