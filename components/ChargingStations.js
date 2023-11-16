@@ -175,13 +175,8 @@ export default ChargingStation = ({ navigation }) => {
     const handleSheetChange = useCallback((index) => {
         console.log("handleSheetChange", index);
         if (index === -1) {
-            const arr=[]
             setShowCloseData(false)
-            data.map(data=>{
-                arr.push({...data,selected:false})
-            })
-            setData(arr)
-            
+ 
         }
     }, []);
 
