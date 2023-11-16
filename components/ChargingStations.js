@@ -175,7 +175,13 @@ export default ChargingStation = ({ navigation }) => {
     const handleSheetChange = useCallback((index) => {
         console.log("handleSheetChange", index);
         if (index === -1) {
+            const arr=[]
             setShowCloseData(false)
+            data.map(data=>{
+                arr.push({...data,selected:false})
+            })
+            setData(arr)
+            
         }
     }, []);
 
@@ -252,7 +258,12 @@ export default ChargingStation = ({ navigation }) => {
                                             <View style={{ height: 80, width: 100, borderWidth: 1, justifyContent: "flex-start", alignItems: "center", marginTop: 10, backgroundColor: "#1D1A39", borderRadius: 4 }}>
                                                 <Image style={{ flex: 1 }} source={Logo} resizeMode='contain' />
                                             </View>
+                                            <View style={{flex:1}}>
                                             <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.name}</Text>
+                                            <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.operator}</Text>
+                                         
+                                            </View>
+                                            
 
                                         </View>
                                     </Pressable>)}
