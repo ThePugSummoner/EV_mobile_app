@@ -58,7 +58,7 @@ export default ElectricPrice = ({ navigation }) => {
                     //Lisätty useState set
                     setAllPrices(arr)
                     setIsloading(false)
-                    console.log(arr.length, 'array');
+                    console.log(arr.length, 'array useEffect');
                     //console.log(`Hinta nyt on ${price}`);
                    } catch (error) {
                     alert(error);
@@ -68,6 +68,7 @@ export default ElectricPrice = ({ navigation }) => {
              }else{
                 setAllPrices(dbPrice)
                 setIsloading(false)
+                console.log("else")
              }
             
         });
@@ -95,7 +96,7 @@ export default ElectricPrice = ({ navigation }) => {
             //Lisätty useState set
             setAllPrices(arr)
             
-            console.log(arr.length, 'array');
+            console.log(arr.length, 'array remove');
             //console.log(`Hinta nyt on ${price}`);
            } catch (error) {
             alert(error);
