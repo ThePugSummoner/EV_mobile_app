@@ -8,8 +8,8 @@ import { Picker } from '@react-native-picker/picker';
 
 
 const carOptions = [
-  { label: 'Toyota Camry', value: 'Toyota Camry', drive: 'rear' },
-  { label: 'Honda Accord', value: 'Honda Accord', drive: 'front' },
+  { label: 'Flash EV', value: 'Flash EV', drive: 'rear', totalPower: 150, torque: 250, range: 360, capacity: 64, chargePower: 11, consumption: 17.1},
+  { label: 'Lightning EV', value: 'Lightning EV', drive: 'dual motor AWD', totalPower: 340, torque: 510, range: 580, capacity: 75, chargePower: 11, consumption: 19},
   { label: 'Ford Fusion', value: 'Ford Fusion', drive: 'rear' },
 
 ];
@@ -48,7 +48,6 @@ export default function Register ({ navigation }) {
         signUp(name, email, password, phone, selectedCar) 
             onAuthStateChanged(auth, (user) => {
                 if(user) {
-                  /* addCarToUser(user.uid, selectedCar); */
                   navigation.navigate('Main Page', {userUid: user.uid})
                 }
             })
@@ -59,7 +58,7 @@ export default function Register ({ navigation }) {
   return (
     <ScrollView contentContainerStyle={HomeStyle.container}>
     <View style={HomeStyle.container}>
-      <Text style={{ color: '#E5D9B6', marginBottom: 10 }}>Registration</Text>
+      <Text style={{ color: '#E5D9B6', marginBottom: 10, fontSize: 30, fontWeight: 'bold' }}>Registration</Text>
       
       <TextInput
         style={HomeStyle.input}
@@ -105,17 +104,20 @@ export default function Register ({ navigation }) {
         onChangeText={setRepeatPassword}
         secureTextEntry
       />
-      <Text style={{ color: '#cbb26a', marginTop: 10 }}>Select Car:</Text>
-      <Picker
-        selectedValue={selectedCar}
-        onValueChange={(itemValue) => setSelectedCar(itemValue)}
-        style={HomeStyle.input}
-      >
-        <Picker.Item label="Select a car" value="" />
-        {carOptions.map((car, index) => (
-          <Picker.Item key={index} label={car.label} value={car} />
-        ))}
-      </Picker>
+      {/* <Text style={{ color: '#cbb26a', marginTop: 10 }}>Select Car:</Text> */}
+      <View style={[HomeStyle.input, {padding: 0, backgroundColor: '#1d1a39'}]}> 
+        <Picker
+          selectedValue={selectedCar}
+          onValueChange={(itemValue) => setSelectedCar(itemValue)}
+          style={[HomeStyle.input, {padding: 0, color: '#cbb26a', backgroundColor: 'transparent', width: 250, margin: 0}]}
+          dropdownIconColor={'#cbb26a'}
+        >
+          <Picker.Item label="Select a car" value="" style={{color: '#cbb26a', fontSize: 18, backgroundColor: '#1d1a39', padding: 0, margin: 5}}/>
+          {carOptions.map((car, index) => (
+            <Picker.Item key={index} label={car.label} value={car} style={{color: '#cbb26a', fontSize: 18, backgroundColor: '#1d1a39'}}/>
+          ))}
+        </Picker>
+      </View>
 
       <Text style={{ color: 'red' }}>{error}</Text>
 

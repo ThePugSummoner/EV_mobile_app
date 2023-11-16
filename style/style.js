@@ -132,7 +132,7 @@ const MainPageStyle = StyleSheet.create({
     toggleButtons: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginTop: 250
+        marginBottom: 25
     },
     /*toggleButtonsSingular: {
         transform: [{rotate: '90deg'}],

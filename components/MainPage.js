@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Image, } from 'react-native';
-import { MainPageStyle } from '../style/style';
+import { HomeStyle, MainPageStyle } from '../style/style';
 //import BatteryGauge from 'react-battery-gauge';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -38,7 +38,7 @@ export default function MainPage ({ route }) {
                     style={{width: 330, height: 230, resizeMode: 'contain'}}
                 />
             </View>
-            <View style={MainPageStyle.battery}>
+            <View style={[MainPageStyle.battery, {marginBottom: 0}]}>
                 {/*<BatteryGauge
                 value={40} 
                 maxValue={100}
@@ -49,13 +49,21 @@ export default function MainPage ({ route }) {
                 style={MainPageStyle.batteryGauge}                
                 /> */}
                 <Text style={MainPageStyle.standInText}>BATTERY</Text>
-            </View>
+            <Text></Text>
             { userData && (
               <>
-                <Text>{userData.car.label}</Text>
-                <Text>{userData.car.drive}</Text>
+                <Text style={{color: '#cbb26a'}}>{userData.car.label}</Text>
+                <Text style={{color: '#cbb26a'}}>{userData.car.drive}</Text>
+                <Text style={{color: '#cbb26a'}}>{userData.car.totalPower} kW</Text>
+                <Text style={{color: '#cbb26a'}}>{userData.car.torque} Nm</Text>
+                <Text style={{color: '#cbb26a'}}>{userData.car.range} km</Text>
+                <Text style={{color: '#cbb26a'}}>{userData.car.capacity} kWh</Text>
+                <Text style={{color: '#cbb26a'}}>{userData.car.chargePower} kW</Text>
+                <Text style={{color: '#cbb26a'}}>{userData.car.consumption} kW/100km</Text>
+
               </>
             )}
+            </View>
             <Text></Text>
             <View style={MainPageStyle.toggleButtons}>
                 <View style={MainPageStyle.toggleButtonsSingular}>

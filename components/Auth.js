@@ -14,10 +14,12 @@ export const signUp = async (name, email, password, phone, selectedCar) => {
                 car: selectedCar
             })
         })
+        return true
     }
     catch (error) {
         console.log("Registration failed. ", error.message)
         Alert.alert("Registration failed. ", error.message)
+        return false
     }
 }
 
