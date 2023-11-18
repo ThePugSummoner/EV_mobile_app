@@ -15,7 +15,7 @@ const INITIAL_LATITUDE = 65.0800
 const INITIAL_LONGITUDE = 25.4800
 const INITIAL_LATITUDE_DELTA = 0.0922
 const INITIAL_LONGITUDE_DELTA = 0.0421
-const RADIUS = 3500
+const RADIUS = 50000
 
 
 
@@ -27,6 +27,7 @@ export default ChargingStation = ({ navigation }) => {
     const [data, setData] = useState([])
     const [dataClose, setDataClose] = useState([])
     const [showCloseData, setShowCloseData] = useState(false)
+    const [scrollIndex,setScrollIndex]=useState("")
 
     //UseRef
     const map = useRef(null);
@@ -43,22 +44,7 @@ export default ChargingStation = ({ navigation }) => {
         setIsLoading(false)
     }, [])
 
-    // tarkastellaan lähimpiä asemia
-    useEffect(() => {
-        const arr = []
-        if (isLoading !== true && isLoadingData !== true) {
-            data.map((mapData, index) => {
-                if (haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude) < RADIUS) {
-                    arr.push(mapData)
-                }
-            })
-            if (arr.length === 0) {
-                setShowCloseData(false)
-            }
-            setDataClose(arr)
-        }
 
-    }, [isLoadingData, isLoading, latitude, longitude])
 
     //Käyttäjän locatio haetaan
     async function userLocationData() {
@@ -119,7 +105,18 @@ export default ChargingStation = ({ navigation }) => {
             console.log(e)
         }
     }
-
+    function getClosestData(){
+        const arr = []
+        
+            data.map((mapData, index) => {
+                if (haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude) < RADIUS) {
+                    arr.push(mapData)
+                }
+            })
+            setDataClose(arr)
+            return arr
+        
+    }
 
     // liikutaan näytöllä niin päivittää sijainnin
     function regionChange(region) {
@@ -154,18 +151,42 @@ export default ChargingStation = ({ navigation }) => {
         })
         setData(arr)
         map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
-        scrollViewRef?.current?.scrollTo({ x: 0, y: 0, animated: false })
 
     }
 
     //buttonille millä saadaa lähimmät asemat slideriin
     function handleCloseDataPress() {
-        if (dataClose.length === 0) {
-            Alert.alert("Info", "There are no charging stations near you.")
+        const arr=getClosestData()
+        if (arr.length === 0) {
+            Alert.alert("Info", "There are no charging stations in that area.")
         } else {
             setShowCloseData(true)
             handleOpenPress()
+            setScrollIndex(0)
+
         }
+    }
+   
+    function handleScroll(event){
+        //console.log('currentScreenIndex', parseInt(event.nativeEvent.contentOffset.x/320));
+        if(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320))!==scrollIndex){
+            setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320)))
+            const arr = []
+            const item=dataClose[Math.floor(parseInt(event.nativeEvent.contentOffset.x/320))]
+            data.map(data => {
+                if (data.id === item.id) {
+                    arr.push({ ...data, selected: true })
+                } else {
+                    arr.push({ ...data, selected: false })
+                }
+            })
+            setData(arr)
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
+    
+            console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320)))
+            console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x)))
+        }
+        
     }
     //BottomSheetille snapPoint
     const snapPoints = useMemo(() => ["35%"], []);
@@ -181,7 +202,7 @@ export default ChargingStation = ({ navigation }) => {
     }, []);
 
     //console.log(data, "useState")
-    console.log(dataClose, "dataClose useState")
+    //console.log(dataClose, "dataClose useState")
     //console.log(data,"kaikki data")
     if (isLoading && isLoadingData) {
         return <View style={CharginStationsStyle.container}><Text>Please wait a moment</Text></View>
@@ -208,7 +229,7 @@ export default ChargingStation = ({ navigation }) => {
                     >
                         {data.map((marker, index) =>
                             <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}>
-                                <FontAwesome5 name="map-marker-alt" size={24} color={marker.selected ? "orange" : "red"} />
+                                <FontAwesome5 name="map-marker-alt" size={marker.selected? 1.25 * 24 : 24} color={marker.selected ? "orange" : "red"} />
                             </Marker>)}
                         <Circle
                             center={{ latitude: latitude, longitude: longitude }}
@@ -243,6 +264,8 @@ export default ChargingStation = ({ navigation }) => {
                                 contentContainerStyle={{ paddingHorizontal: 20 }}
                                 pagingEnabled
                                 decelerationRate={"fast"}
+                                scrollEventThrottle={16}
+                                onScroll={(e)=>handleScroll(e)}
 
 
                             >
