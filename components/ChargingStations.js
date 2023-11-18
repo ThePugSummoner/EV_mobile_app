@@ -34,11 +34,11 @@ export default ChargingStation = ({ navigation }) => {
     const bottomSheetRef = useRef(null);
     const scrollViewRef = useRef(null)
 
-
+//useEffect latausasemille
     useEffect(() => {
         charginStationData()
     }, [])
-
+//UseEffect käyttäjän locaatiolle
     useEffect(() => {
         userLocationData()
         setIsLoading(false)
@@ -105,6 +105,8 @@ export default ChargingStation = ({ navigation }) => {
             console.log(e)
         }
     }
+
+    //Lähimmät latausasemat
     function getClosestData(){
         const arr = []
         
@@ -166,7 +168,7 @@ export default ChargingStation = ({ navigation }) => {
 
         }
     }
-   
+   //ScrollView scrollin tarkkailu
     function handleScroll(event){
         //console.log('currentScreenIndex', parseInt(event.nativeEvent.contentOffset.x/320));
         if(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320))!==scrollIndex){
