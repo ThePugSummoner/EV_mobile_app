@@ -1,7 +1,7 @@
 import { Button, Text, View } from 'react-native';
 import { ElectricityPriceStyle } from '../style/style';
 import { useEffect, useState } from 'react';
-import { child, push, ref, remove, update, onValue, set } from '@firebase/database';
+import { child, push, ref, remove, update, onValue, set, get } from '@firebase/database';
 import { db, PRICES_REF } from '../firebase/Config';
 
 const LATEST_PRICES_ENDPOINT = 'https://api.porssisahko.net/v1/latest-prices.json';
@@ -31,20 +31,31 @@ export default ElectricPrice = ({ navigation }) => {
 
     // 48 tunnin sähköhintojen haku
     useEffect(() => {  
-       
-        const priceRef = ref(db, PRICES_REF);
-        onValue(priceRef, (snapshot) => {
-            const data = snapshot.val() ? snapshot.val() : {};
-            const dbPrice = {...data};
+       console.log("useEffect")
+        const dbRef = ref(db, PRICES_REF);
+        let data = {};
+        get(dbRef).then((snapshot) => {  
+            if (snapshot.exists()) {
+               data = snapshot.val();  
+            } else {    
+               // data = {}
+                console.log("No data available");  }
+            }).catch((error) => { 
+                console.error(error);
+            });
+        // onValue(priceRef, (snapshot) => {
+        //     const data = snapshot.val() ? snapshot.val() : {};
+             const dbPrice = {...data};
            //console.log(Object.keys(dbPrice).length,'Haku db:stä');
-           //console.log(dbPrice)
+           console.log(dbPrice, 'haku db:stä')
             //rajapintahaku jos db on tyhjä
             if (Object.keys(dbPrice).length === 0 && isLoading) {
               
                 (async () => {
+                   
+                   try {
                     const arr = [];
                     const response = await fetch(LATEST_PRICES_ENDPOINT);
-                   try {
                     const { prices } = await response.json();
                     //console.log(prices, 'kokodata');
                     for (let i = 0; i < prices.length; i++) {
@@ -72,7 +83,7 @@ export default ElectricPrice = ({ navigation }) => {
                 console.log("else")
              }
             
-        });
+       // });
        
        
 
