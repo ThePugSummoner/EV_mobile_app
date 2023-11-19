@@ -102,8 +102,22 @@ const ElectricityPriceStyle = StyleSheet.create({
         textAlign: 'center',
         marginTop: 30,
     }, headline2:{  
-        fontSize:20,
-    },
+        fontSize:30,
+        textAlign: 'center',
+        margin: 10,
+        color: '#ffffffff'
+    
+    }, headline3:{  
+        fontSize:30,
+        textAlign: 'center',
+        margin: 15,
+        color: '#ffffffff',
+    }, button:{
+       
+    },bghourprice:{
+        backgroundColor: '#1ED1B1',
+       // borderRadius: 15,
+    }
 })
 
 const MainPageStyle = StyleSheet.create({
