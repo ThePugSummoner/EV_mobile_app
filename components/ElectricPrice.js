@@ -33,18 +33,10 @@ export default ElectricPrice = ({ navigation }) => {
     useEffect(() => {  
        console.log("useEffect")
         const dbRef = ref(db, PRICES_REF);
-        let data = {};
         get(dbRef).then((snapshot) => {  
-            if (snapshot.exists()) {
-               data = snapshot.val();  
-            } else {    
-               // data = {}
-                console.log("No data available");  }
-            }).catch((error) => { 
-                console.error(error);
-            });
+           
         // onValue(priceRef, (snapshot) => {
-        //     const data = snapshot.val() ? snapshot.val() : {};
+            const data = snapshot.val() ? snapshot.val() : {};
              const dbPrice = {...data};
            //console.log(Object.keys(dbPrice).length,'Haku db:stä');
            console.log(dbPrice, 'haku db:stä')
@@ -83,7 +75,7 @@ export default ElectricPrice = ({ navigation }) => {
                 console.log("else")
              }
             
-       // });
+        });
        
        
 
