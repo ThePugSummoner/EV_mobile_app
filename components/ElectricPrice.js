@@ -108,11 +108,13 @@ export default ElectricPrice = ({ navigation }) => {
     return (
         <View style = {ElectricityPriceStyle.container}>
             
-            <Text style={ElectricityPriceStyle.headline}>{hourPrice} snt/kWh</Text>
+            <Text style={ElectricityPriceStyle.headline}>Sähkönhinta</Text>
 
             <View style = {ElectricityPriceStyle.container2}>
-
-                <Text style={ElectricityPriceStyle.headline2}>Testi</Text>
+                <Text style={ElectricityPriceStyle.headline2}>Tuntihinta</Text>
+                <View style = {ElectricityPriceStyle.bghourprice}>
+                <Text style={ElectricityPriceStyle.headline3}>{hourPrice} snt/kWh</Text>
+                </View>
 
             </View>
         <View>
