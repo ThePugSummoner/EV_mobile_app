@@ -171,10 +171,10 @@ export default ChargingStation = ({ navigation }) => {
    //ScrollView scrollin tarkkailu
     function handleScroll(event){
         //console.log('currentScreenIndex', parseInt(event.nativeEvent.contentOffset.x/320));
-        if(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320))!==scrollIndex){
-            setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320)))
+
+        if(scrollIndex===dataClose.length-2 ){
             const arr = []
-            const item=dataClose[Math.floor(parseInt(event.nativeEvent.contentOffset.x/320))]
+            const item=dataClose[dataClose.length-1]
             data.map(data => {
                 if (data.id === item.id) {
                     arr.push({ ...data, selected: true })
@@ -183,10 +183,32 @@ export default ChargingStation = ({ navigation }) => {
                 }
             })
             setData(arr)
+            setScrollIndex(dataClose.length-1)
             map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
     
-            console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320)))
+        }else if(parseInt(event.nativeEvent.contentOffset.x % 320)!==0){
+          return  console.log(parseInt(event.nativeEvent.contentOffset.x % 320))
+        }
+        console.log(scrollIndex,"scroll index ennen if")
+        console.log(Math.ceil(parseInt(event.nativeEvent.contentOffset.x/320)),"ennen if")
+        if(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320))!==scrollIndex){
+            
+            const arr = []
+            const item=dataClose[parseInt(event.nativeEvent.contentOffset.x/320)]
+            data.map(data => {
+                if (data.id === item.id) {
+                    arr.push({ ...data, selected: true })
+                } else {
+                    arr.push({ ...data, selected: false })
+                }
+            })
+            setData(arr)
+            setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x/320)))
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
+    
+            console.log(parseInt(event.nativeEvent.contentOffset.x/320))
             console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x)))
+            console.log(scrollIndex,"Iffissä scroll index")
         }
         
     }
