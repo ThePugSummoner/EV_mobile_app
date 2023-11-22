@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { HomeStyle, MainPageStyle, ProfileStyle } from '../style/style';
-//import BatteryGauge from 'react-battery-gauge';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { CircularProgression } from './CircularProgress';
 import { getUserData, logOut } from './Auth';
 
 
@@ -48,16 +48,8 @@ export default function MainPage ({ route, navigation }) {
                 />
             </View>
             <View style={[MainPageStyle.battery, {marginBottom: 0}]}>
-                {/*<BatteryGauge
-                value={40} 
-                maxValue={100}
-                orientation= 'vertical'
-                size={200}
-                animated= 'false'
-                charging= 'false'
-                style={MainPageStyle.batteryGauge}                
-                /> */}
-                <Text style={MainPageStyle.standInText}>BATTERY</Text>
+                {/*<Text style={MainPageStyle.standInText}>BATTERY</Text> */}
+                <CircularProgression />
             <Text></Text>
             { userData && (
               <>

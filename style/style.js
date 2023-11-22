@@ -183,6 +183,32 @@ const MainPageStyle = StyleSheet.create({
     /*toggleButtonsSingular: {
         transform: [{rotate: '90deg'}],
     } */
+    animatedText: {
+        color: "#37306B",
+        fontSize: 24,
+        fontWeight: 'bold',
+        position: 'absolute',
+    },
+    circleProgress: {
+        fontWeight: '200',
+        color: 'black',
+    },
+    circleTitle: {
+        textShadowColor: "#009600",
+        textShadowRadius: 1,
+        textShadowOffset: {width: 0, height: 1}
+    },
+    charging: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    chargingText: {
+        fontSize: 20,
+        fontWeight: '400',
+        color: '#31ac00',
+        paddingTop: 10
+    }
+
 })
 
 export {HomeStyle,ProfileStyle,CharginStationsStyle, ePriceStyle, MainPageStyle}
