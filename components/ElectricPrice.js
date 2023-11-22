@@ -1,5 +1,5 @@
 import { Button, Text, View } from 'react-native';
-import { ElectricityPriceStyle } from '../style/style';
+import { ePriceStyle } from '../style/style';
 import { useEffect, useState } from 'react';
 import { child, push, ref, remove, update, onValue, set, get } from '@firebase/database';
 import { db, PRICES_REF } from '../firebase/Config';
@@ -110,16 +110,21 @@ export default ElectricPrice = ({ navigation }) => {
   console.log(isLoading)
    //console.log(allPrices,"kaikki hinnat")
     return (
-        <View style = {ElectricityPriceStyle.container}>
+        <View style = {ePriceStyle.container}>
             
-            <Text style={ElectricityPriceStyle.headline}>Sähkönhinta</Text>
+            <Text style={ePriceStyle.headline}>Sähkönhinta</Text>
 
-            <View style = {ElectricityPriceStyle.container2}>
-                <Text style={ElectricityPriceStyle.headline2}>Tuntihinta</Text>
-                <View style = {ElectricityPriceStyle.bghourprice}>
-                <Text style={ElectricityPriceStyle.headline3}>{hourPrice} snt/kWh</Text>
+            <View style = {ePriceStyle.container2}>
+                <Text style={ePriceStyle.headline2}>Tuntihinta</Text>
+
+                <View style = {ePriceStyle.bghourprice}>
+                    <Text style={ePriceStyle.headline3}>{hourPrice} snt/kWh</Text>
                 </View>
-
+            </View>
+            <View style = {ePriceStyle.container3}>
+                <View style = {ePriceStyle.bghourprice2}>
+                    <Text style={ePriceStyle.headline3}>Tuntihinta {hourPrice} snt/kWh</Text>
+                </View>
             </View>
         <View>
             <Button title="Remove" onPress={()=> removePrices()}></Button>
