@@ -92,23 +92,69 @@ buttonText:{
 
 })
 
-const ElectricityPriceStyle = StyleSheet.create({
+const ePriceStyle = StyleSheet.create({
     container:{
         backgroundColor: '#1D1A39',
         flex: 1,
+        
     },
     container2:{
         backgroundColor: '#094F44',
-        row: 3,
+        //row: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     headline:{
         fontSize:30,
         color: '#E5D9B6',
         textAlign: 'center',
         marginTop: 30,
-    }, headline2:{  
-        fontSize:20,
     },
+    headline2:{  
+        fontSize:30,
+        textAlign: 'center',
+        margin: 10,
+        color: '#ffffffff'
+    
+    },
+    headline3:{  
+        fontSize:30,
+        textAlign: 'center',
+        margin: 15,
+        color: '#ffffff',
+    },
+    button:{
+       
+    },
+    bghourprice:{
+        //backgroundColor: '#1ED1B1',
+        //borderRadius: 20,
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').width * 0.6,
+        backgroundColor:'#1ED1B1',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+       
+    },
+    container3:{
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bghourprice2:{
+        //väritestejä
+    //backgroundColor: '#1ED1B1',
+    //borderRadius: 20,
+    borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').width * 0.6,
+        backgroundColor:'#d8c690',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        margin: 10,
+}
 })
 
 const MainPageStyle = StyleSheet.create({
@@ -142,6 +188,32 @@ const MainPageStyle = StyleSheet.create({
     /*toggleButtonsSingular: {
         transform: [{rotate: '90deg'}],
     } */
+    animatedText: {
+        color: "#37306B",
+        fontSize: 24,
+        fontWeight: 'bold',
+        position: 'absolute',
+    },
+    circleProgress: {
+        fontWeight: '200',
+        color: 'black',
+    },
+    circleTitle: {
+        textShadowColor: "#009600",
+        textShadowRadius: 1,
+        textShadowOffset: {width: 0, height: 1}
+    },
+    charging: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    chargingText: {
+        fontSize: 20,
+        fontWeight: '400',
+        color: '#31ac00',
+        paddingTop: 10
+    }
+
 })
 
-export {HomeStyle,ProfileStyle,CharginStationsStyle, ElectricityPriceStyle, MainPageStyle}
+export {HomeStyle,ProfileStyle,CharginStationsStyle, ePriceStyle, MainPageStyle}

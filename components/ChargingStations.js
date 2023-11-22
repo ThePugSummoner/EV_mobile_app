@@ -15,7 +15,7 @@ const INITIAL_LATITUDE = 65.0800
 const INITIAL_LONGITUDE = 25.4800
 const INITIAL_LATITUDE_DELTA = 0.0922
 const INITIAL_LONGITUDE_DELTA = 0.0421
-const RADIUS = 3500
+const RADIUS = 50000
 
 
 
@@ -27,38 +27,24 @@ export default ChargingStation = ({ navigation }) => {
     const [data, setData] = useState([])
     const [dataClose, setDataClose] = useState([])
     const [showCloseData, setShowCloseData] = useState(false)
+    const [scrollIndex, setScrollIndex] = useState("")
 
     //UseRef
     const map = useRef(null);
     const bottomSheetRef = useRef(null);
     const scrollViewRef = useRef(null)
 
-
+    //useEffect latausasemille
     useEffect(() => {
         charginStationData()
     }, [])
-
+    //UseEffect käyttäjän locaatiolle
     useEffect(() => {
         userLocationData()
         setIsLoading(false)
     }, [])
 
-    // tarkastellaan lähimpiä asemia
-    useEffect(() => {
-        const arr = []
-        if (isLoading !== true && isLoadingData !== true) {
-            data.map((mapData, index) => {
-                if (haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude) < RADIUS) {
-                    arr.push(mapData)
-                }
-            })
-            if (arr.length === 0) {
-                setShowCloseData(false)
-            }
-            setDataClose(arr)
-        }
 
-    }, [isLoadingData, isLoading, latitude, longitude])
 
     //Käyttäjän locatio haetaan
     async function userLocationData() {
@@ -102,13 +88,13 @@ export default ChargingStation = ({ navigation }) => {
             for (let i = 0; i < answer.length; i++) {
                 arr.push({
                     id: answer[i].id,
-                    name: answer[i].tags.name===undefined ? "Sähköauton latausasema" : answer[i].tags.name,
+                    name: answer[i].tags.name === undefined ? "Sähköauton latausasema" : answer[i].tags.name,
                     latitude: answer[i].lat,
                     longitude: answer[i].lon,
-                    brand:answer[i].tags.brand,
-                    operator:answer[i].tags.operator,
-                    capacity:answer[i].tags.capacity,
-                    socket:answer[i].tags.socket,
+                    brand: answer[i].tags.brand,
+                    operator: answer[i].tags.operator,
+                    capacity: answer[i].tags.capacity,
+                    socket: answer[i].tags.socket,
                     selected: false
                 })
             }
@@ -120,6 +106,19 @@ export default ChargingStation = ({ navigation }) => {
         }
     }
 
+    //Lähimmät latausasemat
+    function getClosestData() {
+        const arr = []
+
+        data.map((mapData, index) => {
+            if (haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude) < RADIUS) {
+                arr.push(mapData)
+            }
+        })
+        setDataClose(arr)
+        return arr
+
+    }
 
     // liikutaan näytöllä niin päivittää sijainnin
     function regionChange(region) {
@@ -154,18 +153,81 @@ export default ChargingStation = ({ navigation }) => {
         })
         setData(arr)
         map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
-        scrollViewRef?.current?.scrollTo({ x: 0, y: 0, animated: false })
 
     }
 
     //buttonille millä saadaa lähimmät asemat slideriin
     function handleCloseDataPress() {
-        if (dataClose.length === 0) {
-            Alert.alert("Info", "There are no charging stations near you.")
+        const arr = getClosestData()
+        if (arr.length === 0) {
+            Alert.alert("Info", "There are no charging stations in that area.")
         } else {
             setShowCloseData(true)
             handleOpenPress()
+            setScrollIndex(0)
+
         }
+    }
+
+    const isCloseToRight = ({ layoutMeasurement, contentOffset, contentSize }) => {
+        const paddingToRight = 20;
+        return layoutMeasurement.width + contentOffset.x >= contentSize.width - paddingToRight;
+    };
+
+    //ScrollView scrollin tarkkailu
+    function handleScroll(event) {
+        //console.log(dataClose.length, "length")
+        //console.log(scrollIndex, "scrollIndex")
+
+        const closeRight=isCloseToRight(event.nativeEvent)
+        const mod = modulo(parseInt(event.nativeEvent.contentOffset.x), 320)
+        if(closeRight===true){
+            const arr = []
+            const item = dataClose[dataClose.length - 1]
+            data.map(data => {
+                if (data.id === item.id) {
+                    arr.push({ ...data, selected: true })
+                } else {
+                    arr.push({ ...data, selected: false })
+                }
+            })
+            setData(arr)
+            setScrollIndex(dataClose.length - 1)
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
+        }else if (mod === false) {
+            return //console.log("modulo false")
+        }
+         if (parseInt(event.nativeEvent.contentOffset.x / 320) !== scrollIndex) {
+
+            const arr = []
+            const item = dataClose[parseInt(event.nativeEvent.contentOffset.x / 320)]
+            data.map(data => {
+                if (data.id === item.id) {
+                    arr.push({ ...data, selected: true })
+                } else {
+                    arr.push({ ...data, selected: false })
+                }
+            })
+            setData(arr)
+            setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
+
+            //console.log(parseInt(event.nativeEvent.contentOffset.x / 320))
+           // console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x)))
+            //console.log(scrollIndex, "Iffissä scroll index")
+        }
+
+    }
+
+  
+    function modulo(number, modulo) {
+        let answer
+        if (number % modulo === 0) {
+            answer = true
+        } else {
+            answer = false
+        }
+        return answer
     }
     //BottomSheetille snapPoint
     const snapPoints = useMemo(() => ["35%"], []);
@@ -176,12 +238,12 @@ export default ChargingStation = ({ navigation }) => {
         console.log("handleSheetChange", index);
         if (index === -1) {
             setShowCloseData(false)
- 
+
         }
     }, []);
 
     //console.log(data, "useState")
-    console.log(dataClose, "dataClose useState")
+    //console.log(dataClose, "dataClose useState")
     //console.log(data,"kaikki data")
     if (isLoading && isLoadingData) {
         return <View style={CharginStationsStyle.container}><Text>Please wait a moment</Text></View>
@@ -208,7 +270,7 @@ export default ChargingStation = ({ navigation }) => {
                     >
                         {data.map((marker, index) =>
                             <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}>
-                                <FontAwesome5 name="map-marker-alt" size={24} color={marker.selected ? "orange" : "red"} />
+                                <FontAwesome5 name="map-marker-alt" size={marker.selected ? 1.25 * 24 : 24} color={marker.selected ? "orange" : "red"} />
                             </Marker>)}
                         <Circle
                             center={{ latitude: latitude, longitude: longitude }}
@@ -234,6 +296,7 @@ export default ChargingStation = ({ navigation }) => {
                             enablePanDownToClose={true}
                             backgroundStyle={{ backgroundColor: '#ffffffff' }}
 
+
                         >
                             <BottomSheetScrollView
                                 ref={scrollViewRef}
@@ -243,6 +306,9 @@ export default ChargingStation = ({ navigation }) => {
                                 contentContainerStyle={{ paddingHorizontal: 20 }}
                                 pagingEnabled
                                 decelerationRate={"fast"}
+                                scrollEventThrottle={16}
+                                onScroll={(e) => handleScroll(e)}
+
 
 
                             >
@@ -253,12 +319,12 @@ export default ChargingStation = ({ navigation }) => {
                                             <View style={{ height: 80, width: 100, borderWidth: 1, justifyContent: "flex-start", alignItems: "center", marginTop: 10, backgroundColor: "#1D1A39", borderRadius: 4 }}>
                                                 <Image style={{ flex: 1 }} source={Logo} resizeMode='contain' />
                                             </View>
-                                            <View style={{flex:1}}>
-                                            <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.name}</Text>
-                                            <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.operator}</Text>
-                                         
+                                            <View style={{ flex: 1 }}>
+                                                <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.name}</Text>
+                                                <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.operator}</Text>
+
                                             </View>
-                                            
+
 
                                         </View>
                                     </Pressable>)}
