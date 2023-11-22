@@ -8,9 +8,9 @@ import { Picker } from '@react-native-picker/picker';
 
 
 const carOptions = [
-  { label: 'Flash EV', value: 'Flash EV', drive: 'rear', totalPower: 150, torque: 250, range: 360, capacity: 64, chargePower: 11, consumption: 17.1},
-  { label: 'Lightning EV', value: 'Lightning EV', drive: 'dual motor AWD', totalPower: 340, torque: 510, range: 580, capacity: 75, chargePower: 11, consumption: 19},
-  { label: 'Ford Fusion', value: 'Ford Fusion', drive: 'rear' },
+  { label: 'Flash EV', value: 'Flash EV', drive: 'rear', totalPower: 150, torque: 250, range: 374, capacity: 64, chargePower: 6.6, consumption: 17.1},
+  { label: 'Lightning EV', value: 'Lightning EV', drive: 'dual motor AWD', totalPower: 340, torque: 510, range: 400, capacity: 75, chargePower: 11, consumption: 18.7},
+  { label: 'Bolt EV', value: 'Bolt EV', drive: 'rear',  totalPower: 250, torque: 320, range: 384, capacity: 70, chargePower: 11, consumption: 18.2},
 
 ];
 

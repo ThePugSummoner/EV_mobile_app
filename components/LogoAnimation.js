@@ -42,18 +42,18 @@ const LogoAnimation = ({ navigation }) => {
           transform: [{ scale: buttonFadeAnim }],
         }}
       > 
-      {hasUserName ? 
+      
             <TouchableOpacity
             style={{ backgroundColor: '#cbb26a', padding: 10, borderRadius: 5, alignItems: 'center' }}
             onPress={() => navigation.navigate('Login', { user: userName })}
             >
             <Text style={{ fontSize: 20, color: '#1D1A39' }}>LOGIN</Text>
             </TouchableOpacity>
-        :
+            <Text></Text>
             <TouchableOpacity style={{backgroundColor: '#cbb26a', padding: 10, borderRadius: 5, alignItems: 'center'}} onPress={() => navigation.navigate('Register')}>
                 <Text style={{fontSize: 20, color: '#1D1A39'}}>Registration</Text>
             </TouchableOpacity>
-        }
+        
       </Animated.View>
     </Animated.View>
   );

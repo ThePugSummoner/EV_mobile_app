@@ -52,6 +52,11 @@ const HomeStyle = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         color: '#E5D9B6'
+    },
+    text: {
+        color: '#cbb26a',
+        fontSize: 20,
+
     }
 }) 
 

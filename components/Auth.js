@@ -62,13 +62,10 @@ export const setTopLevelNavigator = (navigatorRef) => {
     navigationRef.current = navigatorRef;
   };
 
-export const logOut = async() => {
+export const logOut = async(navigationRef) => {
     try {
+        const auth = getAuth();
         await signOut(auth)
-        navigationRef.current?.reset({
-            index: 0,
-            routes: [{ name: 'Login' }],
-          });
     }
     catch (error) {
         console.log("Logout error. ", error.message)

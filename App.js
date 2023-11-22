@@ -19,8 +19,9 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   
+ 
   const [showTabs, setShowTabs] = useState(true)
-
+  
   return (
     <NavigationContainer ref={setTopLevelNavigator}>
       <Tab.Navigator
@@ -60,29 +61,26 @@ export default function App() {
           tabBarActiveTintColor: 'khaki',
           tabBarInactiveTintColor: 'lightyellow'
         })}
-      > 
+      >
       {showTabs && (
         <>
           <Tab.Screen name="Home" component={Home} options={{tabBarStyle: {display: 'none'}, headerShown: false}}/>
           <Tab.Screen name="Register" component={Register} options={{tabBarStyle: {display: 'none'}, headerShown: false}}/>
           <Tab.Screen name="Login" component={Login} options={{tabBarStyle: {display: 'none'}, headerShown: false}}/>
         </>
-        )}
+      )}
         <Tab.Screen name="Profile" component={CustomStackNavigator}  listeners={{
             focus: () => {
-              setShowTabs(false); 
-            },
-            /* blur: () => {
               setShowTabs(true); 
-            }, */
+            },
           }}
-          options={{ headerShown: false }}
+          options={{tabBarStyle: {display: 'none'}, headerShown: false }}
           
           />
         <Tab.Screen name="Main Page" component={Mainpage} options={{headerShown:false}} listeners={{
             focus: () => {
               setShowTabs(false); 
-            }
+            },
           }}/>
         <Tab.Screen name="Charging Stations" component={Chargingstations}  listeners={{
             focus: () => {
@@ -90,7 +88,7 @@ export default function App() {
             },
            
           }}/>
-          <Tab.Screen name="Electricity Price" component={ElectricPrice}  listeners={{
+        <Tab.Screen name="Electricity Price" component={ElectricPrice}  listeners={{
             focus: () => {
               setShowTabs(false); 
             },
@@ -98,5 +96,6 @@ export default function App() {
           }}/>
       </Tab.Navigator>
     </NavigationContainer>
+
   );
 }
