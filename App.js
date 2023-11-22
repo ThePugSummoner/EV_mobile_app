@@ -56,9 +56,9 @@ export default function App() {
             return <MaterialCommunityIcons name={iconName} size={size} color={color} />
           
           },
-          tabBarStyle: { backgroundColor: '#22203a' },
-          tabBarActiveTintColor: 'khaki',
-          tabBarInactiveTintColor: 'lightyellow'
+          tabBarStyle: { backgroundColor: '#fff3be' }, // #22203a, #fff3be
+          tabBarActiveTintColor: 'midnightblue', // midnightblue, khaki
+          tabBarInactiveTintColor: 'darkgoldenrod' // darkgoldenrod, lightyellow
         })}
       > 
       {showTabs && (
