@@ -3,6 +3,7 @@ import { ePriceStyle } from '../style/style';
 import { useEffect, useState } from 'react';
 import { child, push, ref, remove, update, onValue, set, get } from '@firebase/database';
 import { db, PRICES_REF } from '../firebase/Config';
+import { useIsFocused } from '@react-navigation/native';
 
 const LATEST_PRICES_ENDPOINT = 'https://api.porssisahko.net/v1/latest-prices.json';
 
@@ -11,8 +12,32 @@ export default ElectricPrice = ({ navigation }) => {
     const [hourPrice, setHourPrice] = useState();
     const [allPrices,setAllPrices] = useState();
     const [isLoading,setIsloading]=useState(true)
+    const isFocused = useIsFocused();
 
-    //tuntihinta sähkölle
+     useEffect(() => {
+        
+        if (isFocused) {
+            const newDate = new Date();
+            const newHour = addZero(newDate.getHours());
+            const newMinute = addZero(newDate.getMinutes());
+            const hourAndMinute = `${newHour}${newMinute}`;
+            console.log(hourAndMinute, 'tunti ja minuutti');
+
+            if(1430 <= Number(hourAndMinute)){
+                console.log('Hour ja minutes ovat isompia kuin 1430');
+
+            }
+        }
+     },[isFocused]); 
+
+     function addZero(i) {
+        if (i < 10) {
+          i = `0${i}`
+        }
+        return i;
+    }
+
+    //tuntihinta sähkölle - Hourly price for electricity
     useEffect(() => {
         const dateAndTimeNow = new Date();
         const date = dateAndTimeNow.toISOString().split('T')[0];
@@ -37,9 +62,9 @@ export default ElectricPrice = ({ navigation }) => {
            
         // onValue(priceRef, (snapshot) => {
             const data = snapshot.val() ? snapshot.val() : {};
-             const dbPrice = {...data};
+            const dbPrice = {...data};
            //console.log(Object.keys(dbPrice).length,'Haku db:stä');
-           console.log(dbPrice, 'haku db:stä')
+            console.log(dbPrice, 'haku db:stä')
             //rajapintahaku jos db on tyhjä
             if (Object.keys(dbPrice).length === 0 && isLoading) {
               
