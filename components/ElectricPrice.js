@@ -1,9 +1,10 @@
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, ScrollView } from 'react-native';
 import { ePriceStyle } from '../style/style';
 import { useEffect, useState } from 'react';
 import { child, push, ref, remove, update, onValue, set, get } from '@firebase/database';
 import { db, PRICES_REF } from '../firebase/Config';
 import { useIsFocused } from '@react-navigation/native';
+//import { ScrollView } from 'react-native-gesture-handler';
 
 const LATEST_PRICES_ENDPOINT = 'https://api.porssisahko.net/v1/latest-prices.json';
 
@@ -135,31 +136,41 @@ export default ElectricPrice = ({ navigation }) => {
   console.log(isLoading)
    //console.log(allPrices,"kaikki hinnat")
     return (
+        <>
+         <ScrollView>
         <View style = {ePriceStyle.container}>
-            
-            <Text style={ePriceStyle.headline}>Sähkönhinta</Text>
+           
+            <Text style={ePriceStyle.headline}>Electricity price</Text>
 
             <View style = {ePriceStyle.container2}>
-                <Text style={ePriceStyle.headline2}>Tuntihinta</Text>
-
+                {/* <Text style={ePriceStyle.headline2}>Tuntihinta</Text> */}
                 <View style = {ePriceStyle.bghourprice}>
+                    <Text style={ePriceStyle.headline2}>Hourly price:</Text>
                     <Text style={ePriceStyle.headline3}>{hourPrice} snt/kWh</Text>
                 </View>
             </View>
-            {/* <View style = {ePriceStyle.container3}>
+            <View style = {ePriceStyle.container3}>
                 <View style = {ePriceStyle.bghourprice2}>
-                    <Text style={ePriceStyle.headline3}>Tuntihinta {hourPrice} snt/kWh</Text>
+                    <Text style={ePriceStyle.headline3}>Hourly price: {hourPrice} snt/kWh</Text>
                 </View>
-            </View> */}
+            </View>
+           
             <View style={ePriceStyle.testi}>
-                <View style={ePriceStyle.square}></View>
-                <View style={ePriceStyle.square2}></View>
+                <View style={ePriceStyle.square}>
+                    <Text style={ePriceStyle.headline4}>Today</Text>
+                </View>
+                <View style={ePriceStyle.square2}>
+                <Text style={ePriceStyle.headline4}>Tommorow</Text>
+                </View>
             </View>
         <View>
             <Button title="Remove" onPress={()=> removePrices()}></Button>
           
         </View>
-        </View>
 
+       
+        </View>
+        </ScrollView>
+        </>
     );
 }

@@ -95,11 +95,10 @@ buttonText:{
 const ePriceStyle = StyleSheet.create({
     container:{
         backgroundColor: '#1D1A39',
-        flex: 1,
-        
+        flex: 1, 
     },
     container2:{
-        backgroundColor: '#094F44',
+        //backgroundColor: '#094F44',
         //row: 3,
         justifyContent: 'center',
         alignItems: 'center',
@@ -109,13 +108,14 @@ const ePriceStyle = StyleSheet.create({
         color: '#E5D9B6',
         textAlign: 'center',
         marginTop: 30,
+        marginBottom: 20,
     },
     headline2:{  
-        fontSize:30,
+        fontSize:25,
         textAlign: 'center',
         margin: 10,
-        color: '#ffffffff'
-    
+        marginTop: 20,
+        color: '#ffffffff',
     },
     headline3:{  
         fontSize:30,
@@ -132,10 +132,12 @@ const ePriceStyle = StyleSheet.create({
         borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
         width: Dimensions.get('window').width * 0.6,
         height: Dimensions.get('window').width * 0.6,
-        backgroundColor:'#1ED1B1',
+        backgroundColor:'#094F44',//#094F44
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
+        borderWidth: 3,
+        borderColor:'#d8c690'//'#1ED1B1',
        
     },
     container3:{
@@ -154,27 +156,39 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         margin: 10,
+        borderWidth: 3,
+    borderColor:'#be9e44',
 }, testi:{
     margin: 20,
     marginTop: 30,
     flex: 1,
     flexDirection:'row',
+    justifyContent: 'space-evenly',
+   
 }, square: {
-    height: Dimensions.get('window').width * 0.4,
-    width: Dimensions.get('window').width * 0.4,
+    height: Dimensions.get('window').width * 0.45,
+    width: Dimensions.get('window').width * 0.45,
     margin: 5,
     backgroundColor: '#1ED1B1',  
-    borderRadius: 4,      
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor:'#be9e44',
+        
   }, square2: {
-    height: Dimensions.get('window').width * 0.4,
-    width: Dimensions.get('window').width * 0.4, 
+    height: Dimensions.get('window').width * 0.45,
+    width: Dimensions.get('window').width * 0.45, 
     margin: 5,
     backgroundColor: '#d8c690', 
-    borderRadius: 4,
-    borderWidth: 20,
-    borderColor:'#ffffff'
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor:'#be9e44',
           
-  },
+  }, headline4:{  
+    fontSize:20,
+    textAlign: 'center',
+    margin: 10,
+    color: '#ffffff',
+    },
 
 })
 
