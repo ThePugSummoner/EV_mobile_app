@@ -121,10 +121,14 @@ export default ElectricPrice = ({ navigation }) => {
                     <Text style={ePriceStyle.headline3}>{hourPrice} snt/kWh</Text>
                 </View>
             </View>
-            <View style = {ePriceStyle.container3}>
+            {/* <View style = {ePriceStyle.container3}>
                 <View style = {ePriceStyle.bghourprice2}>
                     <Text style={ePriceStyle.headline3}>Tuntihinta {hourPrice} snt/kWh</Text>
                 </View>
+            </View> */}
+            <View style={ePriceStyle.testi}>
+                <View style={ePriceStyle.square}></View>
+                <View style={ePriceStyle.square2}></View>
             </View>
         <View>
             <Button title="Remove" onPress={()=> removePrices()}></Button>

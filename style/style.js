@@ -149,7 +149,28 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         margin: 10,
-}
+}, testi:{
+    margin: 20,
+    marginTop: 30,
+    flex: 1,
+    flexDirection:'row',
+}, square: {
+    height: Dimensions.get('window').width * 0.4,
+    width: Dimensions.get('window').width * 0.4,
+    margin: 5,
+    backgroundColor: '#1ED1B1',  
+    borderRadius: 4,      
+  }, square2: {
+    height: Dimensions.get('window').width * 0.4,
+    width: Dimensions.get('window').width * 0.4, 
+    margin: 5,
+    backgroundColor: '#d8c690', 
+    borderRadius: 4,
+    borderWidth: 20,
+    borderColor:'#ffffff'
+          
+  },
+
 })
 
 const MainPageStyle = StyleSheet.create({
