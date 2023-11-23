@@ -26,26 +26,60 @@ export default function MainPage ({ route, navigation }) {
       fetchData();
     }, [userUid]);
 
-    const handleLogout = () => {
+    /* const handleLogout = () => {
+     
         logOut()
-        /* navigation.navigate('Profile') */
-    }
+        navigation.navigate("Login")
+    } */
 
+    let componentToShow;
+
+    // Check if userData and userData.car exist before accessing their properties
+    if (userData && userData.car) {
+        switch (userData.car.value) {
+        case 'Flash EV':
+            componentToShow = (
+            <Image
+                source={require('../images/CarTransparent.png')}
+                style={{ width: 330, height: 230, resizeMode: 'contain' }}
+            />
+            );
+            break;
+        case 'Lightning EV':
+            componentToShow = (
+            <Image
+                source={require('../images/CarEV.png')}
+                style={{ width: 330, height: 230, resizeMode: 'contain' }}
+            />
+            );
+            break;
+        case 'Bolt EV':
+            componentToShow = <Image
+            source={require('../images/VOlterraBoltEV2.png')}
+            style={{ width: 330, height: 230, resizeMode: 'contain' }}
+            />
+            break;
+        default:
+            componentToShow = null;
+        }
+    } else {
+        // Handle the case where userData or userData.car is null or undefined
+        componentToShow = null;
+    }
     
     return (
         <View style={MainPageStyle.container}>
           {userData && (
             <View style={[MainPageStyle.header, {paddingTop: 50}]}>
               <Text style={MainPageStyle.standInText}>Welcome, {userData.name}!</Text>
-              <TouchableOpacity style={ProfileStyle.button} onPress={handleLogout}>
-                    <MaterialCommunityIcons name="logout" size={20} color="#b38c1a" />
-                    <Text style={ProfileStyle.buttonText}>Log Out</Text>
-            </TouchableOpacity>
+              <Text style={MainPageStyle.standInText}>{userData.car.value}</Text>
+            
             </View> )}
             <View style={MainPageStyle.carImage}>
-                <Image source={require('../images/CarTransparent.png')} 
+                {/* <Image source={require('../images/CarTransparent.png')} 
                     style={{width: 330, height: 230, resizeMode: 'contain'}}
-                />
+                /> */}
+                {componentToShow}
             </View>
             <View style={[MainPageStyle.battery, {marginBottom: 0}]}>
                 {/*<Text style={MainPageStyle.standInText}>BATTERY</Text> */}
@@ -72,9 +106,9 @@ export default function MainPage ({ route, navigation }) {
                     value={toggleValueLock}
                     onPress={() => setToggleValueLock(console.log("Car doors unlocked/locked"))}
                     thumbButton={{ 
-                        width: 60, 
-                        height: 60, 
-                        radius: 30, 
+                        width: 50, 
+                        height: 50, 
+                        radius: 25, 
                         activeBackgroundColor: "#b38c1a",
                         inActiveBackgroundColor: "#cbb26a",
                     }}
@@ -99,9 +133,9 @@ export default function MainPage ({ route, navigation }) {
                     value={toggleValuePower}
                     onPress={() => setToggleValuePower(console.log("Car turned on/off"))}
                     thumbButton={{ 
-                        width: 60, 
-                        height: 60, 
-                        radius: 30, 
+                        width: 50, 
+                        height: 50, 
+                        radius: 25, 
                         activeBackgroundColor: "#b38c1a",
                         inActiveBackgroundColor: "#cbb26a",
                     }}
@@ -126,9 +160,9 @@ export default function MainPage ({ route, navigation }) {
                     value={toggleValueAirConditioner}
                     onPress={() => setToggleValueAirConditioner(console.log("Air conditioner is on/off"))}
                     thumbButton={{ 
-                        width: 60, 
-                        height: 60, 
-                        radius: 30, 
+                        width: 50, 
+                        height: 50, 
+                        radius: 25, 
                         activeBackgroundColor: "#b38c1a",
                         inActiveBackgroundColor: "#cbb26a",
                     }}

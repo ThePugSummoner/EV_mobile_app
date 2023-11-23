@@ -19,7 +19,7 @@ export default function Login ({ navigation }) {
         Alert.alert('Password is required!')
       }
       else {
-        await signIn(email, password)
+        /* await signIn(email, password) */
           try {
             const loginSuccess = await signIn(email, password);
             if (loginSuccess) {

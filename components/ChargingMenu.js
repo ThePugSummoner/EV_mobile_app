@@ -2,10 +2,10 @@ import { Text } from "react-native"
 
 
 
-function CharginMenu(){
+function ChargingMenu(){
     return(
         
         <Text>HOI Charging Menu</Text>
     )
 }
-export default CharginMenu
+export default ChargingMenu

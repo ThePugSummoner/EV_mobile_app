@@ -9,19 +9,18 @@ import React, { useEffect, useState } from 'react';
 
 export default Profile = ({ route, navigation }) => {
 
-    /* const user = getAuth().currentUser
-    console.log(user) */
-    /* const [userData, setUserData] = useState(null); */
+  const user = getAuth().currentUser
+  console.log(user)
+  const [userData, setUserData] = useState(null);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const user = await getUserData(); // Assuming getUserData returns a Promise
+        const user = await getUserData();
         setUserData(user);
         console.log(userData)
       } catch (error) {
         console.error('Error fetching user data:', error.message);
-        // Handle the error as needed
       }
     };
 
@@ -31,19 +30,19 @@ export default Profile = ({ route, navigation }) => {
     const handleLogout = () => {
         logOut()
         navigation.navigate('Home')
-      } */
+      }
 
     return (
         <View style={ProfileStyle.container}>
             <View style={ProfileStyle.avatar}>
                 <MaterialCommunityIcons name="account-box" size={100} color="black" />
-                {/* {userData && (
+                {userData && (
                     <>
                     <Text style={ProfileStyle.avatarText}>Welcome, {userData.name}</Text>
                     <Text style={ProfileStyle.avatarText}>Your car is: {userData.car.value}</Text>
                     </>
                     
-                )} */}
+                )}
                 
             </View>
             <View style={{ flex: 4 }}>
@@ -57,10 +56,10 @@ export default Profile = ({ route, navigation }) => {
 
                 <TouchableOpacity 
                 style={ProfileStyle.button}
-                onPress={()=>navigation.navigate("Car Info")}
+                onPress={()=>navigation.navigate('Main Page', { userUid: user.uid })}
                 >
                     <MaterialCommunityIcons name="car-sports" size={35} color="black" />
-                    <Text style={ProfileStyle.buttonText}>Car info</Text>
+                    <Text style={ProfileStyle.buttonText}>Remote Control</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
@@ -71,10 +70,10 @@ export default Profile = ({ route, navigation }) => {
                     <Text style={ProfileStyle.buttonText}>Charging menu</Text>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity style={ProfileStyle.button} onPress={handleLogout}>
+                <TouchableOpacity style={ProfileStyle.button} onPress={handleLogout}>
                     <MaterialCommunityIcons name="logout" size={35} color="black" />
                     <Text style={ProfileStyle.buttonText}>Log Out</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
             </View>
         </View>
     )
