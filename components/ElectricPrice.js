@@ -51,6 +51,8 @@ function dateTime(){
 
 
 
+
+
     //tuntihinta sähkölle - Hourly price for electricity
     useEffect(() => {
         const dateAndTimeNow = new Date();
