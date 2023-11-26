@@ -20,7 +20,7 @@ export default ElectricPrice = ({ navigation }) => {
         if (isFocused) {
             const time=dateTime()
         
-            if("19:30" < time){
+            if("14:30" < time){
                 console.log(`${time} on isompi kuin 14:30`);
 
             }else{
