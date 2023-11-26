@@ -18,18 +18,18 @@ export default ElectricPrice = ({ navigation }) => {
      useEffect(() => {
         
         if (isFocused) {
-            const newDate = new Date();
-            const newHour = addZero(newDate.getHours());
-            const newMinute = addZero(newDate.getMinutes());
-            const hourAndMinute = `${newHour}${newMinute}`;
-            console.log(hourAndMinute, 'tunti ja minuutti');
+            const time=dateTime()
+        
+            if("19:30" < time){
+                console.log(`${time} on isompi kuin 14:30`);
 
-            if(1430 <= Number(hourAndMinute)){
-                console.log('Hour ja minutes ovat isompia kuin 1430');
-
+            }else{
+                console.log(`${time} on pienempi 14:30`)
             }
         }
      },[isFocused]); 
+
+
 
      function addZero(i) {
         if (i < 10) {
@@ -37,6 +37,19 @@ export default ElectricPrice = ({ navigation }) => {
         }
         return i;
     }
+
+
+function dateTime(){
+    const newDate = new Date();
+    const newHour = addZero(newDate.getHours());
+    const newMinute = addZero(newDate.getMinutes());
+    const hourAndMinute = `${newHour}:${newMinute}`;
+    console.log(hourAndMinute, 'tunti ja minuutti');
+    return hourAndMinute
+}
+
+
+
 
     //tuntihinta sähkölle - Hourly price for electricity
     useEffect(() => {
@@ -65,7 +78,7 @@ export default ElectricPrice = ({ navigation }) => {
             const data = snapshot.val() ? snapshot.val() : {};
             const dbPrice = {...data};
            //console.log(Object.keys(dbPrice).length,'Haku db:stä');
-            console.log(dbPrice, 'haku db:stä')
+            //console.log(dbPrice, 'haku db:stä')
             //rajapintahaku jos db on tyhjä
             if (Object.keys(dbPrice).length === 0 && isLoading) {
               
