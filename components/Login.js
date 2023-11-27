@@ -32,7 +32,6 @@ export default function Login ({ navigation }) {
             }
           } catch (error) {
             console.error('Error during login: ', error.message);
-            /* Alert.alert('Error during login: ', error.message); */
           }
         }
       }

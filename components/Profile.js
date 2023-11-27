@@ -18,7 +18,7 @@ export default Profile = ({ route, navigation }) => {
       try {
         const user = await getUserData();
         setUserData(user);
-        console.log(userData)
+        
       } catch (error) {
         console.error('Error fetching user data:', error.message);
       }

@@ -73,22 +73,7 @@ export const logOut = async(navigationRef) => {
     }
 }
 
-/* export const getUserData = async (userUid) => {
-    try {
-      const userRef = child(ref(db), `${USERS_REF}${userUid}`);
-      const snapshot = await get(userRef);
-  
-      if (snapshot.exists()) {
-        return snapshot.val();
-      } else {
-        console.error('User data not found.');
-        return null;
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error.message);
-      return null;
-    }
-  }; */
+
   export const getUserData = async () => {
     return new Promise((resolve, reject) => {
       const auth = getAuth();
