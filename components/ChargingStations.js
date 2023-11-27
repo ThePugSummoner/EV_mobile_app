@@ -28,6 +28,9 @@ export default ChargingStation = ({ navigation }) => {
     const [dataClose, setDataClose] = useState([])
     const [showCloseData, setShowCloseData] = useState(false)
     const [scrollIndex, setScrollIndex] = useState("")
+    //Alla päivitystä varten olevat
+    const [closeDataLocation,setCloseDataLocation]=useState()
+    const [updateCloseData,setUpdateCloseData]=useState(false)
 
     //UseRef
     const map = useRef(null);
@@ -43,8 +46,17 @@ export default ChargingStation = ({ navigation }) => {
         userLocationData()
         setIsLoading(false)
     }, [])
-
-
+//Voidaan lähimmät asemat päivittää , kun liikuttuna tarpeeksi 
+useEffect(()=>{
+if(showCloseData){
+    if(RADIUS<haversineDistanceBetweenPoints(closeDataLocation.latitude,closeDataLocation.longitude,latitude,longitude)){
+        setUpdateCloseData(true)  
+    }
+    
+}else{
+    setUpdateCloseData(false)
+}
+},[latitude,longitude,showCloseData])
 
     //Käyttäjän locatio haetaan
     async function userLocationData() {
@@ -157,15 +169,19 @@ export default ChargingStation = ({ navigation }) => {
     }
 
     //buttonille millä saadaa lähimmät asemat slideriin
+    // Samaa käytetään myös päivittämiseen.
     function handleCloseDataPress() {
         const arr = getClosestData()
         if (arr.length === 0) {
             Alert.alert("Info", "There are no charging stations in that area.")
+            bottomSheetRef.current?.close()
         } else {
             setShowCloseData(true)
             handleOpenPress()
             setScrollIndex(0)
-
+            scrollViewRef.current?.scrollTo({x: 0, y: 0, animated: true})
+            setCloseDataLocation({latitude:latitude,longitude:longitude})
+            setUpdateCloseData(false)
         }
     }
 
@@ -280,6 +296,12 @@ export default ChargingStation = ({ navigation }) => {
 
 
                     </MapView>
+                    {updateCloseData && <View style={{height:Dimensions.get("window").height * 0.05,width:Dimensions.get("window").width*0.5,position: 'absolute', top: 10, left:"25%", right:"25%", bottom: 0, justifyContent: 'center',alignSelf:"center"}}>
+                    <TouchableOpacity onPress={()=>handleCloseDataPress()}  style={{ flex: 1,backgroundColor:"red", padding: 10 }}>
+                            <Text style={{ textAlign: "center" }}>Update List</Text>
+                        </TouchableOpacity>
+                    </View>}
+                   
                     {!showCloseData ?
                         <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, position: "absolute", bottom: 50, right: 0, backgroundColor: "red", marginBottom: 20, padding: 10 }}>
 
