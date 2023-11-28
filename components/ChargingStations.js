@@ -90,25 +90,29 @@ if(showCloseData){
                     'Content-Type': 'application/json'
                 },
                 body: `[out:json][timeout:25];
-                area(id:3602711874)->.searchArea;
+                area(id:3600054224)->.searchArea;
                 nwr["amenity"="charging_station"](area.searchArea);
                 out geom;`
             });
             let answer = await api.json();
             answer = answer.elements
+            console.log(answer.length,"length")
             const arr = []
             for (let i = 0; i < answer.length; i++) {
-                arr.push({
-                    id: answer[i].id,
-                    name: answer[i].tags.name === undefined ? "Sähköauton latausasema" : answer[i].tags.name,
-                    latitude: answer[i].lat,
-                    longitude: answer[i].lon,
-                    brand: answer[i].tags.brand,
-                    operator: answer[i].tags.operator,
-                    capacity: answer[i].tags.capacity,
-                    socket: answer[i].tags.socket,
-                    selected: false
-                })
+                if(answer[i].type==="node"){
+                    arr.push({
+                        id: answer[i].id,
+                        name: answer[i].tags.name === undefined ? "Sähköauton latausasema" : answer[i].tags.name,
+                        latitude: answer[i].lat,
+                        longitude: answer[i].lon,
+                        brand: answer[i].tags.brand,
+                        operator: answer[i].tags.operator,
+                        capacity: answer[i].tags.capacity,
+                        socket: answer[i].tags.socket,
+                        selected: false
+                    })
+                }
+               
             }
             setData(arr)
             setIsloadingData(false)
@@ -209,7 +213,7 @@ if(showCloseData){
             })
             setData(arr)
             setScrollIndex(dataClose.length - 1)
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA },10)
         }else if (mod === false) {
             return //console.log("modulo false")
         }
@@ -285,7 +289,11 @@ if(showCloseData){
                         followsUserLocation={true}
                     >
                         {data.map((marker, index) =>
-                            <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}>
+                            <Marker key={index}
+                             title={marker.name}
+                              coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                              tracksViewChanges={false}
+                              >
                                 <FontAwesome5 name="map-marker-alt" size={marker.selected ? 1.25 * 24 : 24} color={marker.selected ? "orange" : "red"} />
                             </Marker>)}
                         <Circle
