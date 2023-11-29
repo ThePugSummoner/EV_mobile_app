@@ -6,6 +6,7 @@ import { db, PRICES_REF } from '../firebase/Config';
 import { useIsFocused } from '@react-navigation/native';
 //import { ScrollView } from 'react-native-gesture-handler';
 
+
 const LATEST_PRICES_ENDPOINT = 'https://api.porssisahko.net/v1/latest-prices.json';
 
 export default ElectricPrice = ({ navigation }) => {
@@ -141,6 +142,8 @@ export default ElectricPrice = ({ navigation }) => {
 
     }, []);
 
+   
+
     const removePrices = () => {
         remove(ref(db, PRICES_REF));
         // (async () => {
@@ -191,10 +194,10 @@ export default ElectricPrice = ({ navigation }) => {
 
                     <View style={ePriceStyle.testi}>
                         <View style={ePriceStyle.square}>
-                            <Text style={ePriceStyle.headline4}>Today</Text>
+                            <Text style={ePriceStyle.headline4}>Lowest price:</Text>
                         </View>
                         <View style={ePriceStyle.square2}>
-                            <Text style={ePriceStyle.headline4}>Tommorow</Text>
+                            <Text style={ePriceStyle.headline4}>Highest price</Text>
                         </View>
                     </View>
                     <View>

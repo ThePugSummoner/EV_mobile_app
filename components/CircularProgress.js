@@ -13,7 +13,7 @@ const CircularProgression = () => {
             <View>
                 <CircularProgress
                     value={circleValue}
-                    radius={70}
+                    radius={100}
                     progressValueColor={'#ffffff'}
                     duration={2500}
                     strokeColorConfig={[
@@ -30,7 +30,7 @@ const CircularProgression = () => {
                     activeStrokeWidth={20}
                     dashedStrokeConfig={{
                         count: 50,
-                        width: 4,
+                        width: 3,
                     }} 
                     title={titleShow}
                     titleColor={"#06b900"}

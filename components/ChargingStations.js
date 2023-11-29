@@ -90,25 +90,29 @@ if(showCloseData){
                     'Content-Type': 'application/json'
                 },
                 body: `[out:json][timeout:25];
-                area(id:3602711874)->.searchArea;
+                area(id:3600054224)->.searchArea;
                 nwr["amenity"="charging_station"](area.searchArea);
                 out geom;`
             });
             let answer = await api.json();
             answer = answer.elements
+            console.log(answer.length,"length")
             const arr = []
             for (let i = 0; i < answer.length; i++) {
-                arr.push({
-                    id: answer[i].id,
-                    name: answer[i].tags.name === undefined ? "Sähköauton latausasema" : answer[i].tags.name,
-                    latitude: answer[i].lat,
-                    longitude: answer[i].lon,
-                    brand: answer[i].tags.brand,
-                    operator: answer[i].tags.operator,
-                    capacity: answer[i].tags.capacity,
-                    socket: answer[i].tags.socket,
-                    selected: false
-                })
+                if(answer[i].type==="node"){
+                    arr.push({
+                        id: answer[i].id,
+                        name: answer[i].tags.name === undefined ? "Sähköauton latausasema" : answer[i].tags.name,
+                        latitude: answer[i].lat,
+                        longitude: answer[i].lon,
+                        brand: answer[i].tags.brand,
+                        operator: answer[i].tags.operator,
+                        capacity: answer[i].tags.capacity,
+                        socket: answer[i].tags.socket,
+                        selected: false
+                    })
+                }
+               
             }
             setData(arr)
             setIsloadingData(false)
@@ -209,7 +213,7 @@ if(showCloseData){
             })
             setData(arr)
             setScrollIndex(dataClose.length - 1)
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA },10)
         }else if (mod === false) {
             return //console.log("modulo false")
         }
@@ -285,7 +289,11 @@ if(showCloseData){
                         followsUserLocation={true}
                     >
                         {data.map((marker, index) =>
-                            <Marker key={index} title={marker.name} coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}>
+                            <Marker key={index}
+                             title={marker.name}
+                              coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                              tracksViewChanges={false}
+                              >
                                 <FontAwesome5 name="map-marker-alt" size={marker.selected ? 1.25 * 24 : 24} color={marker.selected ? "orange" : "red"} />
                             </Marker>)}
                         <Circle
@@ -297,13 +305,13 @@ if(showCloseData){
 
                     </MapView>
                     {updateCloseData && <View style={{height:Dimensions.get("window").height * 0.05,width:Dimensions.get("window").width*0.5,position: 'absolute', top: 10, left:"25%", right:"25%", bottom: 0, justifyContent: 'center',alignSelf:"center"}}>
-                    <TouchableOpacity onPress={()=>handleCloseDataPress()}  style={{ flex: 1,backgroundColor:"red", padding: 10 }}>
+                    <TouchableOpacity onPress={()=>handleCloseDataPress()}  style={{ flex: 1,backgroundColor:"#ffffffd7", padding: 10 ,borderRadius:4}}>
                             <Text style={{ textAlign: "center" }}>Update List</Text>
                         </TouchableOpacity>
                     </View>}
                    
                     {!showCloseData ?
-                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, position: "absolute", bottom: 50, right: 0, backgroundColor: "red", marginBottom: 20, padding: 10 }}>
+                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, position: "absolute", bottom: 50, right: 0, backgroundColor: "#ffffffd7", marginBottom: 20, padding: 10 }}>
 
 
                             <Text style={{ textAlign: "center" }}>Show list</Text>
@@ -316,7 +324,7 @@ if(showCloseData){
                             onChange={handleSheetChange}
                             enableContentPanningGesture={false}
                             enablePanDownToClose={true}
-                            backgroundStyle={{ backgroundColor: '#ffffffff' }}
+                            backgroundStyle={{ backgroundColor: '#ffffff' }}
 
 
                         >
@@ -336,7 +344,7 @@ if(showCloseData){
                             >
                                 {dataClose.map((dataClose, index) =>
                                     <Pressable key={index} onPress={() => handlePress(dataClose)}>
-                                        <View style={{ borderWidth: 1, height: 150, width: 300, backgroundColor: "#d3d3d3e0", marginHorizontal: 10, justifyContent: "flex-start", alignItems: "flex-start", padding: 10, gap: 20, borderRadius: 4, flexDirection: "row-reverse" }}>
+                                        <View style={{ borderWidth: 1, height: 150, width: 300, backgroundColor: "#fff3be", marginHorizontal: 10, justifyContent: "flex-start", alignItems: "flex-start", padding: 10, gap: 20, borderRadius: 4, flexDirection: "row-reverse" }}>
 
                                             <View style={{ height: 80, width: 100, borderWidth: 1, justifyContent: "flex-start", alignItems: "center", marginTop: 10, backgroundColor: "#1D1A39", borderRadius: 4 }}>
                                                 <Image style={{ flex: 1 }} source={Logo} resizeMode='contain' />

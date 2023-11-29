@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, usePrevious } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { HomeStyle, MainPageStyle, ProfileStyle } from '../style/style';
 import Toggle from "react-native-toggle-element";
@@ -9,9 +9,14 @@ import { getUserData, logOut } from './Auth';
 
 export default function MainPage ({ route, navigation }) {
 
-    const [toggleValueLock, setToggleValueLock] = useState(false)
+    const [toggleValueLock, setToggleValueLock] = useState(true)
+    const [lockText, setLockText] = useState("Locked")
+
     const [toggleValuePower, setToggleValuePower] = useState(false)
+    const [powerText, setPowerText] = useState("Power off")
+
     const [toggleValueAirConditioner, setToggleValueAirConditioner] = useState(false)
+    const [airConditionerText, setAirConditionerText] = useState("AC off")
 
     const { userUid } = route.params;
     const [userData, setUserData] = useState(null);
@@ -25,6 +30,45 @@ export default function MainPage ({ route, navigation }) {
 
       fetchData();
     }, [userUid]);
+
+    function changeLockValue() {
+        if (toggleValueLock === true) {
+            setToggleValueLock(false)
+            setLockText("Unlocked")
+            console.log("Lock is false")
+        }
+        else if (toggleValueLock === false) {
+            setToggleValueLock(true)
+            setLockText("Locked")
+            console.log("Lock is true")
+        }
+    }
+
+    function changePowerValue() {
+        if (toggleValuePower === true) {
+            setToggleValuePower(false)
+            setPowerText("Power off")
+            console.log("Power is false")
+        }
+        else if (toggleValuePower === false) {
+            setToggleValuePower(true)
+            setPowerText("Power on")
+            console.log("Power is true")
+        }
+    }
+
+    function changeAirConditionerValue() {
+        if (toggleValueAirConditioner === true) {
+            setToggleValueAirConditioner(false)
+            setAirConditionerText("AC off")
+            console.log("AC is false")
+        }
+        else if (toggleValueAirConditioner === false) {
+            setToggleValueAirConditioner(true)
+            setAirConditionerText("AC on")
+            console.log("AC is true")
+        }
+    }
 
     /* const handleLogout = () => {
      
@@ -76,35 +120,20 @@ export default function MainPage ({ route, navigation }) {
             
             </View> )}
             <View style={MainPageStyle.carImage}>
-                {/* <Image source={require('../images/CarTransparent.png')} 
+                <Image source={require('../images/CarTransparent.png')} 
                     style={{width: 330, height: 230, resizeMode: 'contain'}}
-                /> */}
+                />
                 {componentToShow}
             </View>
             <View style={[MainPageStyle.battery, {marginBottom: 0}]}>
                 {/*<Text style={MainPageStyle.standInText}>BATTERY</Text> */}
                 <CircularProgression />
-            <Text></Text>
-            { userData && (
-              <>
-                <Text style={{color: '#cbb26a'}}>{userData.car.label}</Text>
-                <Text style={{color: '#cbb26a'}}>{userData.car.drive}</Text>
-                <Text style={{color: '#cbb26a'}}>{userData.car.totalPower} kW</Text>
-                <Text style={{color: '#cbb26a'}}>{userData.car.torque} Nm</Text>
-                <Text style={{color: '#cbb26a'}}>{userData.car.range} km</Text>
-                <Text style={{color: '#cbb26a'}}>{userData.car.capacity} kWh</Text>
-                <Text style={{color: '#cbb26a'}}>{userData.car.chargePower} kW</Text>
-                <Text style={{color: '#cbb26a'}}>{userData.car.consumption} kW/100km</Text>
-
-              </>
-            )}
             </View>
-            <Text></Text>
             <View style={MainPageStyle.toggleButtons}>
                 <View style={MainPageStyle.toggleButtonsSingular}>
                     <Toggle 
                     value={toggleValueLock}
-                    onPress={() => setToggleValueLock(console.log("Car doors unlocked/locked"))}
+                    onPress={() => changeLockValue()}
                     thumbButton={{ 
                         width: 50, 
                         height: 50, 
@@ -127,11 +156,12 @@ export default function MainPage ({ route, navigation }) {
                         width: 85,
                     }}
                     />
+                    <Text style={MainPageStyle.lockTextStyle}>{lockText}</Text>
                 </View>
                 <View style={MainPageStyle.toggleButtonsSingular}>
                     <Toggle 
                     value={toggleValuePower}
-                    onPress={() => setToggleValuePower(console.log("Car turned on/off"))}
+                    onPress={() => changePowerValue()}
                     thumbButton={{ 
                         width: 50, 
                         height: 50, 
@@ -154,11 +184,12 @@ export default function MainPage ({ route, navigation }) {
                         width: 85,
                     }}
                     />
+                    <Text style={MainPageStyle.powerTextStyle}>{powerText}</Text>
                 </View>
                 <View style={MainPageStyle.toggleButtonsSingular}>
                     <Toggle 
                     value={toggleValueAirConditioner}
-                    onPress={() => setToggleValueAirConditioner(console.log("Air conditioner is on/off"))}
+                    onPress={() => changeAirConditionerValue()}
                     thumbButton={{ 
                         width: 50, 
                         height: 50, 
@@ -181,8 +212,20 @@ export default function MainPage ({ route, navigation }) {
                         width: 85,
                     }}
                     />
+                    <Text style={MainPageStyle.acTextStyle}>{airConditionerText}</Text>
                 </View>
             </View>
+            {/*<View style={MainPageStyle.buttonTexts}>
+                <View>
+                    <Text style={MainPageStyle.lockTextStyle}>{lockText}</Text>
+                </View>
+                <View>
+                    <Text style={MainPageStyle.powerTextStyle}>{powerText}</Text>
+                </View>
+                <View>
+                    <Text style={MainPageStyle.acTextStyle}>{airConditionerText}</Text>
+                </View>
+                </View> */}
         </View>
 
     );
