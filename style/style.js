@@ -218,7 +218,7 @@ const MainPageStyle = StyleSheet.create({
     toggleButtons: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginBottom: 25
+        marginTop: 70
     },
     /*toggleButtonsSingular: {
         transform: [{rotate: '90deg'}],
@@ -247,6 +247,27 @@ const MainPageStyle = StyleSheet.create({
         fontWeight: '400',
         color: '#31ac00',
         paddingTop: 10
+    },
+    lockTextStyle: {
+        color: '#ffffff',
+        fontSize: 18,
+        alignSelf: 'center',
+        marginTop: 12,
+        color: "#cbb26a"
+    },
+    powerTextStyle: {
+        color: '#ffffff',
+        fontSize: 18,
+        alignSelf: 'center',
+        marginTop: 12,
+        color: "#cbb26a"
+    },
+    acTextStyle: {
+        color: '#ffffff',
+        fontSize: 18,
+        alignSelf: 'center',
+        marginTop: 12,
+        color: "#cbb26a"
     }
 
 })
