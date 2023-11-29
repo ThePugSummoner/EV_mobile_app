@@ -3,7 +3,6 @@ import Profile from './Profile';
 import ProfileInfo from './ProfileInfo';
 import CarInfo from './CarInfo';
 import ChargingMenu from './ChargingMenu';
-import Home from './Home';
 import MainPage from './MainPage';
 
 
