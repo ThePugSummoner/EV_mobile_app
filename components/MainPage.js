@@ -120,9 +120,9 @@ export default function MainPage ({ route, navigation }) {
             
             </View> )}
             <View style={MainPageStyle.carImage}>
-                <Image source={require('../images/CarTransparent.png')} 
-                    style={{width: 330, height: 230, resizeMode: 'contain'}}
-                />
+                {/* <Image source={require('../images/CarTransparent.png')} 
+                    style={{width: 330, height: 230, resizeMode: 'contain'}} */}
+                {/* /> */}
                 {componentToShow}
             </View>
             <View style={[MainPageStyle.battery, {marginBottom: 0}]}>

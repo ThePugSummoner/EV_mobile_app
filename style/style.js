@@ -14,7 +14,20 @@ const CharginStationsStyle = StyleSheet.create({
     }
 })
 
-
+const LogoAnimationStyle = StyleSheet.create({
+    animationB:{
+        backgroundColor: '#CBB26A', 
+        padding: 10, 
+        borderRadius: 8, 
+        alignItems: 'center', 
+       // borderColor:"#D8C690",
+       // borderWidth:2,
+    },
+    animationBtext:{
+        fontSize: 20, 
+        color: '#1a1a1a'
+    },
+})
 
 const HomeStyle = StyleSheet.create({
     container: {
@@ -23,17 +36,22 @@ const HomeStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    header:{
+        fontSize: 30, 
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
     containerLogin: {
-        backgroundColor: '#E5D9B6',
+        backgroundColor: '#E5D9B6', //tämä sama sävy laitettu bottomnaviin
         alignItems: 'center',
         justifyContent: 'space-around',
         padding: 30,
-        borderRadius: 10
+        borderRadius: 8,
     },
     textInput: {
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#cbb26a',
-        borderRadius: 5,
+        borderRadius: 8,
         padding: 10,
         margin: 10,
         width: 200,
@@ -44,7 +62,7 @@ const HomeStyle = StyleSheet.create({
     input: {
         borderWidth: 1,
         borderColor: '#cbb26a',
-        borderRadius: 5,
+        borderRadius: 8,
         padding: 10,
         margin: 10,
         width: 300,
@@ -57,7 +75,20 @@ const HomeStyle = StyleSheet.create({
         color: '#cbb26a',
         fontSize: 20,
 
-    }
+    },
+    loginButton:{ //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
+        backgroundColor: '#cbb26a',
+        padding: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+        margin: 10,
+        
+    },
+    loginButtonText:{
+        fontSize: 20, 
+        color: '#1a1a1a', 
+        //fontWeight: 'bold'
+    },
 }) 
 
 const ProfileStyle = StyleSheet.create({
@@ -91,6 +122,8 @@ buttonText:{
 
 
 })
+
+
 
 const ePriceStyle = StyleSheet.create({
     container:{
@@ -170,7 +203,7 @@ const ePriceStyle = StyleSheet.create({
     width: Dimensions.get('window').width * 0.45,
     margin: 5,
     backgroundColor: '#1ED1B1',  
-    borderRadius: 5,
+    borderRadius: 8, //joo
     borderWidth: 2,
     borderColor:'#be9e44',
         
@@ -201,9 +234,9 @@ const MainPageStyle = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#22203a',
         padding: 10,
-        borderBottomWidth: 1,
-        borderColor: "#b38c1a",
-        borderRadius: 5,
+        borderBottomWidth: 2,
+        borderColor: "#BE9E44", //#b38c1a
+        //borderRadius: 5,
         justifyContent: 'space-evenly'
     },
     standInText: {
@@ -272,4 +305,4 @@ const MainPageStyle = StyleSheet.create({
 
 })
 
-export {HomeStyle,ProfileStyle,CharginStationsStyle, ePriceStyle, MainPageStyle}
+export {HomeStyle,ProfileStyle,CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle}
