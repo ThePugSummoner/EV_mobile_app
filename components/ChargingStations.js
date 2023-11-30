@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { Alert, Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import MapView, { Marker, Circle, animateToRegion } from 'react-native-maps';
+import  { Marker, Circle, animateToRegion } from 'react-native-maps';
+import MapView from "react-native-map-clustering";
 import * as Location from "expo-location"
 import { CharginStationsStyle } from '../style/style';
 import { Dimensions } from 'react-native';
@@ -128,9 +129,10 @@ if(showCloseData){
 
         data.map((mapData, index) => {
             if (haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude) < RADIUS) {
-                arr.push(mapData)
+                arr.push({...mapData,range:haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude)})
             }
         })
+        arr.sort((a, b) => a.range - b.range);
         setDataClose(arr)
         return arr
 
@@ -213,7 +215,7 @@ if(showCloseData){
             })
             setData(arr)
             setScrollIndex(dataClose.length - 1)
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA },10)
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
         }else if (mod === false) {
             return //console.log("modulo false")
         }
@@ -221,6 +223,7 @@ if(showCloseData){
 
             const arr = []
             const item = dataClose[parseInt(event.nativeEvent.contentOffset.x / 320)]
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
             data.map(data => {
                 if (data.id === item.id) {
                     arr.push({ ...data, selected: true })
@@ -230,8 +233,7 @@ if(showCloseData){
             })
             setData(arr)
             setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
-
+           
             //console.log(parseInt(event.nativeEvent.contentOffset.x / 320))
            // console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x)))
             //console.log(scrollIndex, "Iffissä scroll index")
@@ -287,6 +289,10 @@ if(showCloseData){
                         showsUserLocation={true}
                         showsMyLocationButton={true}
                         followsUserLocation={true}
+                        loadingEnabled={true}
+                        minZoom={20}
+                        minPoints={10}
+                      
                     >
                         {data.map((marker, index) =>
                             <Marker key={index}
@@ -296,6 +302,7 @@ if(showCloseData){
                               >
                                 <FontAwesome5 name="map-marker-alt" size={marker.selected ? 1.25 * 24 : 24} color={marker.selected ? "orange" : "red"} />
                             </Marker>)}
+                            
                         <Circle
                             center={{ latitude: latitude, longitude: longitude }}
                             radius={RADIUS}
