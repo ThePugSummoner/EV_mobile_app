@@ -13,7 +13,7 @@ export default ElectricPrice = ({ navigation }) => {
 
     const [hourPrice, setHourPrice] = useState();
     const [allPrices, setAllPrices] = useState();
-    const [isLoading, setIsloading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
     const isFocused = useIsFocused();
 
     //Katsoo aikaa ja "onko käyttäjä sovelluksessa tässä näkymässä"
@@ -122,7 +122,7 @@ export default ElectricPrice = ({ navigation }) => {
                         set(ref(db, PRICES_REF + 'testi'), arr)
                         //Lisätty useState set
                         setAllPrices(arr)
-                        setIsloading(false)
+                        setIsLoading(false)
                         console.log(arr.length, 'array useEffect');
                         //console.log(`Hinta nyt on ${price}`);
                     } catch (error) {
@@ -132,7 +132,7 @@ export default ElectricPrice = ({ navigation }) => {
                 //Else lisätty jossa on sitten myös useState set. Sillä laitetaan jo valmiina oleva Db data
             } else {
                 setAllPrices(dbPrice)
-                setIsloading(false)
+                setIsLoading(false)
                 console.log("else")
             }
 
@@ -142,7 +142,7 @@ export default ElectricPrice = ({ navigation }) => {
 
     }, []);
 
-   
+
 
     const removePrices = () => {
         remove(ref(db, PRICES_REF));
