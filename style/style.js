@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Dimensions } from 'react-native';
-import Constants from "expo-constants"
+import Constants from "expo-constants";
 
 const CharginStationsStyle = StyleSheet.create({
     container:{
@@ -229,6 +229,7 @@ const MainPageStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1D1A39',
+        marginTop: Constants.statusBarHeight, //ok?
     },
     header: {
         flexDirection: 'row',
