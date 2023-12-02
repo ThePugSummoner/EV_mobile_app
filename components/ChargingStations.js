@@ -334,7 +334,7 @@ if(showCloseData){
                     </View>}
                    
                     {!showCloseData ?
-                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, position: "absolute", bottom: 50, right: 0, backgroundColor: "#ffffffd7", marginBottom: 20, padding: 10 }}>
+                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, position: "absolute", bottom: 80, right: 0, backgroundColor: "#ffffffd7", marginBottom: 20, padding: 10 }}>
 
 
                             <Text style={{ textAlign: "center" }}>Show list</Text>
