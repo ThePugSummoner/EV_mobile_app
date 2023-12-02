@@ -14,6 +14,7 @@ export default ElectricPrice = ({ navigation }) => {
     const [hourPrice, setHourPrice] = useState();
     const [allPrices, setAllPrices] = useState();
     const [isLoading, setIsLoading] = useState(true)
+    const [firsDayPrice,setFirstDayPrice]=useState()
     const isFocused = useIsFocused();
 
     //Katsoo aikaa ja "onko käyttäjä sovelluksessa tässä näkymässä"
@@ -98,7 +99,7 @@ export default ElectricPrice = ({ navigation }) => {
             const data = snapshot.val() ? snapshot.val() : {};
             const dbPrice = { ...data };
             //console.log(Object.keys(dbPrice).length,'Haku db:stä');
-            //console.log(dbPrice, 'haku db:stä')
+            console.log(dbPrice, 'haku db:stä')
             //rajapintahaku jos db on tyhjä
             if (Object.keys(dbPrice).length === 0 && isLoading) {
 
@@ -120,9 +121,11 @@ export default ElectricPrice = ({ navigation }) => {
                         set(ref(db, PRICES_REF + 'testi'), arr)
                         //Lisätty useState set
                         setAllPrices(arr)
+                        testi(arr)
                         findHighestAndLowestPrices(arr);
                         setIsLoading(false)
                         console.log(arr.length, 'array useEffect');
+                        console.log(arr,"arr")
                         //console.log(`Hinta nyt on ${price}`);
                     } catch (error) {
                         alert(error);
@@ -133,35 +136,13 @@ export default ElectricPrice = ({ navigation }) => {
                 setAllPrices(dbPrice)
                 findHighestAndLowestPrices(dbPrice);
                 setIsLoading(false)
-                console.log("else")
+                testi(dbPrice.testi)
+                //console.log(dbPrice,"else")
             }
 
         });
 
     }, []);
-
-    // Function to find the highest and lowest prices
-    const findHighestAndLowestPrices = (data) => {
-        if (data) {
-            const prices = data.testi.map((priceData) => ({
-                price: priceData.price,
-                time: priceData.endDate.split('T')[1].split(':')[0], // Extracting the hour from endDate
-            }));
-
-            const highestPrice = prices.reduce((max, current) =>
-                max.price > current.price ? max : current
-            );
-
-            const lowestPrice = prices.reduce((min, current) =>
-                min.price < current.price ? min : current
-            );
-
-            console.log('Highest Price:', highestPrice.price, 'at', highestPrice.time, 'hours');
-            console.log('Lowest Price:', lowestPrice.price, 'at', lowestPrice.time, 'hours');
-        }
-    };
-
-    
 
 
 
@@ -192,10 +173,13 @@ export default ElectricPrice = ({ navigation }) => {
         // })();
     }
     console.log(isLoading)
+    console.log(firsDayPrice)
     //console.log(allPrices,"kaikki hinnat")
     return (
-        <>
-            <ScrollView>
+        
+            <ScrollView style={{flex:1}}
+            contentContainerStyle={{justifyContent:"flex-start",alignItems:"stretch"}}
+            >
                 <View style={ePriceStyle.container}>
 
                     <Text style={ePriceStyle.headline}>Electricity price</Text>
@@ -215,10 +199,12 @@ export default ElectricPrice = ({ navigation }) => {
 
                     <View style={ePriceStyle.testi}>
                         <View style={ePriceStyle.square}>
-                            <Text style={ePriceStyle.headline4}>Lowest price:</Text>
+                            <Text style={ePriceStyle.headline4}>Lowest price:{firsDayPrice?.minPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Day:{firsDayPrice?.minPrice.time.split('T')[0]}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{firsDayPrice?.minPrice.time.split('T')[1].split(":")[0]} : {firsDayPrice?.minPrice.time.split('T')[1].split(":")[1]}</Text>
                         </View>
                         <View style={ePriceStyle.square2}>
-                            <Text style={ePriceStyle.headline4}>Highest price</Text>
+                            <Text style={ePriceStyle.headline4}>Highest price:{firsDayPrice?.maxPrice.price}</Text>
                         </View>
                     </View>
                     <View>
@@ -229,6 +215,6 @@ export default ElectricPrice = ({ navigation }) => {
 
                 </View>
             </ScrollView>
-        </>
+        
     );
 }
