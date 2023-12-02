@@ -23,12 +23,12 @@ export default ElectricPrice = ({ navigation }) => {
             const time = checkTime()
             const endDateDb = allPrices.testi[0].endDate.split('T')[0]
             const date1 = date()
-            
-           
+
+
 
             console.log(date1, 'date1')
             console.log(endDateDb, 'endDate')
-           
+
 
             if ("14:30" < time && "2023-11-26" === date1) {
                 console.log(`${time} on isompi kuin 14:30`);
@@ -69,8 +69,6 @@ export default ElectricPrice = ({ navigation }) => {
         return `${newYear}-${newMonth}-${newDay}`
 
     }
-
-
 
 
     //tuntihinta sähkölle - Hourly price for electricity
@@ -122,6 +120,7 @@ export default ElectricPrice = ({ navigation }) => {
                         set(ref(db, PRICES_REF + 'testi'), arr)
                         //Lisätty useState set
                         setAllPrices(arr)
+                        findHighestAndLowestPrices(arr);
                         setIsLoading(false)
                         console.log(arr.length, 'array useEffect');
                         //console.log(`Hinta nyt on ${price}`);
@@ -132,15 +131,37 @@ export default ElectricPrice = ({ navigation }) => {
                 //Else lisätty jossa on sitten myös useState set. Sillä laitetaan jo valmiina oleva Db data
             } else {
                 setAllPrices(dbPrice)
+                findHighestAndLowestPrices(dbPrice);
                 setIsLoading(false)
                 console.log("else")
             }
 
         });
 
-
-
     }, []);
+
+    // Function to find the highest and lowest prices
+    const findHighestAndLowestPrices = (data) => {
+        if (data) {
+            const prices = data.testi.map((priceData) => ({
+                price: priceData.price,
+                time: priceData.endDate.split('T')[1].split(':')[0], // Extracting the hour from endDate
+            }));
+
+            const highestPrice = prices.reduce((max, current) =>
+                max.price > current.price ? max : current
+            );
+
+            const lowestPrice = prices.reduce((min, current) =>
+                min.price < current.price ? min : current
+            );
+
+            console.log('Highest Price:', highestPrice.price, 'at', highestPrice.time, 'hours');
+            console.log('Lowest Price:', lowestPrice.price, 'at', lowestPrice.time, 'hours');
+        }
+    };
+
+    
 
 
 
