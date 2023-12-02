@@ -122,7 +122,6 @@ export default ElectricPrice = ({ navigation }) => {
                         //Lisätty useState set
                         setAllPrices(arr)
                         testi(arr)
-                        findHighestAndLowestPrices(arr);
                         setIsLoading(false)
                         console.log(arr.length, 'array useEffect');
                         console.log(arr,"arr")
@@ -134,7 +133,6 @@ export default ElectricPrice = ({ navigation }) => {
                 //Else lisätty jossa on sitten myös useState set. Sillä laitetaan jo valmiina oleva Db data
             } else {
                 setAllPrices(dbPrice)
-                findHighestAndLowestPrices(dbPrice);
                 setIsLoading(false)
                 testi(dbPrice.testi)
                 //console.log(dbPrice,"else")
@@ -143,6 +141,38 @@ export default ElectricPrice = ({ navigation }) => {
         });
 
     }, []);
+
+    function testi(item){
+        const pricesFirstDay =[]
+        const pricesSecondDay =[]
+        console.log(item[0].endDate,"item")
+        item.map(priceData =>
+          {
+            if(item[0].endDate.split('T')[0]===priceData.endDate.split('T')[0]){
+                pricesFirstDay.push({price:priceData.price,
+                    time:priceData.endDate
+                    })
+            }else{
+                pricesSecondDay.push({price:priceData.price,
+                    time:priceData.endDate
+                    })
+            }}
+
+            )
+        const priceFirstDay=pricesFirstDay.sort(({ price: a }, { price: b }) => b - a);
+        const priceSecondDAy=pricesSecondDay.sort(({ price: a }, { price: b }) => b - a);
+        const firstDayMaxPrice = priceFirstDay[0]
+        const firstDayMinPrice =priceFirstDay[priceFirstDay.length-1]
+        const secondDayMaxPrice = priceSecondDAy[0]
+        const secondDayMinPrice =priceSecondDAy[priceSecondDAy.length-1]
+            setFirstDayPrice({maxPrice:firstDayMaxPrice,minPrice:firstDayMinPrice})
+        console.log(firstDayMaxPrice,"isoin hinta")
+        console.log(firstDayMinPrice,"Pienin hinta")
+        console.log(secondDayMaxPrice,"isoin hinta")
+        console.log(secondDayMinPrice,"Pienin hinta")
+ 
+        
+    }
 
 
 
