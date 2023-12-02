@@ -33,17 +33,18 @@ const HomeStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1D1A39',
-        alignItems: 'center',
+        alignItems: "center",
         justifyContent: 'center',
     },
     header:{
         fontSize: 30, 
         fontWeight: 'bold',
         marginBottom: 10,
+        textAlign:"center"
     },
     containerLogin: {
         backgroundColor: '#E5D9B6', //tämä sama sävy laitettu bottomnaviin
-        alignItems: 'center',
+        alignItems: "stretch",
         justifyContent: 'space-around',
         padding: 30,
         borderRadius: 8,
@@ -135,6 +136,7 @@ const ePriceStyle = StyleSheet.create({
         //row: 3,
         justifyContent: 'center',
         alignItems: 'center',
+        flex:1
     },
     headline:{
         fontSize:30,
@@ -162,7 +164,7 @@ const ePriceStyle = StyleSheet.create({
     bghourprice:{
         //backgroundColor: '#1ED1B1',
         //borderRadius: 20,
-        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        borderRadius: 150,
         width: Dimensions.get('window').width * 0.6,
         height: Dimensions.get('window').width * 0.6,
         backgroundColor:'#094F44',//#094F44
@@ -176,12 +178,13 @@ const ePriceStyle = StyleSheet.create({
     container3:{
         justifyContent: 'center',
         alignItems: 'center',
+        flex:1
     },
     bghourprice2:{
         //väritestejä
     //backgroundColor: '#1ED1B1',
     //borderRadius: 20,
-    borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+    borderRadius: 150,
         width: Dimensions.get('window').width * 0.6,
         height: Dimensions.get('window').width * 0.6,
         backgroundColor:'#d8c690',
