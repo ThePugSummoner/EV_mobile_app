@@ -23,6 +23,7 @@ const RADIUS = 50000
 export default ChargingStation = ({ navigation }) => {
     const [latitude, setLatitude] = useState(INITIAL_LATITUDE)
     const [longitude, setLongitude] = useState(INITIAL_LONGITUDE)
+    const [longitudeDelta,setLongitudeDelta]=useState()
     const [isLoading, setIsLoading] = useState(true)
     const [isLoadingData, setIsloadingData] = useState(true)
     const [data, setData] = useState([])
@@ -142,6 +143,8 @@ if(showCloseData){
     function regionChange(region) {
         setLatitude(region.latitude)
         setLongitude(region.longitude)
+        setLongitudeDelta(region.longitudeDelta)
+        //console.log(region)
     }
 
 
@@ -260,10 +263,19 @@ if(showCloseData){
         console.log("handleSheetChange", index);
         if (index === -1) {
             setShowCloseData(false)
+            setData(datas => {
+                return datas.map(item => {
+                  return item.selected === true ? { ...item, selected: false } : item
+                })
+              })
 
         }
     }, []);
 
+    const currentZoomLevel = Math.round(
+        Math.log(360 / longitudeDelta) / Math.LN2
+        );
+        //console.log(currentZoomLevel,"zoom zoom")
     //console.log(data, "useState")
     //console.log(dataClose, "dataClose useState")
     //console.log(data,"kaikki data")
@@ -290,8 +302,12 @@ if(showCloseData){
                         showsMyLocationButton={true}
                         followsUserLocation={true}
                         loadingEnabled={true}
-                        minZoom={20}
-                        minPoints={10}
+                        minZoom={1}
+                        minPoints={currentZoomLevel>5 ? 10 : 2}
+                        maxZoom={7}
+                        clusterColor='red'
+                        radius={currentZoomLevel<=7 ? Dimensions.get("window").width * 0.2 : Dimensions.get("window").width * 0.06}
+                        
                       
                     >
                         {data.map((marker, index) =>
