@@ -23,11 +23,11 @@ export default ElectricPrice = ({ navigation }) => {
 
         if (isFocused && isLoading === false) {
             const time = checkTime()
-            const endDateDb = allPrices.testi[0].endDate.split('T')[0]
+            const endDateDb = allPrices.testi[0].endDate
             const date1 = date()
 
             //console.log(date1, 'date1')
-           // console.log(endDateDb, 'endDate')
+            //console.log(endDateDb, 'endDate')
             if ("14:30" < time && endDateDb === date1) {
                 fetchPrices()
                 console.log("Data päivitetty!");
@@ -105,6 +105,7 @@ export default ElectricPrice = ({ navigation }) => {
                 setAllPrices(dbPrice)
                 setIsLoading(false)
                 testi(dbPrice.testi)
+                console.log("Haku firebasesta onnistui!")
                 //console.log(dbPrice,"else")
             }
 
@@ -128,8 +129,9 @@ async function fetchPrices(){
         setAllPrices(arr)
         testi(arr)
         setIsLoading(false)
-        console.log(arr.length, 'array useEffect1');
-        console.log(arr,"arr")
+        //console.log(arr.length, 'array useEffect1');
+        //console.log(arr,"arr")
+        console.log("Haku rajapinnasta onnistui!")
     }catch(e){
 alert(e)
     }
