@@ -217,7 +217,9 @@ export default ChargingStation = ({ navigation }) => {
         if (parseInt(event.nativeEvent.contentOffset.x / 320) !== scrollIndex && closeRight === false) {
             const item = dataClose[parseInt(event.nativeEvent.contentOffset.x / 320)]
             const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+            console.log(currentMapIndex)
             setIndexi(currentMapIndex)
+            setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
             map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
            
            
