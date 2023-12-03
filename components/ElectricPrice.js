@@ -190,8 +190,9 @@ alert(e)
     //console.log(allPrices,"kaikki hinnat")
     return (
         
-            <ScrollView style={{flex:1}}
+            <ScrollView style={{flex:1,}}
             contentContainerStyle={{justifyContent:"flex-start",alignItems:"stretch"}}
+            overScrollMode='never'
             >
                 <View style={ePriceStyle.container}>
 
