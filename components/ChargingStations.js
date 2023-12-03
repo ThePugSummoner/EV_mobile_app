@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { Alert, Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import  { Marker, Circle, animateToRegion } from 'react-native-maps';
+import { Marker, Circle, animateToRegion } from 'react-native-maps';
 import MapView from "react-native-map-clustering";
 import * as Location from "expo-location"
 import { CharginStationsStyle } from '../style/style';
@@ -14,8 +14,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 const INITIAL_LATITUDE = 65.0800
 const INITIAL_LONGITUDE = 25.4800
-const INITIAL_LATITUDE_DELTA = 0.0922
-const INITIAL_LONGITUDE_DELTA = 0.0421
+const INITIAL_LATITUDE_DELTA = 0.0922 // 1.0161223635077477
+const INITIAL_LONGITUDE_DELTA = 0.0421 //0.8992378874508375  //
 const RADIUS = 50000
 
 
@@ -23,7 +23,7 @@ const RADIUS = 50000
 export default ChargingStation = ({ navigation }) => {
     const [latitude, setLatitude] = useState(INITIAL_LATITUDE)
     const [longitude, setLongitude] = useState(INITIAL_LONGITUDE)
-    const [longitudeDelta,setLongitudeDelta]=useState()
+    const [longitudeDelta, setLongitudeDelta] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [isLoadingData, setIsloadingData] = useState(true)
     const [data, setData] = useState([])
@@ -31,8 +31,9 @@ export default ChargingStation = ({ navigation }) => {
     const [showCloseData, setShowCloseData] = useState(false)
     const [scrollIndex, setScrollIndex] = useState("")
     //Alla päivitystä varten olevat
-    const [closeDataLocation,setCloseDataLocation]=useState()
-    const [updateCloseData,setUpdateCloseData]=useState(false)
+    const [closeDataLocation, setCloseDataLocation] = useState()
+    const [updateCloseData, setUpdateCloseData] = useState(false)
+    const [indexi, setIndexi] = useState()
 
     //UseRef
     const map = useRef(null);
@@ -48,17 +49,17 @@ export default ChargingStation = ({ navigation }) => {
         userLocationData()
         setIsLoading(false)
     }, [])
-//Voidaan lähimmät asemat päivittää , kun liikuttuna tarpeeksi 
-useEffect(()=>{
-if(showCloseData){
-    if(RADIUS<haversineDistanceBetweenPoints(closeDataLocation.latitude,closeDataLocation.longitude,latitude,longitude)){
-        setUpdateCloseData(true)  
-    }
-    
-}else{
-    setUpdateCloseData(false)
-}
-},[latitude,longitude,showCloseData])
+    //Voidaan lähimmät asemat päivittää , kun liikuttuna tarpeeksi 
+    useEffect(() => {
+        if (showCloseData) {
+            if (RADIUS < haversineDistanceBetweenPoints(closeDataLocation.latitude, closeDataLocation.longitude, latitude, longitude)) {
+                setUpdateCloseData(true)
+            }
+
+        } else {
+            setUpdateCloseData(false)
+        }
+    }, [latitude, longitude, showCloseData])
 
     //Käyttäjän locatio haetaan
     async function userLocationData() {
@@ -98,10 +99,10 @@ if(showCloseData){
             });
             let answer = await api.json();
             answer = answer.elements
-            console.log(answer.length,"length")
+            console.log(answer.length, "length")
             const arr = []
             for (let i = 0; i < answer.length; i++) {
-                if(answer[i].type==="node"){
+                if (answer[i].type === "node") {
                     arr.push({
                         id: answer[i].id,
                         name: answer[i].tags.name === undefined ? "Sähköauton latausasema" : answer[i].tags.name,
@@ -114,7 +115,7 @@ if(showCloseData){
                         selected: false
                     })
                 }
-               
+
             }
             setData(arr)
             setIsloadingData(false)
@@ -130,7 +131,7 @@ if(showCloseData){
 
         data.map((mapData, index) => {
             if (haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude) < RADIUS) {
-                arr.push({...mapData,range:haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude)})
+                arr.push({ ...mapData, range: haversineDistanceBetweenPoints(latitude, longitude, mapData.latitude, mapData.longitude) })
             }
         })
         arr.sort((a, b) => a.range - b.range);
@@ -144,7 +145,7 @@ if(showCloseData){
         setLatitude(region.latitude)
         setLongitude(region.longitude)
         setLongitudeDelta(region.longitudeDelta)
-        //console.log(region)
+        console.log(region)
     }
 
 
@@ -164,15 +165,9 @@ if(showCloseData){
     // Painetaan slider itemistä niin päästään siihen "markeriin"
     function handlePress(item) {
         console.log(item)
-        const arr = []
-        data.map(data => {
-            if (data.id === item.id) {
-                arr.push({ ...data, selected: true })
-            } else {
-                arr.push({ ...data, selected: false })
-            }
-        })
-        setData(arr)
+        console.log(dataClose.length, "datan koko")
+        const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+        setIndexi(currentMapIndex)
         map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
 
     }
@@ -188,9 +183,11 @@ if(showCloseData){
             setShowCloseData(true)
             handleOpenPress()
             setScrollIndex(0)
-            scrollViewRef.current?.scrollTo({x: 0, y: 0, animated: true})
-            setCloseDataLocation({latitude:latitude,longitude:longitude})
+            scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true })
+            setCloseDataLocation({ latitude: latitude, longitude: longitude })
             setUpdateCloseData(false)
+
+
         }
     }
 
@@ -204,47 +201,75 @@ if(showCloseData){
         //console.log(dataClose.length, "length")
         //console.log(scrollIndex, "scrollIndex")
 
-        const closeRight=isCloseToRight(event.nativeEvent)
+        const closeRight = isCloseToRight(event.nativeEvent)
         const mod = modulo(parseInt(event.nativeEvent.contentOffset.x), 320)
-        if(closeRight===true){
-            const arr = []
+        console.log(closeRight,"lähellä loppua")
+        if (closeRight === true) {
             const item = dataClose[dataClose.length - 1]
-            data.map(data => {
-                if (data.id === item.id) {
-                    arr.push({ ...data, selected: true })
-                } else {
-                    arr.push({ ...data, selected: false })
-                }
-            })
-            setData(arr)
+            const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+            setIndexi(currentMapIndex)
             setScrollIndex(dataClose.length - 1)
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
-        }else if (mod === false) {
+            
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA },1000)
+        } else if (mod === false) {
             return //console.log("modulo false")
         }
-         if (parseInt(event.nativeEvent.contentOffset.x / 320) !== scrollIndex) {
-
-            const arr = []
+        if (parseInt(event.nativeEvent.contentOffset.x / 320) !== scrollIndex && closeRight === false) {
             const item = dataClose[parseInt(event.nativeEvent.contentOffset.x / 320)]
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
-            data.map(data => {
-                if (data.id === item.id) {
-                    arr.push({ ...data, selected: true })
-                } else {
-                    arr.push({ ...data, selected: false })
-                }
-            })
-            setData(arr)
-            setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
+            const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+            setIndexi(currentMapIndex)
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
            
+           
+           
+           
+            //    clearTimeout(myTime)
+
+            //     const myTime=setTimeout(()=>{
+            //         const currentMapIndex = data.findIndex(mapData=>mapData.id===item.id)
+            //         const lastMapIndex = data.findIndex(mapData=>mapData.selected===true)
+            //         console.log(currentMapIndex,"indexiä")
+            //         console.log(lastMapIndex,"indexiä")
+            //         const updatedMap ={...data[currentMapIndex],selected:true}
+            //         const secondUpdateMap ={...data[lastMapIndex],selected:false}
+
+            //         const newMapData = [...data]
+            //         newMapData[currentMapIndex]= updatedMap
+            //         newMapData[lastMapIndex]= secondUpdateMap
+            //         setData(newMapData)
+            //         setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
+
+
+
+            //     },10)
+
+
+
+
+
+            // const currentMapIndex = data.findIndex(mapData=>mapData.id===item.id)
+            // const lastMapIndex = data.findIndex(mapData=>mapData.selected===true)
+            // console.log(currentMapIndex,"indexiä")
+            // console.log(lastMapIndex,"indexiä")
+            // const updatedMap ={...data[currentMapIndex],selected:true}
+            // const secondUpdateMap ={...data[lastMapIndex],selected:false}
+
+            // const newMapData = [...data]
+            // newMapData[currentMapIndex]= updatedMap
+            // newMapData[lastMapIndex]= secondUpdateMap
+            // setData(newMapData)
+            // setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
+
+
+
             //console.log(parseInt(event.nativeEvent.contentOffset.x / 320))
-           // console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x)))
+            // console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x)))
             //console.log(scrollIndex, "Iffissä scroll index")
         }
 
     }
 
-  
+
     function modulo(number, modulo) {
         let answer
         if (number % modulo === 0) {
@@ -263,19 +288,14 @@ if(showCloseData){
         console.log("handleSheetChange", index);
         if (index === -1) {
             setShowCloseData(false)
-            setData(datas => {
-                return datas.map(item => {
-                  return item.selected === true ? { ...item, selected: false } : item
-                })
-              })
-
+            setIndexi("")
         }
     }, []);
 
     const currentZoomLevel = Math.round(
         Math.log(360 / longitudeDelta) / Math.LN2
-        );
-        //console.log(currentZoomLevel,"zoom zoom")
+    );
+    //console.log(currentZoomLevel, "zoom zoom")
     //console.log(data, "useState")
     //console.log(dataClose, "dataClose useState")
     //console.log(data,"kaikki data")
@@ -303,22 +323,22 @@ if(showCloseData){
                         followsUserLocation={true}
                         loadingEnabled={true}
                         minZoom={1}
-                        minPoints={currentZoomLevel>5 ? 10 : 2}
+                        minPoints={currentZoomLevel > 5 ? 10 : 2}
                         maxZoom={7}
                         clusterColor='red'
-                        radius={currentZoomLevel<=7 ? Dimensions.get("window").width * 0.2 : Dimensions.get("window").width * 0.06}
-                        
-                      
+                        radius={currentZoomLevel <= 7 ? Dimensions.get("window").width * 0.2 : Dimensions.get("window").width * 0.06}
+
+
                     >
                         {data.map((marker, index) =>
                             <Marker key={index}
-                             title={marker.name}
-                              coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-                              tracksViewChanges={false}
-                              >
-                                <FontAwesome5 name="map-marker-alt" size={marker.selected ? 1.25 * 24 : 24} color={marker.selected ? "orange" : "red"} />
+                                title={marker.name}
+                                coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                                tracksViewChanges={false}
+                            >
+                                <FontAwesome5 name="map-marker-alt" size={index === indexi ? 1.25 * 24 : 24} color={index === indexi ? "orange" : "red"} />
                             </Marker>)}
-                            
+
                         <Circle
                             center={{ latitude: latitude, longitude: longitude }}
                             radius={RADIUS}
@@ -327,12 +347,12 @@ if(showCloseData){
 
 
                     </MapView>
-                    {updateCloseData && <View style={{height:Dimensions.get("window").height * 0.05,width:Dimensions.get("window").width*0.5,position: 'absolute', top: 10, left:"25%", right:"25%", bottom: 0, justifyContent: 'center',alignSelf:"center"}}>
-                    <TouchableOpacity onPress={()=>handleCloseDataPress()}  style={{ flex: 1,backgroundColor:"#ffffffd7", padding: 10 ,borderRadius:4}}>
+                    {updateCloseData && <View style={{ height: Dimensions.get("window").height * 0.05, width: Dimensions.get("window").width * 0.5, position: 'absolute', top: 10, left: "25%", right: "25%", bottom: 0, justifyContent: 'center', alignSelf: "center" }}>
+                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, backgroundColor: "#ffffffd7", padding: 10, borderRadius: 4 }}>
                             <Text style={{ textAlign: "center" }}>Update List</Text>
                         </TouchableOpacity>
                     </View>}
-                   
+
                     {!showCloseData ?
                         <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, position: "absolute", bottom: 80, right: 0, backgroundColor: "#ffffffd7", marginBottom: 20, padding: 10 }}>
 
@@ -359,7 +379,7 @@ if(showCloseData){
                                 contentContainerStyle={{ paddingHorizontal: 20 }}
                                 pagingEnabled
                                 decelerationRate={"fast"}
-                                scrollEventThrottle={16}
+
                                 onScroll={(e) => handleScroll(e)}
 
 
