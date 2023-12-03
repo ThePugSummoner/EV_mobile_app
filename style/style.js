@@ -198,7 +198,7 @@ const ePriceStyle = StyleSheet.create({
     margin: 20,
     marginTop: 30,
     flex: 1,
-    flexDirection:'row',
+    flexDirection:"column",
     justifyContent: 'space-evenly',
    
 }, square: {
