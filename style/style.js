@@ -200,6 +200,7 @@ const ePriceStyle = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     justifyContent: 'space-evenly',
+    alignItems: 'center',
    
 }, square: {
     height: Dimensions.get('window').width * 0.45,
