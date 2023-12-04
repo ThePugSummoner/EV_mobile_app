@@ -35,6 +35,7 @@ export default ChargingStation = ({ navigation }) => {
     const [updateCloseData, setUpdateCloseData] = useState(false)
     const [indexi, setIndexi] = useState()
 
+
     //UseRef
     const map = useRef(null);
     const bottomSheetRef = useRef(null);
@@ -212,10 +213,10 @@ export default ChargingStation = ({ navigation }) => {
     }
 
     function handleMarkerPress(event) {
-
+       
         const coordinate = event.nativeEvent.coordinate
         const arr = []
-        const mapIndex1 = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
+        const mapIndex = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
 
         data.map((mapData, index) => {
             if (haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude) < RADIUS) {
@@ -223,10 +224,10 @@ export default ChargingStation = ({ navigation }) => {
                 arr.push({ ...mapData, range: haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude) })
             }
         })
-
-        const test = arr.findIndex(test => test.id === data[mapIndex1].id)
+        console.log(mapIndex,"indexx")
+        const test = arr.findIndex(test => test.id === data[mapIndex].id)
         if (test === -1) {
-            arr.push(data[mapIndex1])
+            arr.push(data[mapIndex])
         }
         arr.sort((a, b) => a.range - b.range);
         const testii = testie(arr)
@@ -234,23 +235,21 @@ export default ChargingStation = ({ navigation }) => {
         if (testii === false) {
             console.log("uusi array")
             setDataClose(arr)
-            const mapIndex = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
             const mapId = data[mapIndex].id
             const closeDataIndex = arr.findIndex(arr => arr.id === mapId)
             const xAxis = 320 * closeDataIndex
-
+            console.log(xAxis,"x akseli")
             setShowCloseData(true)
             handleOpenPress()
             setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
             setUpdateCloseData(false)
-            scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: false })
+            handleScrollMarkerPress(arr,xAxis)
         } else {
             console.log("Vanha array")
-            const mapIndex = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
             const mapId = data[mapIndex].id
             const closeDataIndex = dataClose.findIndex(arr => arr.id === mapId)
             const xAxis = 320 * closeDataIndex
-
+            console.log(xAxis,"x akseli")
             setShowCloseData(true)
             handleOpenPress()
             setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
@@ -269,6 +268,28 @@ export default ChargingStation = ({ navigation }) => {
         return layoutMeasurement.width + contentOffset.x >= contentSize.width - paddingToRight;
     };
 
+function handleScrollMarkerPress(arr,xAxis){
+    
+    if (xAxis===arr.length * 320) {
+        const item = arr[arr.length - 1]
+        const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+        setIndexi(currentMapIndex)
+        setScrollIndex(arr.length - 1)
+        console.log(currentMapIndex)
+        map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
+        scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: false })
+    } else {
+        const item = arr[(xAxis / 320)]
+        const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+        console.log(currentMapIndex)
+        setIndexi(currentMapIndex)
+        setScrollIndex(Math.floor(xAxis / 320))
+        map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
+        scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: false })
+
+}
+
+}
     //ScrollView scrollin tarkkailu
     function handleScroll(event) {
         //console.log(dataClose.length, "length")
