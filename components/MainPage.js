@@ -1,5 +1,5 @@
 import React, { useState, useEffect, usePrevious } from 'react';
-import { Text, View, Image, TouchableOpacity, BackHandler, Alert, Alert, Modal, Pressable } from 'react-native';
+import { Text, View, Image, TouchableOpacity, BackHandler, Alert, Modal, Pressable } from 'react-native';
 import { HomeStyle, MainPageStyle, ProfileStyle } from '../style/style';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -66,16 +66,16 @@ export default function MainPage ({ route, navigation }) {
         if (toggleValueLock === true) {
             setToggleValueLock(false)
             setLockText("Unlocked")
-            setModalVisible(true)
-            setModalText("Doors are UNLOCKED")
+            //setModalVisible(true)
+            //setModalText("Doors are UNLOCKED")
             //console.log("Lock is false")
             
         }
         else if (toggleValueLock === false) {
             setToggleValueLock(true)
             setLockText("Locked")
-            setModalVisible(true)
-            setModalText("Doors are LOCKED")
+            //setModalVisible(true)
+            //setModalText("Doors are LOCKED")
             //console.log("Lock is true")
         }
     }
