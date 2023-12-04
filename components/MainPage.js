@@ -1,5 +1,5 @@
 import React, { useState, useEffect, usePrevious } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity, BackHandler, Alert } from 'react-native';
 import { HomeStyle, MainPageStyle, ProfileStyle } from '../style/style';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -25,11 +25,38 @@ export default function MainPage ({ route, navigation }) {
       const fetchData = async () => {
         const data = await getUserData(userUid);
         setUserData(data);
-        console.log(data)
       };
 
       fetchData();
     }, [userUid]);
+
+    useEffect(() => {
+        const backAction = () => {
+          Alert.alert('Hold on!', 'Are you sure you want to log out?', [
+            {
+              text: 'Cancel',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {text: 'YES', onPress: () => handleLogout()},
+          ]);
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          'hardwareBackPress',
+          backAction,
+        );
+    
+        return () => backHandler.remove();
+      }, []);
+
+      const handleLogout = () => {
+        logOut()
+        navigation.navigate('Home')
+      }
+
+
 
     function changeLockValue() {
         if (toggleValueLock === true) {
@@ -70,22 +97,15 @@ export default function MainPage ({ route, navigation }) {
         }
     }
 
-    /* const handleLogout = () => {
-     
-        logOut()
-        navigation.navigate("Login")
-    } */
-
     let componentToShow;
 
-    // Check if userData and userData.car exist before accessing their properties
     if (userData && userData.car) {
         switch (userData.car.value) {
         case 'Flash EV':
             componentToShow = (
             <Image
                 source={require('../images/CarTransparent.png')}
-                style={{ width: 330, height: 230, resizeMode: 'contain' }}
+                style={{ width: 330, height: 230, resizeMode: 'contain'}}
             />
             );
             break;
@@ -93,23 +113,24 @@ export default function MainPage ({ route, navigation }) {
             componentToShow = (
             <Image
                 source={require('../images/CarEV.png')}
-                style={{ width: 330, height: 230, resizeMode: 'contain' }}
+                style={{ width: 330, height: 230, resizeMode: 'contain'}}
             />
             );
             break;
         case 'Bolt EV':
             componentToShow = <Image
             source={require('../images/VOlterraBoltEV2.png')}
-            style={{ width: 330, height: 230, resizeMode: 'contain' }}
+            style={{ width: 330, height: 230, resizeMode: 'contain'}}
             />
             break;
         default:
             componentToShow = null;
         }
     } else {
-        // Handle the case where userData or userData.car is null or undefined
         componentToShow = null;
     }
+
+
     
     return (
         <View style={MainPageStyle.container}>
@@ -120,11 +141,10 @@ export default function MainPage ({ route, navigation }) {
             
             </View> )}
             <View style={MainPageStyle.carImage}>
-                <Image source={require('../images/CarTransparent.png')} 
-                    style={{width: 330, height: 230, resizeMode: 'contain'}}
-                />
                 {componentToShow}
+                <MaterialCommunityIcons name={toggleValueLock ? 'lock' : 'lock-open-variant'} size={40} style={{position: 'absolute', top: 90, color: toggleValueLock ? 'red' : 'green', backgroundColor: '#e9c46a', borderRadius: 30, padding: 8}}/>
             </View>
+            
             <View style={[MainPageStyle.battery, {marginBottom: 0}]}>
                 {/*<Text style={MainPageStyle.standInText}>BATTERY</Text> */}
                 <CircularProgression />

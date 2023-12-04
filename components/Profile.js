@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react';
 export default Profile = ({ route, navigation }) => {
 
   const user = getAuth().currentUser
-  console.log(user)
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -56,10 +55,10 @@ export default Profile = ({ route, navigation }) => {
 
                 <TouchableOpacity 
                 style={ProfileStyle.button}
-                onPress={()=>navigation.navigate('Main Page', { userUid: user.uid })}
+                onPress={()=>navigation.navigate('Car Info', { userUid: user.uid })}
                 >
                     <MaterialCommunityIcons name="car-sports" size={35} color="black" />
-                    <Text style={ProfileStyle.buttonText}>Remote Control</Text>
+                    <Text style={ProfileStyle.buttonText}>Technical Specs</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 

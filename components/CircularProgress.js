@@ -1,12 +1,72 @@
-import React from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { MainPageStyle } from '../style/style';
+import { getUserData } from "./Auth";
+import { getAuth } from 'firebase/auth';
 
 const CircularProgression = () => {
-    
-    const circleValue = 50;
-    const titleShow = "300 km";
+
+    const user = getAuth().currentUser
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+        try {
+            const user = await getUserData();
+            setUserData(user);
+            console.log(userData)
+        } catch (error) {
+            console.error('Error fetching user data:', error.message);
+        }
+        };
+
+        fetchUserData();
+    }, []);
+
+    let circleValue
+    let titleShow
+    let titleColor
+
+    if (userData && userData.car) {
+        circleValue = userData.car.capacityLeft
+        titleShow = [`${Math.round(userData.car.range / 100 * userData.car.capacityLeft)} km`]
+        /* if (userData.car.capacityLeft <= 100 && userData.car.capacityLeft >= 50) {
+            titleColor = '#1eb400'
+        }
+        else if (userData.car.capacityLeft < 50 && userData.car.capacityLeft >= 25) {
+            titleColor = '#fffb00'
+        } 
+        else if (userData.car.capacityLeft < 25 && userData.car.capacityLeft >= 10) {
+            titleColor = '#ff9100'
+        }
+        else if (userData.car.capacityLeft < 10 && userData.car.capacityLeft >= 1) {
+            titleColor = '#ff0000'
+        }
+        else {
+            titleColor = '#000000'
+        } */
+        switch (true) {
+            case (userData.car.capacityLeft <= 100 && userData.car.capacityLeft >= 80):
+              titleColor = '#1eb400';
+              break;
+            case (userData.car.capacityLeft < 80 && userData.car.capacityLeft >= 50):
+              titleColor = '#fffb00';
+              break;
+            case (userData.car.capacityLeft < 50 && userData.car.capacityLeft >= 20):
+              titleColor = '#ff9100';
+              break;
+            case (userData.car.capacityLeft < 20 && userData.car.capacityLeft >= 1):
+              titleColor = '#ff0000';
+              break;
+            default:
+              titleColor = '#ffffff';
+          }
+        
+        }
+    else {
+        circleValue = 0
+    }
 
     return (
         <View style={MainPageStyle.circularContainer}>
@@ -33,8 +93,8 @@ const CircularProgression = () => {
                         width: 3,
                     }} 
                     title={titleShow}
-                    titleColor={"#06b900"}
-                    titleStyle={MainPageStyle.circleTitle}
+                    titleColor={titleColor}
+                    titleStyle={{fontWeight: 'bold'}}
                     progressValueStyle={MainPageStyle.circleProgress}
                 />
             </View>

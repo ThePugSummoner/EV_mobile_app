@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert, BackHandler } from 'react-native';
 import { signUp } from "./Auth";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { auth } from "../firebase/Config";
@@ -8,9 +8,9 @@ import { Picker } from '@react-native-picker/picker';
 
 
 const carOptions = [
-  { label: 'Flash EV', value: 'Flash EV', drive: 'rear', totalPower: 150, torque: 250, range: 374, capacity: 64, chargePower: 6.6, consumption: 17.1},
-  { label: 'Lightning EV', value: 'Lightning EV', drive: 'dual motor AWD', totalPower: 340, torque: 510, range: 400, capacity: 75, chargePower: 11, consumption: 18.7},
-  { label: 'Bolt EV', value: 'Bolt EV', drive: 'rear',  totalPower: 250, torque: 320, range: 384, capacity: 70, chargePower: 11, consumption: 18.2},
+  { label: 'Flash EV', value: 'Flash EV', drive: 'rear', totalPower: 150, torque: 250, range: 374, capacity: 64, chargePower: 6.6, consumption: 17.1, capacityLeft: 40},
+  { label: 'Lightning EV', value: 'Lightning EV', drive: 'dual motor AWD', totalPower: 340, torque: 510, range: 400, capacity: 75, chargePower: 11, consumption: 18.7, capacityLeft: 20},
+  { label: 'Bolt EV', value: 'Bolt EV', drive: 'rear',  totalPower: 250, torque: 320, range: 384, capacity: 70, chargePower: 11, consumption: 18.2, capacityLeft: 60},
 
 ];
 
@@ -22,6 +22,34 @@ export default function Register ({ navigation }) {
   const [repeatPassword, setRepeatPassword] = useState('');
   const [error, setError] = useState('');
   const [selectedCar, setSelectedCar] = useState({});
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Hold on!', 'Are you sure you want to navigate back?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => navigateToLogin()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  const navigateToLogin = () => {
+    // Navigate to the login page using your navigation library
+    navigation.navigate('Home'); // Replace 'Login' with the correct screen name
+  };
+
+
 
   const handleRegister = async () => {
     if(!name) {
