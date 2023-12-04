@@ -31,29 +31,14 @@ const CircularProgression = () => {
     if (userData && userData.car) {
         circleValue = userData.car.capacityLeft
         titleShow = [`${Math.round(userData.car.range / 100 * userData.car.capacityLeft)} km`]
-        /* if (userData.car.capacityLeft <= 100 && userData.car.capacityLeft >= 50) {
-            titleColor = '#1eb400'
-        }
-        else if (userData.car.capacityLeft < 50 && userData.car.capacityLeft >= 25) {
-            titleColor = '#fffb00'
-        } 
-        else if (userData.car.capacityLeft < 25 && userData.car.capacityLeft >= 10) {
-            titleColor = '#ff9100'
-        }
-        else if (userData.car.capacityLeft < 10 && userData.car.capacityLeft >= 1) {
-            titleColor = '#ff0000'
-        }
-        else {
-            titleColor = '#000000'
-        } */
         switch (true) {
             case (userData.car.capacityLeft <= 100 && userData.car.capacityLeft >= 80):
               titleColor = '#1eb400';
               break;
-            case (userData.car.capacityLeft < 80 && userData.car.capacityLeft >= 50):
+            case (userData.car.capacityLeft < 80 && userData.car.capacityLeft >= 40):
               titleColor = '#fffb00';
               break;
-            case (userData.car.capacityLeft < 50 && userData.car.capacityLeft >= 20):
+            case (userData.car.capacityLeft < 40 && userData.car.capacityLeft >= 20):
               titleColor = '#ff9100';
               break;
             case (userData.car.capacityLeft < 20 && userData.car.capacityLeft >= 1):

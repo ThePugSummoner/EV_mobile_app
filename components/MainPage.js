@@ -1,5 +1,5 @@
 import React, { useState, useEffect, usePrevious } from 'react';
-import { Text, View, Image, TouchableOpacity, BackHandler, Alert, Alert, Modal, Pressable } from 'react-native';
+import { Text, View, Image, TouchableOpacity, BackHandler, Alert, Modal, Pressable } from 'react-native';
 import { HomeStyle, MainPageStyle, ProfileStyle } from '../style/style';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -66,7 +66,7 @@ export default function MainPage ({ route, navigation }) {
         if (toggleValueLock === true) {
             setToggleValueLock(false)
             setLockText("Unlocked")
-            setModalVisible(true)
+           /*  setModalVisible(true) */
             setModalText("Doors are UNLOCKED")
             //console.log("Lock is false")
             
@@ -74,7 +74,7 @@ export default function MainPage ({ route, navigation }) {
         else if (toggleValueLock === false) {
             setToggleValueLock(true)
             setLockText("Locked")
-            setModalVisible(true)
+            /* setModalVisible(true) */
             setModalText("Doors are LOCKED")
             //console.log("Lock is true")
         }
@@ -137,7 +137,7 @@ export default function MainPage ({ route, navigation }) {
         case 'Bolt EV':
             componentToShow = <Image
             source={require('../images/VOlterraBoltEV2.png')}
-            style={{ width: 330, height: 230, resizeMode: 'contain'}}
+            style={{ width: 400, height: 230, resizeMode: 'contain', paddingTop: 0}}
             />
             break;
         default:
@@ -159,7 +159,7 @@ export default function MainPage ({ route, navigation }) {
             </View> )}
             <View style={MainPageStyle.carImage}>
                 {componentToShow}
-                <MaterialCommunityIcons name={toggleValueLock ? 'lock' : 'lock-open-variant'} size={40} style={{position: 'absolute', top: 90, color: toggleValueLock ? 'red' : 'green', backgroundColor: '#e9c46a', borderRadius: 30, padding: 8}}/>
+                <MaterialCommunityIcons name={toggleValueLock ? 'lock' : 'lock-open-variant'} size={40} style={{position: 'absolute', top: 90, color: toggleValueLock ? 'red' : 'green', backgroundColor: '#1d1a39af', borderRadius: 30, padding: 8}}/>
             </View>
             
             <View style={[MainPageStyle.battery, {marginBottom: 0}]}>

@@ -5,7 +5,7 @@ import Constants from "expo-constants";
 const CharginStationsStyle = StyleSheet.create({
     container:{
         container: {
-            paddingTop: Constants.statusBarHeight,
+            /* paddingTop: Constants.statusBarHeight, */
             flex: 1,
             backgroundColor: '#fff',
             alignItems: 'center',
@@ -233,7 +233,7 @@ const MainPageStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1D1A39',
-        marginTop: Constants.statusBarHeight, //ok?
+        
     },
     header: {
         flexDirection: 'row',

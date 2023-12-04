@@ -56,7 +56,7 @@ function CarInfo(){
                 componentToShow = (
                 <Image
                     source={require('../images/CarTransparent.png')}
-                    style={{ width: 430, height: 330, resizeMode: 'contain' }}
+                    style={{ width: 330, height: 230, resizeMode: 'contain' }}
                 />
                 );
                 break;
@@ -64,7 +64,7 @@ function CarInfo(){
                 componentToShow = (
                 <Image
                     source={require('../images/CarEV.png')}
-                    style={{ width: 430, height: 330, resizeMode: 'contain' }}
+                    style={{ width: 330, height: 330, resizeMode: 'contain' }}
                 />
                 );
                 break;
@@ -86,19 +86,7 @@ function CarInfo(){
             <View style={MainPageStyle.carImage}>
                 {componentToShow}
             </View>
-            {userData && /* (
-                    <>
-                    <Text style={HomeStyle.text}>Car model: Volterra {userData.car.value}</Text>
-                    <Text style={HomeStyle.text}>Drive: {userData.car.drive}</Text>
-                    <Text style={HomeStyle.text}>Total power: {userData.car.totaPower} kW</Text>
-                    <Text style={HomeStyle.text}>Torque: {userData.car.torque} Nm</Text>
-                    <Text style={HomeStyle.text}>Range: {userData.car.range} km</Text>
-                    <Text style={HomeStyle.text}>Battery capacity: {userData.car.capacity} kWh</Text>
-                    <Text style={HomeStyle.text}>Charging power: {userData.car.chargePower} kW</Text>
-                    <Text style={HomeStyle.text}>Consumption: {userData.car.consumption} kW/100km</Text>
-                    </>
-                    
-                ) */ <CarInfoTable userData={userData}/>}
+            {userData && <CarInfoTable userData={userData}/>}
         </View>
         
     )
