@@ -1,5 +1,5 @@
 import React, { useState, useEffect, usePrevious } from 'react';
-import { Text, View, Image, TouchableOpacity, BackHandler, Alert, Alert, Modal, Pressable } from 'react-native';
+import { Text, View, Image, TouchableOpacity, BackHandler, Alert, Modal, Pressable } from 'react-native';
 import { HomeStyle, MainPageStyle, ProfileStyle } from '../style/style';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
