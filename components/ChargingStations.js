@@ -175,6 +175,7 @@ export default ChargingStation = ({ navigation }) => {
     //buttonille millä saadaa lähimmät asemat slideriin
     // Samaa käytetään myös päivittämiseen.
     function handleCloseDataPress() {
+
         const arr = getClosestData()
         if (arr.length === 0) {
             Alert.alert("Info", "There are no charging stations in that area.")
@@ -191,6 +192,50 @@ export default ChargingStation = ({ navigation }) => {
         }
     }
 
+    function handleMarkerPress(event) {
+        console.log(event.nativeEvent,"eventti")
+        const coordinate = event.nativeEvent.coordinate
+        const arr = []
+
+        data.map((mapData, index) => {
+            if (haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude) < RADIUS) {
+                arr.push({ ...mapData, range: haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude) })
+            }
+        })
+        arr.sort((a, b) => a.range - b.range);
+        if(arr.length!==dataClose.length){
+            console.log("uusi array")
+            setDataClose(arr)
+            const mapIndex=data.findIndex(map => map.langitude === coordinate.langitude && map.longitude===coordinate.longitude)
+            const mapId= data[mapIndex].id
+            const closeDataIndex = arr.findIndex(arr => arr.id===mapId)
+            const xAxis= 320 * closeDataIndex
+    
+                setShowCloseData(true)
+                handleOpenPress()
+                setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
+                setUpdateCloseData(false)
+                scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: true })
+        }else{
+            console.log("Vanha array")
+            const mapIndex=data.findIndex(map => map.langitude === coordinate.langitude && map.longitude===coordinate.longitude)
+            const mapId= data[mapIndex].id
+            const closeDataIndex = dataClose.findIndex(arr => arr.id===mapId)
+            const xAxis= 320 * closeDataIndex
+    
+                setShowCloseData(true)
+                handleOpenPress()
+                setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
+                setUpdateCloseData(false)
+                scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: true })
+               
+            
+    
+        }
+      
+    }
+
+
     const isCloseToRight = ({ layoutMeasurement, contentOffset, contentSize }) => {
         const paddingToRight = 20;
         return layoutMeasurement.width + contentOffset.x >= contentSize.width - paddingToRight;
@@ -203,14 +248,14 @@ export default ChargingStation = ({ navigation }) => {
 
         const closeRight = isCloseToRight(event.nativeEvent)
         const mod = modulo(parseInt(event.nativeEvent.contentOffset.x), 320)
-        console.log(closeRight,"lähellä loppua")
+        console.log(closeRight, "lähellä loppua")
         if (closeRight === true) {
             const item = dataClose[dataClose.length - 1]
             const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
             setIndexi(currentMapIndex)
             setScrollIndex(dataClose.length - 1)
-            
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA },1000)
+            console.log(currentMapIndex)
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
         } else if (mod === false) {
             return //console.log("modulo false")
         }
@@ -221,10 +266,10 @@ export default ChargingStation = ({ navigation }) => {
             setIndexi(currentMapIndex)
             setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
             map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
-           
-           
-           
-           
+
+
+
+
             //    clearTimeout(myTime)
 
             //     const myTime=setTimeout(()=>{
@@ -325,19 +370,24 @@ export default ChargingStation = ({ navigation }) => {
                         followsUserLocation={true}
                         loadingEnabled={true}
                         minZoom={1}
-                        minPoints={currentZoomLevel > 5 ? 10 : 2}
+                        minPoints={currentZoomLevel > 5 ? 10 : 5}
                         maxZoom={7}
                         clusterColor='red'
                         radius={currentZoomLevel <= 7 ? Dimensions.get("window").width * 0.2 : Dimensions.get("window").width * 0.06}
-
+                        extent={600}
+                        nodeSize={64}
+                        spiderLineColor="#ff00f2"
 
                     >
                         {data.map((marker, index) =>
-                            <Marker key={index}
+                            <Marker key={marker.id}
                                 title={marker.name}
+                                id={marker.id}
                                 coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
                                 tracksViewChanges={false}
+                                onPress={(e) => handleMarkerPress(e)}
                             >
+                                
                                 <FontAwesome5 name="map-marker-alt" size={index === indexi ? 1.25 * 24 : 24} color={index === indexi ? "orange" : "red"} />
                             </Marker>)}
 
