@@ -39,7 +39,7 @@ export default function Login ({ navigation }) {
   return (
     <View style={HomeStyle.container}>
     <View style={HomeStyle.containerLogin}>
-      <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 10}}>Login</Text>
+      <Text style={HomeStyle.header}>LOGIN</Text>
       <TextInput
         style={HomeStyle.textInput}
         placeholder="Enter your email*"
@@ -56,16 +56,9 @@ export default function Login ({ navigation }) {
         secureTextEntry={true}
       />
       <TouchableOpacity
-        style={{
-          backgroundColor: '#cbb26a',
-          padding: 10,
-          borderRadius: 5,
-          alignItems: 'center',
-          margin: 10
-        }}
-        onPress={handleLogin}
+        style={HomeStyle.loginButton} onPress={handleLogin}
       >
-        <Text style={{ fontSize: 20, color: '#1D1A39', fontWeight: 'bold' }}>LOGIN</Text>
+        <Text style={HomeStyle.loginButtonText}>LOGIN</Text>
       </TouchableOpacity>
       </View>
     </View>

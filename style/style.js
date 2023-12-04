@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Dimensions } from 'react-native';
-import Constants from "expo-constants"
+import Constants from "expo-constants";
 
 const CharginStationsStyle = StyleSheet.create({
     container:{
@@ -14,26 +14,45 @@ const CharginStationsStyle = StyleSheet.create({
     }
 })
 
-
+const LogoAnimationStyle = StyleSheet.create({
+    animationB:{
+        backgroundColor: '#CBB26A', 
+        padding: 10, 
+        borderRadius: 8, 
+        alignItems: 'center', 
+       // borderColor:"#D8C690",
+       // borderWidth:2,
+    },
+    animationBtext:{
+        fontSize: 20, 
+        color: '#1a1a1a'
+    },
+})
 
 const HomeStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1D1A39',
-        alignItems: 'center',
+        alignItems: "center",
         justifyContent: 'center',
     },
+    header:{
+        fontSize: 30, 
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign:"center"
+    },
     containerLogin: {
-        backgroundColor: '#E5D9B6',
-        alignItems: 'center',
+        backgroundColor: '#E5D9B6', //tämä sama sävy laitettu bottomnaviin
+        alignItems: "stretch",
         justifyContent: 'space-around',
         padding: 30,
-        borderRadius: 10
+        borderRadius: 8,
     },
     textInput: {
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#cbb26a',
-        borderRadius: 5,
+        borderRadius: 8,
         padding: 10,
         margin: 10,
         width: 200,
@@ -44,7 +63,7 @@ const HomeStyle = StyleSheet.create({
     input: {
         borderWidth: 1,
         borderColor: '#cbb26a',
-        borderRadius: 5,
+        borderRadius: 8,
         padding: 10,
         margin: 10,
         width: 300,
@@ -57,7 +76,20 @@ const HomeStyle = StyleSheet.create({
         color: '#cbb26a',
         fontSize: 20,
 
-    }
+    },
+    loginButton:{ //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
+        backgroundColor: '#cbb26a',
+        padding: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+        margin: 10,
+        
+    },
+    loginButtonText:{
+        fontSize: 20, 
+        color: '#1a1a1a', 
+        //fontWeight: 'bold'
+    },
 }) 
 
 const ProfileStyle = StyleSheet.create({
@@ -92,6 +124,8 @@ buttonText:{
 
 })
 
+
+
 const ePriceStyle = StyleSheet.create({
     container:{
         backgroundColor: '#1D1A39',
@@ -102,6 +136,7 @@ const ePriceStyle = StyleSheet.create({
         //row: 3,
         justifyContent: 'center',
         alignItems: 'center',
+        flex:1
     },
     headline:{
         fontSize:30,
@@ -129,7 +164,7 @@ const ePriceStyle = StyleSheet.create({
     bghourprice:{
         //backgroundColor: '#1ED1B1',
         //borderRadius: 20,
-        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        borderRadius: 150,
         width: Dimensions.get('window').width * 0.6,
         height: Dimensions.get('window').width * 0.6,
         backgroundColor:'#094F44',//#094F44
@@ -143,12 +178,13 @@ const ePriceStyle = StyleSheet.create({
     container3:{
         justifyContent: 'center',
         alignItems: 'center',
+        flex:1
     },
     bghourprice2:{
         //väritestejä
     //backgroundColor: '#1ED1B1',
     //borderRadius: 20,
-    borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+    borderRadius: 150,
         width: Dimensions.get('window').width * 0.6,
         height: Dimensions.get('window').width * 0.6,
         backgroundColor:'#d8c690',
@@ -162,15 +198,16 @@ const ePriceStyle = StyleSheet.create({
     margin: 20,
     marginTop: 30,
     flex: 1,
-    flexDirection:'row',
+    flexDirection:"column",
     justifyContent: 'space-evenly',
+    alignItems: 'center',
    
 }, square: {
     height: Dimensions.get('window').width * 0.45,
     width: Dimensions.get('window').width * 0.45,
     margin: 5,
     backgroundColor: '#1ED1B1',  
-    borderRadius: 5,
+    borderRadius: 8, //joo
     borderWidth: 2,
     borderColor:'#be9e44',
         
@@ -196,14 +233,15 @@ const MainPageStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1D1A39',
+        marginTop: Constants.statusBarHeight, //ok?
     },
     header: {
         flexDirection: 'row',
         backgroundColor: '#22203a',
         padding: 10,
-        borderBottomWidth: 1,
-        borderColor: "#b38c1a",
-        borderRadius: 5,
+        borderBottomWidth: 2,
+        borderColor: "#BE9E44", //#b38c1a
+        //borderRadius: 5,
         justifyContent: 'space-evenly'
     },
     standInText: {
@@ -316,4 +354,4 @@ const MainPageStyle = StyleSheet.create({
 
 })
 
-export {HomeStyle,ProfileStyle,CharginStationsStyle, ePriceStyle, MainPageStyle}
+export {HomeStyle,ProfileStyle,CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle}

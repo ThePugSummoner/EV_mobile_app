@@ -13,7 +13,9 @@ export default ElectricPrice = ({ navigation }) => {
 
     const [hourPrice, setHourPrice] = useState();
     const [allPrices, setAllPrices] = useState();
-    const [isLoading, setIsloading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
+    const [firstDayPrice,setFirstDayPrice]=useState()
+    const [secondDayPrice,setSecondDayPrice]=useState()
     const isFocused = useIsFocused();
 
     //Katsoo aikaa ja "onko käyttäjä sovelluksessa tässä näkymässä"
@@ -21,20 +23,17 @@ export default ElectricPrice = ({ navigation }) => {
 
         if (isFocused && isLoading === false) {
             const time = checkTime()
-            const endDateDb = allPrices.testi[0].endDate.split('T')[0]
+            const endDateDb = allPrices.testi[0].endDate
             const date1 = date()
-            
-           
 
-            console.log(date1, 'date1')
-            console.log(endDateDb, 'endDate')
-           
-
-            if ("14:30" < time && "2023-11-26" === date1) {
-                console.log(`${time} on isompi kuin 14:30`);
+            //console.log(date1, 'date1')
+            //console.log(endDateDb, 'endDate')
+            if ("14:30" < time && endDateDb === date1) {
+                fetchPrices()
+                console.log("Data päivitetty!");
 
             } else {
-                console.log(`${time} on pienempi 14:30`)
+                console.log("Ei päivitettävää!")
             }
         }
     }, [isFocused]);
@@ -71,8 +70,6 @@ export default ElectricPrice = ({ navigation }) => {
     }
 
 
-
-
     //tuntihinta sähkölle - Hourly price for electricity
     useEffect(() => {
         const dateAndTimeNow = new Date();
@@ -96,85 +93,109 @@ export default ElectricPrice = ({ navigation }) => {
         const dbRef = ref(db, PRICES_REF);
         get(dbRef).then((snapshot) => {
 
-            // onValue(priceRef, (snapshot) => {
             const data = snapshot.val() ? snapshot.val() : {};
             const dbPrice = { ...data };
-            //console.log(Object.keys(dbPrice).length,'Haku db:stä');
-            //console.log(dbPrice, 'haku db:stä')
+           
+            console.log(dbPrice, 'haku db:stä')
             //rajapintahaku jos db on tyhjä
             if (Object.keys(dbPrice).length === 0 && isLoading) {
 
-                (async () => {
-
-                    try {
-                        const arr = [];
-                        const response = await fetch(LATEST_PRICES_ENDPOINT);
-                        const { prices } = await response.json();
-                        //console.log(prices, 'kokodata');
-                        for (let i = 0; i < prices.length; i++) {
-
-                            arr.push({ startDate: prices[i].startDate, endDate: prices[i].endDate, price: prices[i].price });
-                        }
-                        // const newPrices = push(child(ref(db), PRICES_REF)).key;
-                        // const updates = {};
-                        // updates[PRICES_REF + newPrices] = arr;
-                        // update(ref(db), updates);
-                        set(ref(db, PRICES_REF + 'testi'), arr)
-                        //Lisätty useState set
-                        setAllPrices(arr)
-                        setIsloading(false)
-                        console.log(arr.length, 'array useEffect');
-                        //console.log(`Hinta nyt on ${price}`);
-                    } catch (error) {
-                        alert(error);
-                    }
-                })();
-                //Else lisätty jossa on sitten myös useState set. Sillä laitetaan jo valmiina oleva Db data
+                    fetchPrices()
             } else {
                 setAllPrices(dbPrice)
-                setIsloading(false)
-                console.log("else")
+                setIsLoading(false)
+                testi(dbPrice.testi)
+                console.log("Haku firebasesta onnistui!")
+                //console.log(dbPrice,"else")
             }
 
         });
 
-
-
     }, []);
 
-   
+
+    
+async function fetchPrices(){
+    try{
+        const arr = [];
+        const response = await fetch(LATEST_PRICES_ENDPOINT);
+        const { prices } = await response.json();
+        for (let i = 0; i < prices.length; i++) {
+            const startTime=`${prices[i].startDate.split('T')[1].split(":")[0]} : ${prices[i].startDate.split('T')[1].split(":")[1]}`
+            const endTime=`${prices[i].endDate.split('T')[1].split(":")[0]} : ${prices[i].endDate.split('T')[1].split(":")[1]}`
+            arr.push({ startDate: prices[i].startDate.split('T')[0],startTime:startTime,endDate: prices[i].endDate.split('T')[0],endTime:endTime, price: prices[i].price });
+        }
+        set(ref(db, PRICES_REF + 'testi'), arr)
+        setAllPrices(arr)
+        testi(arr)
+        setIsLoading(false)
+        //console.log(arr.length, 'array useEffect1');
+        //console.log(arr,"arr")
+        console.log("Haku rajapinnasta onnistui!")
+    }catch(e){
+alert(e)
+    }
+}
+
+    function testi(item){
+        const pricesFirstDay =[]
+        const pricesSecondDay =[]
+        console.log(item[0].endDate,"item")
+        console.log(item,"miltä itemi näyttää")
+        item.map(priceData =>
+          {
+            if(item[0].startDate===priceData.startDate){
+                pricesFirstDay.push({
+                    price:priceData.price,
+                    endDate:priceData.endDate,
+                    endTime:priceData.endTime,
+                    startDate:priceData.startDate,
+                    startTime:priceData.startTime
+                    })
+            }else{
+                pricesSecondDay.push(
+                    {price:priceData.price,
+                    endDate:priceData.endDate,
+                    endTime:priceData.endTime,
+                    startDate:priceData.startDate,
+                    startTime:priceData.startTime
+                    })
+            }}
+
+            )
+        const priceFirstDay=pricesFirstDay.sort(({ price: a }, { price: b }) => b - a);
+        const priceSecondDAy=pricesSecondDay.sort(({ price: a }, { price: b }) => b - a);
+        const firstDayMaxPrice = priceFirstDay[0]
+        const firstDayMinPrice =priceFirstDay[priceFirstDay.length-1]
+        const secondDayMaxPrice = priceSecondDAy[0]
+        const secondDayMinPrice =priceSecondDAy[priceSecondDAy.length-1]
+            setFirstDayPrice({maxPrice:firstDayMaxPrice,minPrice:firstDayMinPrice})
+            setSecondDayPrice({maxPrice:secondDayMaxPrice,minPrice:secondDayMinPrice})
+        console.log(firstDayMaxPrice,"isoin hinta")
+        console.log(firstDayMinPrice,"Pienin hinta")
+        console.log(secondDayMaxPrice,"isoin hinta")
+        console.log(secondDayMinPrice,"Pienin hinta")
+ 
+        
+    }
+
+
 
     const removePrices = () => {
         remove(ref(db, PRICES_REF));
-        // (async () => {
-        //     const arr = [];
-        //     const response = await fetch(LATEST_PRICES_ENDPOINT);
-        //    try {
-        //     const { prices } = await response.json();
-        //     //console.log(prices, 'kokodata');
-        //     for (let i = 0; i < prices.length; i++) {
-
-        //         arr.push({startDate: prices[i].startDate, endDate: prices[i].endDate, price: prices[i].price});
-        //     }
-        //     const newPrices = push(child(ref(db), PRICES_REF)).key;
-        //     const updates = {};
-        //     updates[PRICES_REF + newPrices] = arr;
-        //     update(ref(db), updates);
-        //     //Lisätty useState set
-        //     setAllPrices(arr)
-
-        //     console.log(arr.length, 'array remove');
-        //     //console.log(`Hinta nyt on ${price}`);
-        //    } catch (error) {
-        //     alert(error);
-        //    }
-        // })();
+  
     }
+
+
     console.log(isLoading)
+    console.log(firstDayPrice)
     //console.log(allPrices,"kaikki hinnat")
     return (
-        <>
-            <ScrollView>
+        
+            <ScrollView style={{flex:1,}}
+            contentContainerStyle={{justifyContent:"flex-start",alignItems:"stretch"}}
+            overScrollMode='never'
+            >
                 <View style={ePriceStyle.container}>
 
                     <Text style={ePriceStyle.headline}>Electricity price</Text>
@@ -193,12 +214,36 @@ export default ElectricPrice = ({ navigation }) => {
                     </View>
 
                     <View style={ePriceStyle.testi}>
+                        <View>
+                        <Text style={ePriceStyle.headline4}>Day: {firstDayPrice?.minPrice.endDate}</Text>
+                        </View>
+                        <View style={{flex:1,flexDirection:"row"}}>
                         <View style={ePriceStyle.square}>
-                            <Text style={ePriceStyle.headline4}>Lowest price:</Text>
+                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime}</Text>
                         </View>
                         <View style={ePriceStyle.square2}>
-                            <Text style={ePriceStyle.headline4}>Highest price</Text>
+                        <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime}</Text>
                         </View>
+                        </View>
+                        
+                    </View>
+                    <View style={ePriceStyle.testi}>
+                        <View>
+                        <Text style={ePriceStyle.headline4}>Day: {secondDayPrice?.minPrice.endDate}</Text>
+                        </View>
+                        <View style={{flex:1,flexDirection:"row"}}>
+                        <View style={ePriceStyle.square2}>
+                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
+                        </View>
+                        <View style={ePriceStyle.square}>
+                        <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
+                        </View>
+                        </View>
+                        
                     </View>
                     <View>
                         <Button title="Remove" onPress={() => removePrices()}></Button>
@@ -208,6 +253,6 @@ export default ElectricPrice = ({ navigation }) => {
 
                 </View>
             </ScrollView>
-        </>
+        
     );
 }
