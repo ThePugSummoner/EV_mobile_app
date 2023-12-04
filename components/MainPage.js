@@ -66,16 +66,16 @@ export default function MainPage ({ route, navigation }) {
         if (toggleValueLock === true) {
             setToggleValueLock(false)
             setLockText("Unlocked")
-           /*  setModalVisible(true) */
-            setModalText("Doors are UNLOCKED")
+            //setModalVisible(true)
+            //setModalText("Doors are UNLOCKED")
             //console.log("Lock is false")
             
         }
         else if (toggleValueLock === false) {
             setToggleValueLock(true)
             setLockText("Locked")
-            /* setModalVisible(true) */
-            setModalText("Doors are LOCKED")
+            //setModalVisible(true)
+            //setModalText("Doors are LOCKED")
             //console.log("Lock is true")
         }
     }
