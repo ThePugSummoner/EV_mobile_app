@@ -268,7 +268,51 @@ const MainPageStyle = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 12,
         color: "#cbb26a"
-    }
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 5,
+        backgroundColor: 'rgba(6, 0, 46, 0.45)'
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: '#cbb26a',
+        borderRadius: 15,
+        padding: 25,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 10,
+    },
+    button: {
+        borderRadius: 15,
+        padding: 10,
+        elevation: 4,
+        marginTop: 5
+    },
+    buttonOpen: {
+        backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+        backgroundColor: '#1D1A39',
+    },
+    modalPressableText: {
+        color: 'white',
+        fontWeight: '400',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        fontSize: 17,
+        textAlign: 'center',
+    },
 
 })
 
