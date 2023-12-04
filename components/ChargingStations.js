@@ -191,22 +191,55 @@ export default ChargingStation = ({ navigation }) => {
 
         }
     }
+    function testie(obj) {
+        console.log(obj)
+        if(obj.length!==dataClose.length){
+            return false
+        }
+    const arr=[]
+        for(let i=0;i<obj.length;i++){
+            for(let j=0;j<dataClose.length;j++){
+                if(obj[i].id===dataClose[j].id){
+                    arr.push(obj[i])
+                }
+               
+            }
+        }
+        console.log(arr.length,"arrin pituus test")
+        console.log(dataClose.length,"dataClose pituus test")
+
+       return arr.length!==dataClose.length ? false : true
+      }
 
     function handleMarkerPress(event) {
-        console.log(event.nativeEvent,"eventti")
+        console.log(event.nativeEvent.coordinate,"eventti")
         const coordinate = event.nativeEvent.coordinate
         const arr = []
-
+        const mapIndex1=data.findIndex(map => map.latitude === coordinate.latitude && map.longitude===coordinate.longitude)
+        console.log(arr,"Array alussa")
+        console.log(mapIndex1,"indexit alussa")
         data.map((mapData, index) => {
             if (haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude) < RADIUS) {
+                console.log(haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude),"haversin")
                 arr.push({ ...mapData, range: haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude) })
             }
         })
+        
+        const test =arr.findIndex(test => test.id===data[mapIndex1].id)
+        if(test===-1){
+            arr.push(data[mapIndex1])
+        }
+        console.log(test,"testi")
         arr.sort((a, b) => a.range - b.range);
-        if(arr.length!==dataClose.length){
+        console.log(arr.length,"arr koko")
+        console.log(dataClose.length,"dataClose koko")
+
+        const testii=testie(arr)
+        console.log(testii,"jotain sinne päion")
+        if(testii===false){
             console.log("uusi array")
             setDataClose(arr)
-            const mapIndex=data.findIndex(map => map.langitude === coordinate.langitude && map.longitude===coordinate.longitude)
+            const mapIndex=data.findIndex(map => map.latitude === coordinate.latitude && map.longitude===coordinate.longitude)
             const mapId= data[mapIndex].id
             const closeDataIndex = arr.findIndex(arr => arr.id===mapId)
             const xAxis= 320 * closeDataIndex
@@ -215,10 +248,10 @@ export default ChargingStation = ({ navigation }) => {
                 handleOpenPress()
                 setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
                 setUpdateCloseData(false)
-                scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: true })
+                scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: false })
         }else{
             console.log("Vanha array")
-            const mapIndex=data.findIndex(map => map.langitude === coordinate.langitude && map.longitude===coordinate.longitude)
+            const mapIndex=data.findIndex(map => map.latitude === coordinate.latitude && map.longitude===coordinate.longitude)
             const mapId= data[mapIndex].id
             const closeDataIndex = dataClose.findIndex(arr => arr.id===mapId)
             const xAxis= 320 * closeDataIndex
@@ -227,7 +260,7 @@ export default ChargingStation = ({ navigation }) => {
                 handleOpenPress()
                 setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
                 setUpdateCloseData(false)
-                scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: true })
+                scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: false })
                
             
     
