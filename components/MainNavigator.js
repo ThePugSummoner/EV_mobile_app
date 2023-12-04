@@ -43,7 +43,7 @@ const MainNavigator = () => (
         return <MaterialCommunityIcons name={iconName} size={size} color={color} />
         
         },
-        tabBarStyle: { backgroundColor: '#fff3be' }, // #22203a, #fff3be
+        tabBarStyle: { backgroundColor: '#E5D9B6',paddingBottom:5 }, // #fff3be #22203a, #fff3be //vähän irti iconeita pohjasta padding
         tabBarActiveTintColor: 'midnightblue', // midnightblue, khaki
         tabBarInactiveTintColor: 'darkgoldenrod' // darkgoldenrod, lightyellow
     })}>

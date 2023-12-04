@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Image, Animated, TouchableOpacity, Text } from 'react-native';
-import style from '../style/style';
+import {LogoAnimationStyle} from '../style/style';
 
 const LogoAnimation = ({ navigation }) => {
   
@@ -44,14 +44,14 @@ const LogoAnimation = ({ navigation }) => {
       > 
       
             <TouchableOpacity
-            style={{ backgroundColor: '#cbb26a', padding: 10, borderRadius: 5, alignItems: 'center' }}
+            style={LogoAnimationStyle.animationB}
             onPress={() => navigation.navigate('Login', { user: userName })}
             >
-            <Text style={{ fontSize: 20, color: '#1D1A39' }}>LOGIN</Text>
+            <Text style={LogoAnimationStyle.animationBtext}>LOGIN</Text>
             </TouchableOpacity>
             <Text></Text>
-            <TouchableOpacity style={{backgroundColor: '#cbb26a', padding: 10, borderRadius: 5, alignItems: 'center'}} onPress={() => navigation.navigate('Register')}>
-                <Text style={{fontSize: 20, color: '#1D1A39'}}>Registration</Text>
+            <TouchableOpacity style={LogoAnimationStyle.animationB} onPress={() => navigation.navigate('Register')}>
+                <Text style={LogoAnimationStyle.animationBtext}>REGISTRATION</Text>
             </TouchableOpacity>
         
       </Animated.View>

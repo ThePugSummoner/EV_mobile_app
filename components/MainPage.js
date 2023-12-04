@@ -1,5 +1,5 @@
 import React, { useState, useEffect, usePrevious } from 'react';
-import { Text, View, Image, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import { Text, View, Image, TouchableOpacity, BackHandler, Alert, Alert, Modal, Pressable } from 'react-native';
 import { HomeStyle, MainPageStyle, ProfileStyle } from '../style/style';
 import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -17,6 +17,10 @@ export default function MainPage ({ route, navigation }) {
 
     const [toggleValueAirConditioner, setToggleValueAirConditioner] = useState(false)
     const [airConditionerText, setAirConditionerText] = useState("AC off")
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalText, setModalText] = useState("");
+    //const [modalPressableText, setModalPressableText] = useState("");
 
     const { userUid } = route.params;
     const [userData, setUserData] = useState(null);
@@ -62,12 +66,17 @@ export default function MainPage ({ route, navigation }) {
         if (toggleValueLock === true) {
             setToggleValueLock(false)
             setLockText("Unlocked")
-            console.log("Lock is false")
+            setModalVisible(true)
+            setModalText("Doors are UNLOCKED")
+            //console.log("Lock is false")
+            
         }
         else if (toggleValueLock === false) {
             setToggleValueLock(true)
             setLockText("Locked")
-            console.log("Lock is true")
+            setModalVisible(true)
+            setModalText("Doors are LOCKED")
+            //console.log("Lock is true")
         }
     }
 
@@ -75,12 +84,16 @@ export default function MainPage ({ route, navigation }) {
         if (toggleValuePower === true) {
             setToggleValuePower(false)
             setPowerText("Power off")
-            console.log("Power is false")
+            setModalVisible(true)
+            setModalText("Power is turned OFF")
+            //console.log("Power is false")
         }
         else if (toggleValuePower === false) {
             setToggleValuePower(true)
             setPowerText("Power on")
-            console.log("Power is true")
+            setModalVisible(true)
+            setModalText("Power is turned ON")
+            //console.log("Power is true")
         }
     }
 
@@ -88,12 +101,16 @@ export default function MainPage ({ route, navigation }) {
         if (toggleValueAirConditioner === true) {
             setToggleValueAirConditioner(false)
             setAirConditionerText("AC off")
-            console.log("AC is false")
+            setModalVisible(true)
+            setModalText("Air conditioner is turned OFF")
+            //console.log("AC is false")
         }
         else if (toggleValueAirConditioner === false) {
             setToggleValueAirConditioner(true)
             setAirConditionerText("AC on")
-            console.log("AC is true")
+            setModalVisible(true)
+            setModalText("Air conditioner is turned ON")
+            //console.log("AC is true")
         }
     }
 
@@ -235,18 +252,26 @@ export default function MainPage ({ route, navigation }) {
                     <Text style={MainPageStyle.acTextStyle}>{airConditionerText}</Text>
                 </View>
             </View>
-            {/*<View style={MainPageStyle.buttonTexts}>
-                <View>
-                    <Text style={MainPageStyle.lockTextStyle}>{lockText}</Text>
-                </View>
-                <View>
-                    <Text style={MainPageStyle.powerTextStyle}>{powerText}</Text>
-                </View>
-                <View>
-                    <Text style={MainPageStyle.acTextStyle}>{airConditionerText}</Text>
-                </View>
-                </View> */}
+            <View style={MainPageStyle.modalContainer}>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                    }}>
+                    <View style={MainPageStyle.centeredView}>
+                    <View style={MainPageStyle.modalView}>
+                        <Text style={MainPageStyle.modalText}>{modalText}</Text>
+                        <Pressable
+                        style={[MainPageStyle.button, MainPageStyle.buttonClose]}
+                        onPress={() => setModalVisible(!modalVisible)}>
+                        <Text style={MainPageStyle.modalPressableText}>Understood</Text>
+                        </Pressable>
+                    </View>
+                    </View>
+                </Modal>
+            </View>
         </View>
-
     );
 }
