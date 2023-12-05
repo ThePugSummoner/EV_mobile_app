@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
-import { Alert, Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, Text, TouchableOpacity, View ,Animated} from 'react-native';
 import { Marker, Circle, animateToRegion } from 'react-native-maps';
 import MapView from "react-native-map-clustering";
 import * as Location from "expo-location"
@@ -40,6 +40,8 @@ export default ChargingStation = ({ navigation }) => {
     const map = useRef(null);
     const bottomSheetRef = useRef(null);
     const scrollViewRef = useRef(null)
+    let mapAnimation = new Animated.Value(0)
+    let mapIndex=0
 
     //useEffect latausasemille
     useEffect(() => {
@@ -211,55 +213,43 @@ export default ChargingStation = ({ navigation }) => {
 
         return arr.length !== dataClose.length ? false : true
     }
-
+function handleAddDataClose(coordinates){
+    
+        const coordinate =coordinates
+        const mapIndex = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
+        const dataCloseExist=dataClose.findIndex(close =>data[mapIndex].id===close.id)
+        if(dataCloseExist!==-1){
+         return true
+        }
+        const newCloseData=[...dataClose]
+        newCloseData.unshift(data[mapIndex])
+        const check=testie(newCloseData)
+        if(check===false){
+            setDataClose(newCloseData)
+        }
+        return check
+}
     function handleMarkerPress(event) {
        
-        const coordinate = event.nativeEvent.coordinate
-        const arr = []
-        const mapIndex = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
-
-        data.map((mapData, index) => {
-            if (haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude) < RADIUS) {
-                console.log(haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude), "haversin")
-                arr.push({ ...mapData, range: haversineDistanceBetweenPoints(coordinate.latitude, coordinate.longitude, mapData.latitude, mapData.longitude) })
-            }
-        })
-        console.log(mapIndex,"indexx")
-        const test = arr.findIndex(test => test.id === data[mapIndex].id)
-        if (test === -1) {
-            arr.push(data[mapIndex])
-        }
-        arr.sort((a, b) => a.range - b.range);
-        const testii = testie(arr)
-
-        if (testii === false) {
-            console.log("uusi array")
-            setDataClose(arr)
-            const mapId = data[mapIndex].id
-            const closeDataIndex = arr.findIndex(arr => arr.id === mapId)
-            const xAxis = 320 * closeDataIndex
-            console.log(xAxis,"x akseli")
+         const coordinate = event.nativeEvent.coordinate
+        if(handleAddDataClose(coordinate)===false){
             setShowCloseData(true)
             handleOpenPress()
-            setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
+            setScrollIndex(0)
+            setIndexi(0)
+            scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true })
             setUpdateCloseData(false)
-            handleScrollMarkerPress(arr,xAxis)
-        } else {
-            console.log("Vanha array")
+        }else{
+            const mapIndex = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
             const mapId = data[mapIndex].id
             const closeDataIndex = dataClose.findIndex(arr => arr.id === mapId)
             const xAxis = 320 * closeDataIndex
-            console.log(xAxis,"x akseli")
             setShowCloseData(true)
             handleOpenPress()
-            setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
             setUpdateCloseData(false)
+            setIndexi(mapIndex)
             scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: false })
-
-
-
         }
-
     }
 
 
@@ -268,28 +258,6 @@ export default ChargingStation = ({ navigation }) => {
         return layoutMeasurement.width + contentOffset.x >= contentSize.width - paddingToRight;
     };
 
-function handleScrollMarkerPress(arr,xAxis){
-    
-    if (xAxis===arr.length * 320) {
-        const item = arr[arr.length - 1]
-        const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
-        setIndexi(currentMapIndex)
-        setScrollIndex(arr.length - 1)
-        console.log(currentMapIndex)
-        map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
-        scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: false })
-    } else {
-        const item = arr[(xAxis / 320)]
-        const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
-        console.log(currentMapIndex)
-        setIndexi(currentMapIndex)
-        setScrollIndex(Math.floor(xAxis / 320))
-        map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
-        scrollViewRef.current?.scrollTo({ x: xAxis, y: 0, animated: false })
-
-}
-
-}
     //ScrollView scrollin tarkkailu
     function handleScroll(event) {
         //console.log(dataClose.length, "length")
@@ -304,7 +272,7 @@ function handleScrollMarkerPress(arr,xAxis){
             setIndexi(currentMapIndex)
             setScrollIndex(dataClose.length - 1)
             console.log(currentMapIndex)
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 350)
         } else if (mod === false) {
             return //console.log("modulo false")
         }
@@ -314,7 +282,7 @@ function handleScrollMarkerPress(arr,xAxis){
             console.log(currentMapIndex)
             setIndexi(currentMapIndex)
             setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
-            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 1000)
+            map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 350)
 
 
 
@@ -434,6 +402,7 @@ function handleScrollMarkerPress(arr,xAxis){
                                 id={marker.id}
                                 coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
                                 tracksViewChanges={false}
+                               
                                 onPress={(e) => handleMarkerPress(e)}
                             >
 
@@ -479,9 +448,12 @@ function handleScrollMarkerPress(arr,xAxis){
                                 disableIntervalMomentum={true}
                                 contentContainerStyle={{ paddingHorizontal: 20 }}
                                 pagingEnabled
+                                
                                 decelerationRate={"fast"}
 
-                                onScroll={(e) => handleScroll(e)}
+                                //onScroll={(e) => handleScroll(e)}
+                                onScroll={(e)=>handleScroll(e)
+                                  }
 
 
 
