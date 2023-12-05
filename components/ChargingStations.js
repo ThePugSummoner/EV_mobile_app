@@ -40,8 +40,6 @@ export default ChargingStation = ({ navigation }) => {
     const map = useRef(null);
     const bottomSheetRef = useRef(null);
     const scrollViewRef = useRef(null)
-    let mapAnimation = new Animated.Value(0)
-    let mapIndex=0
 
     //useEffect latausasemille
     useEffect(() => {
@@ -265,7 +263,7 @@ function handleAddDataClose(coordinates){
 
         const closeRight = isCloseToRight(event.nativeEvent)
         const mod = modulo(parseInt(event.nativeEvent.contentOffset.x), 320)
-        console.log(closeRight, "lähellä loppua")
+        //console.log(closeRight, "lähellä loppua")
         if (closeRight === true) {
             const item = dataClose[dataClose.length - 1]
             const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
@@ -279,7 +277,7 @@ function handleAddDataClose(coordinates){
         if (parseInt(event.nativeEvent.contentOffset.x / 320) !== scrollIndex && closeRight === false) {
             const item = dataClose[parseInt(event.nativeEvent.contentOffset.x / 320)]
             const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
-            console.log(currentMapIndex)
+            //console.log(currentMapIndex)
             setIndexi(currentMapIndex)
             setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
             map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 350)
