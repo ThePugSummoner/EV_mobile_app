@@ -209,29 +209,28 @@ alert(e)
                     </View>
                     <View style={ePriceStyle.container3}>
                         <View style={ePriceStyle.bghourprice2}>
-                            <Text style={ePriceStyle.headline3}>Hourly price: {hourPrice} snt/kWh</Text>
-                        </View>
+                            <Text style={ePriceStyle.headline3}>Hourly price: {"\n"}{hourPrice} snt/kWh</Text>
+                    </View>
+                    <View style={ePriceStyle.container3}>
+                        <View style={ePriceStyle.bghourprice2}>
+                        <Text style={ePriceStyle.headline2}>Hourly price:</Text>
+                            <Text style={ePriceStyle.headline3}>{hourPrice} snt/kWh</Text>
+                    </View>
+                    </View>
                     </View>
 
-                    <View style={ePriceStyle.testi}>
-                        <View>
-                        <Text style={ePriceStyle.headline4}>Day: {firstDayPrice?.minPrice.endDate}</Text>
-                        </View>
-                        <View style={{flex:1,flexDirection:"row"}}>
-                        <View style={ePriceStyle.square}>
-                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price}</Text>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime}</Text>
-                        </View>
-                        <View style={ePriceStyle.square2}>
-                        <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price}</Text>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime}</Text>
-                        </View>
-                        </View>
+                   
+                    <View style={ePriceStyle.container3}><Text style={ePriceStyle.headline3}>Hourly price:</Text>
+                        <View style={ePriceStyle.bghourprice2}>
                         
+                            <Text style={ePriceStyle.headline3}>{hourPrice} snt/kWh</Text>
                     </View>
+                    </View>
+                   
+                    
                     <View style={ePriceStyle.testi}>
                         <View>
-                        <Text style={ePriceStyle.headline4}>Day: {secondDayPrice?.minPrice.endDate}</Text>
+                        <Text style={ePriceStyle.headline3}>Day: {secondDayPrice?.minPrice.endDate}</Text>
                         </View>
                         <View style={{flex:1,flexDirection:"row"}}>
                         <View style={ePriceStyle.square2}>
@@ -245,6 +244,23 @@ alert(e)
                         </View>
                         
                     </View>
+                    <View style={ePriceStyle.testi}>
+                        <View>
+                        <Text style={ePriceStyle.headline3}>Day: {firstDayPrice?.minPrice.endDate}</Text>
+                        </View>
+                        <View style={{flex:1,flexDirection:"row"}}>
+                        <View style={ePriceStyle.square}>
+                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime}</Text>
+                        </View>
+                        <View style={ePriceStyle.square2}>
+                        <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime}</Text>
+                        </View>
+                        </View>
+                        
+                    </View>
+                 
                     <View>
                         <Button title="Remove" onPress={() => removePrices()}></Button>
 

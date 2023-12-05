@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 import Constants from "expo-constants";
 
 const CharginStationsStyle = StyleSheet.create({
-    container:{
+    container: {
         container: {
             /* paddingTop: Constants.statusBarHeight, */
             flex: 1,
@@ -15,16 +15,16 @@ const CharginStationsStyle = StyleSheet.create({
 })
 
 const LogoAnimationStyle = StyleSheet.create({
-    animationB:{
-        backgroundColor: '#CBB26A', 
-        padding: 10, 
-        borderRadius: 8, 
-        alignItems: 'center', 
-       // borderColor:"#D8C690",
-       // borderWidth:2,
+    animationB: {
+        backgroundColor: '#CBB26A',
+        padding: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+        // borderColor:"#D8C690",
+        // borderWidth:2,
     },
-    animationBtext:{
-        fontSize: 20, 
+    animationBtext: {
+        fontSize: 20,
         color: '#1a1a1a'
     },
 })
@@ -36,11 +36,11 @@ const HomeStyle = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'center',
     },
-    header:{
-        fontSize: 30, 
+    header: {
+        fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 10,
-        textAlign:"center"
+        textAlign: "center"
     },
     containerLogin: {
         backgroundColor: '#E5D9B6', //tämä sama sävy laitettu bottomnaviin
@@ -77,49 +77,49 @@ const HomeStyle = StyleSheet.create({
         fontSize: 20,
 
     },
-    loginButton:{ //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
+    loginButton: { //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
         backgroundColor: '#cbb26a',
         padding: 10,
         borderRadius: 8,
         alignItems: 'center',
         margin: 10,
-        
+
     },
-    loginButtonText:{
-        fontSize: 20, 
-        color: '#1a1a1a', 
+    loginButtonText: {
+        fontSize: 20,
+        color: '#1a1a1a',
         //fontWeight: 'bold'
     },
-}) 
+})
 
 const ProfileStyle = StyleSheet.create({
-container:{
-    flex:1,
-    justifyContent:"flex-start",
-    alignItems:"stretch"
-},
-avatar:{
-    flex:1,
-    justifyContent:"center",
-    alignItems:"center",
-    borderWidth:1,
-    padding:10
-},
-avatarText:{
-    textAlign:"left",
-    width:"40%",
-},
-button:{
-    height:Dimensions.get("window").height * 0.1,
-    justifyContent:"flex-start",
-    alignItems:"center",
-    flexDirection:"row",
-    gap:10,
-    borderWidth:1,
-},
-buttonText:{
-    fontSize:20
-}
+    container: {
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "stretch"
+    },
+    avatar: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        padding: 10
+    },
+    avatarText: {
+        textAlign: "left",
+        width: "40%",
+    },
+    button: {
+        height: Dimensions.get("window").height * 0.1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: 10,
+        borderWidth: 1,
+    },
+    buttonText: {
+        fontSize: 20
+    }
 
 
 })
@@ -127,104 +127,105 @@ buttonText:{
 
 
 const ePriceStyle = StyleSheet.create({
-    container:{
+    container: {
         backgroundColor: '#1D1A39',
-        flex: 1, 
+        flex: 1,
     },
-    container2:{
+    container2: {
         //backgroundColor: '#094F44',
         //row: 3,
         justifyContent: 'center',
         alignItems: 'center',
-        flex:1
+        flex: 1
     },
-    headline:{
-        fontSize:30,
+    headline: {
+        fontSize: 30,
         color: '#E5D9B6',
         textAlign: 'center',
         marginTop: 30,
         marginBottom: 20,
     },
-    headline2:{  
-        fontSize:25,
+    headline2: {
+        fontSize: 30,
         textAlign: 'center',
         margin: 10,
         marginTop: 20,
         color: '#ffffffff',
+        fontWeight: 'bold',
     },
-    headline3:{  
-        fontSize:30,
+    headline3: {
+        fontSize: 30,
         textAlign: 'center',
-        margin: 15,
+        margin: 10,
         color: '#ffffff',
     },
-    button:{
-       
+    button: {
+
     },
-    bghourprice:{
+    bghourprice: {
         //backgroundColor: '#1ED1B1',
         //borderRadius: 20,
         borderRadius: 150,
         width: Dimensions.get('window').width * 0.6,
         height: Dimensions.get('window').width * 0.6,
-        backgroundColor:'#094F44',//#094F44
+        backgroundColor: '#094F44',//#094F44
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
         borderWidth: 3,
-        borderColor:'#d8c690'//'#1ED1B1',
-       
+        borderColor: '#d8c690'//'#1ED1B1',
+
     },
-    container3:{
+    container3: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex:1
+        flex: 1
     },
-    bghourprice2:{
+    bghourprice2: {
         //väritestejä
-    //backgroundColor: '#1ED1B1',
-    //borderRadius: 20,
-    borderRadius: 150,
-        width: Dimensions.get('window').width * 0.6,
-        height: Dimensions.get('window').width * 0.6,
-        backgroundColor:'#d8c690',
+        //backgroundColor: '#1ED1B1',
+        //borderRadius: 20,
+        borderRadius: 8,
+        width: Dimensions.get('window').width * 0.7,
+        height: Dimensions.get('window').width * 0.4,
+        backgroundColor: '#d8c690',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
         margin: 10,
         borderWidth: 3,
-    borderColor:'#be9e44',
-}, testi:{
-    margin: 20,
-    marginTop: 30,
-    flex: 1,
-    flexDirection:"column",
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-   
-}, square: {
-    height: Dimensions.get('window').width * 0.45,
-    width: Dimensions.get('window').width * 0.45,
-    margin: 5,
-    backgroundColor: '#1ED1B1',  
-    borderRadius: 8, //joo
-    borderWidth: 2,
-    borderColor:'#be9e44',
-        
-  }, square2: {
-    height: Dimensions.get('window').width * 0.45,
-    width: Dimensions.get('window').width * 0.45, 
-    margin: 5,
-    backgroundColor: '#d8c690', 
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor:'#be9e44',
-          
-  }, headline4:{  
-    fontSize:20,
-    textAlign: 'center',
-    margin: 10,
-    color: '#ffffff',
+        borderColor: '#be9e44',
+    }, testi: {
+        margin: 20,
+        marginTop: 30,
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+
+    }, square: {
+        height: Dimensions.get('window').width * 0.45,
+        width: Dimensions.get('window').width * 0.45,
+        margin: 5,
+        backgroundColor: '#1ED1B1',
+        borderRadius: 8, //joo
+        borderWidth: 2,
+        borderColor: '#be9e44',
+
+    }, square2: {
+        height: Dimensions.get('window').width * 0.45,
+        width: Dimensions.get('window').width * 0.45,
+        margin: 5,
+        backgroundColor: '#d8c690',
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#be9e44',
+
+    }, headline4: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+        color: '#ffffff',
     },
 
 })
@@ -233,7 +234,7 @@ const MainPageStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1D1A39',
-        
+
     },
     header: {
         flexDirection: 'row',
@@ -274,7 +275,7 @@ const MainPageStyle = StyleSheet.create({
     circleTitle: {
         textShadowColor: "#009600",
         textShadowRadius: 1,
-        textShadowOffset: {width: 0, height: 1}
+        textShadowOffset: { width: 0, height: 1 }
     },
     charging: {
         justifyContent: 'center',
@@ -322,8 +323,8 @@ const MainPageStyle = StyleSheet.create({
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
@@ -354,4 +355,4 @@ const MainPageStyle = StyleSheet.create({
 
 })
 
-export {HomeStyle,ProfileStyle,CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle}
+export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle }
