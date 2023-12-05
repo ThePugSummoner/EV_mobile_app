@@ -230,6 +230,7 @@ function handleAddDataClose(coordinates){
     function handleMarkerPress(event) {
        
          const coordinate = event.nativeEvent.coordinate
+         console.log(handleAddDataClose(coordinate))
         if(handleAddDataClose(coordinate)===false){
             setShowCloseData(true)
             handleOpenPress()
