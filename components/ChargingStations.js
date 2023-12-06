@@ -264,7 +264,7 @@ export default ChargingStation = ({ navigation }) => {
 
     //ScrollView scrollin tarkkailu
     function handleScroll(event) {
-        console.log(dataClose.length, "length")
+        //console.log(dataClose.length, "length")
         //console.log(scrollIndex, "scrollIndex")
 
         const closeRight = isCloseToRight(event.nativeEvent)
