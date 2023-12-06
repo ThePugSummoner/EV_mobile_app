@@ -14,9 +14,11 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 const INITIAL_LATITUDE = 65.0800
 const INITIAL_LONGITUDE = 25.4800
-const INITIAL_LATITUDE_DELTA = 0.0922 // 1.0161223635077477
-const INITIAL_LONGITUDE_DELTA = 0.0421 //0.8992378874508375  //
-const RADIUS = 50000
+const INITIAL_LATITUDE_DELTA = 0.5698946772875217  //0.0922
+const INITIAL_LONGITUDE_DELTA = 0.7116567716002464  // 0.0421
+const ZOOM_LATITUDE_DELTA=0.0922
+const ZOOM_LONGITUDE_DELTA=0.0421
+const RADIUS = 30000
 
 
 
@@ -82,7 +84,8 @@ export default ChargingStation = ({ navigation }) => {
             setIsLoading(false)
         }
     }
-
+//helsinki 3600034914
+//Suomi 3600054224
     //haetaan latausasemien tiedot OpenStreetMapista
     async function charginStationData() {
         try {
@@ -146,7 +149,7 @@ export default ChargingStation = ({ navigation }) => {
         setLatitude(region.latitude)
         setLongitude(region.longitude)
         setLongitudeDelta(region.longitudeDelta)
-        //console.log("region change compledete")
+        console.log(region)
     }
 
 
@@ -169,7 +172,7 @@ export default ChargingStation = ({ navigation }) => {
         console.log(dataClose.length, "datan koko")
         const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
         setIndexi(currentMapIndex)
-        map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA })
+        map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: ZOOM_LATITUDE_DELTA, longitudeDelta: ZOOM_LONGITUDE_DELTA })
 
     }
 
