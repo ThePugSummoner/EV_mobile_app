@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
-import { Alert, Image, Pressable, ScrollView, Text, TouchableOpacity, View ,Animated} from 'react-native';
+import { Alert, Image, Pressable, ScrollView, Text, TouchableOpacity, View, Animated } from 'react-native';
 import { Marker, Circle, animateToRegion } from 'react-native-maps';
 import MapView from "react-native-map-clustering";
 import * as Location from "expo-location"
@@ -30,7 +30,6 @@ export default ChargingStation = ({ navigation }) => {
     const [dataClose, setDataClose] = useState([])
     const [showCloseData, setShowCloseData] = useState(false)
     const [scrollIndex, setScrollIndex] = useState("")
-    //Alla päivitystä varten olevat
     const [closeDataLocation, setCloseDataLocation] = useState()
     const [updateCloseData, setUpdateCloseData] = useState(false)
     const [indexi, setIndexi] = useState()
@@ -143,10 +142,11 @@ export default ChargingStation = ({ navigation }) => {
 
     // liikutaan näytöllä niin päivittää sijainnin
     function regionChange(region) {
+        
         setLatitude(region.latitude)
         setLongitude(region.longitude)
         setLongitudeDelta(region.longitudeDelta)
-        console.log(region)
+        //console.log("region change compledete")
     }
 
 
@@ -193,7 +193,7 @@ export default ChargingStation = ({ navigation }) => {
         }
     }
     function testie(obj) {
-        console.log(obj)
+        console.log(obj, "Objecti")
         if (obj.length !== dataClose.length) {
             return false
         }
@@ -211,34 +211,36 @@ export default ChargingStation = ({ navigation }) => {
 
         return arr.length !== dataClose.length ? false : true
     }
-function handleAddDataClose(coordinates){
-    
-        const coordinate =coordinates
+    function handleAddDataClose(coordinates) {
+
+        const coordinate = coordinates
         const mapIndex = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
-        const dataCloseExist=dataClose.findIndex(close =>data[mapIndex].id===close.id)
-        if(dataCloseExist!==-1){
-         return true
+        const dataCloseExist = dataClose.findIndex(close => data[mapIndex].id === close.id)
+        if (dataCloseExist !== -1) {
+            return true
         }
-        const newCloseData=[...dataClose]
+        const newCloseData = [...dataClose]
         newCloseData.unshift(data[mapIndex])
-        const check=testie(newCloseData)
-        if(check===false){
+        const check = testie(newCloseData)
+        if (check === false) {
             setDataClose(newCloseData)
         }
         return check
-}
+    }
     function handleMarkerPress(event) {
-       
-         const coordinate = event.nativeEvent.coordinate
-         console.log(handleAddDataClose(coordinate))
-        if(handleAddDataClose(coordinate)===false){
+
+        const coordinate = event.nativeEvent.coordinate
+        setCloseDataLocation({ latitude: coordinate.latitude, longitude: coordinate.longitude })
+        console.log(handleAddDataClose(coordinate), "Coordinaatit luettu")
+        if (handleAddDataClose(coordinate) === false) {
             setShowCloseData(true)
             handleOpenPress()
             setScrollIndex(0)
             setIndexi(0)
             scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true })
             setUpdateCloseData(false)
-        }else{
+            console.log("done")
+        } else {
             const mapIndex = data.findIndex(map => map.latitude === coordinate.latitude && map.longitude === coordinate.longitude)
             const mapId = data[mapIndex].id
             const closeDataIndex = dataClose.findIndex(arr => arr.id === mapId)
@@ -259,7 +261,7 @@ function handleAddDataClose(coordinates){
 
     //ScrollView scrollin tarkkailu
     function handleScroll(event) {
-        //console.log(dataClose.length, "length")
+        console.log(dataClose.length, "length")
         //console.log(scrollIndex, "scrollIndex")
 
         const closeRight = isCloseToRight(event.nativeEvent)
@@ -401,7 +403,7 @@ function handleAddDataClose(coordinates){
                                 id={marker.id}
                                 coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
                                 tracksViewChanges={false}
-                               
+
                                 onPress={(e) => handleMarkerPress(e)}
                             >
 
@@ -447,12 +449,12 @@ function handleAddDataClose(coordinates){
                                 disableIntervalMomentum={true}
                                 contentContainerStyle={{ paddingHorizontal: 20 }}
                                 pagingEnabled
-                                
+
                                 decelerationRate={"fast"}
 
                                 //onScroll={(e) => handleScroll(e)}
-                                onScroll={(e)=>handleScroll(e)
-                                  }
+                                onScroll={(e) => handleScroll(e)
+                                }
 
 
 
