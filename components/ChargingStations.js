@@ -25,7 +25,7 @@ const RADIUS = 30000
 export default ChargingStation = ({ navigation }) => {
     const [latitude, setLatitude] = useState(INITIAL_LATITUDE)
     const [longitude, setLongitude] = useState(INITIAL_LONGITUDE)
-    const [longitudeDelta, setLongitudeDelta] = useState()
+    const [longitudeDelta, setLongitudeDelta] = useState(INITIAL_LONGITUDE_DELTA)
     const [isLoading, setIsLoading] = useState(true)
     const [isLoadingData, setIsloadingData] = useState(true)
     const [data, setData] = useState([])
@@ -148,7 +148,7 @@ export default ChargingStation = ({ navigation }) => {
         
         setLatitude(region.latitude)
         setLongitude(region.longitude)
-        setLongitudeDelta(region.longitudeDelta)
+       
         console.log(region)
     }
 
@@ -367,6 +367,7 @@ export default ChargingStation = ({ navigation }) => {
     //console.log(data, "useState")
     //console.log(dataClose, "dataClose useState")
     //console.log(data,"kaikki data")
+    console.log(longitudeDelta,"longis")
     if (isLoading && isLoadingData) {
         return <View style={CharginStationsStyle.container}><Text>Please wait a moment</Text></View>
     } else {
@@ -385,6 +386,13 @@ export default ChargingStation = ({ navigation }) => {
                             longitudeDelta: INITIAL_LONGITUDE_DELTA
                         }}
                         onRegionChangeComplete={region => regionChange(region)}
+                        onRegionChange={region=> setLongitudeDelta(prev =>{
+                            if(prev!==Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2)){
+                               return Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2)
+                            }else{
+                                return prev
+                            }
+                        })}
                         mapType='hyprid'
                         showsUserLocation={true}
                         showsMyLocationButton={true}
