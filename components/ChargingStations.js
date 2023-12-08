@@ -10,15 +10,16 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Logo from "../images/Volterra.png"
 import { FontAwesome5 } from '@expo/vector-icons';
+import FinCities from "./CitiesFinland.json"
 
 
 const INITIAL_LATITUDE = 65.0800
 const INITIAL_LONGITUDE = 25.4800
-const INITIAL_LATITUDE_DELTA = 0.5698946772875217  //0.0922
-const INITIAL_LONGITUDE_DELTA = 0.7116567716002464  // 0.0421
-const ZOOM_LATITUDE_DELTA=0.0922
-const ZOOM_LONGITUDE_DELTA=0.0421
-const RADIUS = 30000
+const INITIAL_LATITUDE_DELTA = 0.0922 //0.5698946772875217  //0.0922
+const INITIAL_LONGITUDE_DELTA =0.0421// 0.7116567716002464  // 0.0421
+const ZOOM_LATITUDE_DELTA = 0.0922
+const ZOOM_LONGITUDE_DELTA = 0.0421
+const RADIUS = 10000
 
 
 
@@ -35,6 +36,8 @@ export default ChargingStation = ({ navigation }) => {
     const [closeDataLocation, setCloseDataLocation] = useState()
     const [updateCloseData, setUpdateCloseData] = useState(false)
     const [indexi, setIndexi] = useState()
+    const [citiesMarkers, setCitiesMarkers] = useState()
+    const [markersData,setMarkersData]=useState()
 
 
     //UseRef
@@ -63,6 +66,67 @@ export default ChargingStation = ({ navigation }) => {
         }
     }, [latitude, longitude, showCloseData])
 
+
+    useEffect(() => {
+        console.log("esetapahtuma")
+        const cityMarkersData = []
+        if (isLoadingData === false) {
+            console.log("if tapahtuma")
+            for (let i = 0; i < FinCities.length; i++) {
+                for (let j = 0; j < data.length; j++) {
+                    if (5000 > haversineDistanceBetweenPoints(data[j].latitude, data[j].longitude, FinCities[i].lat, FinCities[i].lng)) {
+                        if (cityMarkersData.length === 0 && FinCities[i].population>20000) {
+                            cityMarkersData.push({
+                                id:FinCities[i].city,
+                                city: FinCities[i].city,
+                                category:"city",
+                                latitude: Number(FinCities[i].lat),
+                                longitude: Number(FinCities[i].lng)
+                            })
+                            console.log("tapahtuu")
+                        } else if (cityMarkersData.length > 0 && -1 === cityMarkersData.findIndex(marker => marker.city === FinCities[i].city) && FinCities[i].population>20000) {
+                            cityMarkersData.push({
+                                id:FinCities[i].city,
+                                city: FinCities[i].city,
+                                category:"city",
+                                latitude: Number(FinCities[i].lat),
+                                longitude: Number(FinCities[i].lng)
+                            })
+                        }
+                    }
+                }
+            }
+            setCitiesMarkers(cityMarkersData)
+        }
+    }, [isLoadingData])
+
+    useEffect(()=>{
+        console.log(showCloseData,"show")
+       if(showCloseData) {
+       return
+       }
+       else{
+        if(longitudeDelta<6 && isLoadingData===false){
+            setMarkersData(citiesMarkers)
+            console.log("Tapahtuu elsen alla oleva if ")
+        }else {
+            console.log("tapahtuu else if")
+            const zoomInMarkersData=[]
+            data.map(data=>{
+                if(50000>haversineDistanceBetweenPoints(data.latitude,data.longitude,latitude,longitude)){
+                    zoomInMarkersData.push({...data})
+                }
+            })
+            setMarkersData(zoomInMarkersData)
+        }
+       }
+
+
+
+    },[longitudeDelta,latitude,longitude,showCloseData])
+
+
+
     //Käyttäjän locatio haetaan
     async function userLocationData() {
         try {
@@ -84,8 +148,8 @@ export default ChargingStation = ({ navigation }) => {
             setIsLoading(false)
         }
     }
-//helsinki 3600034914
-//Suomi 3600054224
+    //helsinki 3600034914
+    //Suomi 3600054224
     //haetaan latausasemien tiedot OpenStreetMapista
     async function charginStationData() {
         try {
@@ -105,10 +169,10 @@ export default ChargingStation = ({ navigation }) => {
             console.log(answer.length, "length")
             const arr = []
             for (let i = 0; i < answer.length; i++) {
-                if (answer[i].type === "node") {
+                if (answer[i].type === "node" && answer[i].tags.name!==undefined) {
                     arr.push({
                         id: answer[i].id,
-                        name: answer[i].tags.name === undefined ? "Sähköauton latausasema" : answer[i].tags.name,
+                        name: answer[i].tags.name,
                         latitude: answer[i].lat,
                         longitude: answer[i].lon,
                         brand: answer[i].tags.brand,
@@ -145,10 +209,10 @@ export default ChargingStation = ({ navigation }) => {
 
     // liikutaan näytöllä niin päivittää sijainnin
     function regionChange(region) {
-        
+
         setLatitude(region.latitude)
         setLongitude(region.longitude)
-       
+
         console.log(region)
     }
 
@@ -176,6 +240,9 @@ export default ChargingStation = ({ navigation }) => {
 
     }
 
+    function zoomInPress(item){
+        map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: ZOOM_LATITUDE_DELTA, longitudeDelta: ZOOM_LONGITUDE_DELTA })
+    }
     //buttonille millä saadaa lähimmät asemat slideriin
     // Samaa käytetään myös päivittämiseen.
     function handleCloseDataPress() {
@@ -272,19 +339,19 @@ export default ChargingStation = ({ navigation }) => {
         //console.log(closeRight, "lähellä loppua")
         if (closeRight === true) {
             const item = dataClose[dataClose.length - 1]
-            const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
-            setIndexi(currentMapIndex)
+            //const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+            setIndexi(dataClose.length - 1)
             setScrollIndex(dataClose.length - 1)
-            console.log(currentMapIndex)
+            console.log(dataClose.length - 1)
             map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 350)
         } else if (mod === false) {
             return //console.log("modulo false")
         }
         if (parseInt(event.nativeEvent.contentOffset.x / 320) !== scrollIndex && closeRight === false) {
             const item = dataClose[parseInt(event.nativeEvent.contentOffset.x / 320)]
-            const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+            //const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
             //console.log(currentMapIndex)
-            setIndexi(currentMapIndex)
+            setIndexi(parseInt(event.nativeEvent.contentOffset.x / 320))
             setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
             map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 350)
 
@@ -367,7 +434,9 @@ export default ChargingStation = ({ navigation }) => {
     //console.log(data, "useState")
     //console.log(dataClose, "dataClose useState")
     //console.log(data,"kaikki data")
-    console.log(longitudeDelta,"longis")
+    //console.log(citiesMarkers)
+    //console.log(markersData.length,"pituus marker")
+    console.log(longitudeDelta, "longis")
     if (isLoading && isLoadingData) {
         return <View style={CharginStationsStyle.container}><Text>Please wait a moment</Text></View>
     } else {
@@ -386,10 +455,10 @@ export default ChargingStation = ({ navigation }) => {
                             longitudeDelta: INITIAL_LONGITUDE_DELTA
                         }}
                         onRegionChangeComplete={region => regionChange(region)}
-                        onRegionChange={region=> setLongitudeDelta(prev =>{
-                            if(prev!==Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2)){
-                               return Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2)
-                            }else{
+                        onRegionChange={region => setLongitudeDelta(prev => {
+                            if (prev !== Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2)) {
+                                return Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2)
+                            } else {
                                 return prev
                             }
                         })}
@@ -399,27 +468,41 @@ export default ChargingStation = ({ navigation }) => {
                         followsUserLocation={true}
                         loadingEnabled={true}
                         minZoom={1}
-                        minPoints={currentZoomLevel > 5 ? 10 : 5}
-                        maxZoom={7}
+                        maxZoom={2}
+                        minPoints={10}
                         clusterColor='red'
-                        radius={currentZoomLevel <= 7 ? Dimensions.get("window").width * 0.2 : Dimensions.get("window").width * 0.06}
+                        radius={ Dimensions.get("window").width * 0.2}
                         extent={600}
                         nodeSize={64}
                         spiderLineColor="#ff00f2"
 
                     >
-                        {data.map((marker, index) =>
+                        {!showCloseData && markersData.map((marker, index) =>
                             <Marker key={marker.id}
                                 title={marker.name}
                                 id={marker.id}
                                 coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
                                 tracksViewChanges={false}
 
-                                onPress={(e) => handleMarkerPress(e)}
+                                onPress={(e) => marker.category==="city" ? zoomInPress(marker) : handleMarkerPress(e)}
                             >
 
                                 <FontAwesome5 name="map-marker-alt" size={index === indexi ? 1.25 * 24 : 24} color={index === indexi ? "orange" : "red"} />
                             </Marker>)}
+
+                            {showCloseData && dataClose?.map((marker,index)=>
+                            <Marker key={marker.id}
+                            title={marker.name}
+                            id={marker.id}
+                            coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                            tracksViewChanges={false}
+
+                            onPress={(e) => marker.category==="city" ? zoomInPress(marker) : handleMarkerPress(e)}
+                        >
+
+                            <FontAwesome5 name="map-marker-alt" size={index === indexi ? 1.25 * 24 : 24} color={index === indexi ? "orange" : "red"} />
+                        </Marker>
+                            )}
 
                         <Circle
                             center={{ latitude: latitude, longitude: longitude }}
