@@ -28,9 +28,9 @@ export default ElectricPrice = ({ navigation }) => {
             const endDateDb = allPrices.testi[0].endDate
             const date1 = date()
 
-            //console.log(date1, 'date1')
-            //console.log(endDateDb, 'endDate')
-            if ("14:30" < time && endDateDb === date1) {
+            console.log(date1, 'date1')
+            console.log(endDateDb, 'endDate')
+            if ("14:30" < time && endDateDb <= date1) {
                 fetchPrices()
                 console.log("Data päivitetty!");
 
@@ -240,7 +240,7 @@ export default ElectricPrice = ({ navigation }) => {
 
                 <View style={ePriceStyle.testi}>
                     <View>
-                        <Text style={ePriceStyle.headline3}>Day: {secondDayPrice?.minPrice.endDate}</Text>
+                        <Text style={ePriceStyle.headline3}>Day: {secondDayPrice?.minPrice.startDate}</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square2}>
@@ -256,7 +256,7 @@ export default ElectricPrice = ({ navigation }) => {
                 </View>
                 <View style={ePriceStyle.testi}>
                     <View>
-                        <Text style={ePriceStyle.headline3}>Day: {firstDayPrice?.minPrice.endDate}</Text>
+                        <Text style={ePriceStyle.headline3}>Day: {firstDayPrice?.minPrice.startDate}</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
