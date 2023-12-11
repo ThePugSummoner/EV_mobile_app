@@ -5,6 +5,7 @@ import Toggle from "react-native-toggle-element";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { CircularProgression } from './CircularProgress';
 import { getUserData, logOut } from './Auth';
+import { Dimensions } from 'react-native';
 
 
 export default function MainPage ({ route, navigation }) {
@@ -36,7 +37,7 @@ export default function MainPage ({ route, navigation }) {
 
     useEffect(() => {
         const backAction = () => {
-          Alert.alert('Hold on!', 'Are you sure you want to log out?', [
+          Alert.alert('Log out:', 'Are you sure you want to log out?', [
             {
               text: 'Cancel',
               onPress: () => null,
@@ -159,10 +160,10 @@ export default function MainPage ({ route, navigation }) {
             </View> )}
             <View style={MainPageStyle.carImage}>
                 {componentToShow}
-                <MaterialCommunityIcons name={toggleValueLock ? 'lock' : 'lock-open-variant'} size={40} style={{position: 'absolute', top: 90, color: toggleValueLock ? 'red' : 'green', backgroundColor: '#1d1a39af', borderRadius: 30, padding: 8}}/>
+                <MaterialCommunityIcons name={toggleValueLock ? 'lock' : 'lock-open-variant'} size={40} style={{position: 'absolute', top: Dimensions.get("window").height * 0.07, color: toggleValueLock ? 'red' : 'green', backgroundColor: '#1d1a39af', borderRadius: 30, padding: 8}}/>
             </View>
             
-            <View style={[MainPageStyle.battery, {marginBottom: 0}]}>
+            <View style={MainPageStyle.battery}>
                 {/*<Text style={MainPageStyle.standInText}>BATTERY</Text> */}
                 <CircularProgression />
             </View>

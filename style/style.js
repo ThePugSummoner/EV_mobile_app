@@ -31,13 +31,14 @@ const LogoAnimationStyle = StyleSheet.create({
 
 const HomeStyle = StyleSheet.create({
     container: {
+        paddingTop: Constants.statusBarHeight + 5,
         flex: 1,
         backgroundColor: '#1D1A39',
         alignItems: "center",
         justifyContent: 'center',
     },
     header: {
-        fontSize: 30,
+        fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: "center"
@@ -47,6 +48,13 @@ const HomeStyle = StyleSheet.create({
         alignItems: "stretch",
         justifyContent: 'space-around',
         padding: 30,
+        borderRadius: 8,
+    },
+    containerRegister: {
+        backgroundColor: '#E5D9B6', //tämä sama sävy laitettu bottomnaviin
+        alignItems: "stretch",
+        justifyContent: 'space-around',
+        padding: 20,
         borderRadius: 8,
     },
     textInput: {
@@ -61,16 +69,16 @@ const HomeStyle = StyleSheet.create({
         textAlign: 'center'
     },
     input: {
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#cbb26a',
         borderRadius: 8,
-        padding: 10,
+        padding: 8,
         margin: 10,
-        width: 300,
+        width: 250,
         alignItems: 'center',
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'center',
-        color: '#E5D9B6'
+        color: '#000000'
     },
     text: {
         color: '#cbb26a',
@@ -99,7 +107,7 @@ const ProfileStyle = StyleSheet.create({
         alignItems: "stretch"
     },
     avatar: {
-        flex: 1,
+        flex: 2,
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 1,
@@ -110,12 +118,13 @@ const ProfileStyle = StyleSheet.create({
         width: "40%",
     },
     button: {
-        height: Dimensions.get("window").height * 0.1,
+        //height: Dimensions.get("window").height * 0.1,
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
         gap: 10,
         borderWidth: 1,
+        flex:1
     },
     buttonText: {
         fontSize: 20
@@ -244,7 +253,10 @@ const ePriceStyle = StyleSheet.create({
 const MainPageStyle = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection:"column",
         backgroundColor: '#1D1A39',
+        justifyContent:"flex-start",
+        alignItems:"stretch",
 
     },
     header: {
@@ -254,21 +266,30 @@ const MainPageStyle = StyleSheet.create({
         borderBottomWidth: 2,
         borderColor: "#BE9E44", //#b38c1a
         //borderRadius: 5,
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
     standInText: {
         color: 'white',
     },
     carImage: {
+        justifyContent:"center",
         alignItems: 'center',
+        flex:3,
+      
     },
     battery: {
-        alignItems: 'center'
+        justifyContent:"center",
+        alignItems: 'center',
+        flex:4,
+        padding:20,
+       
     },
     toggleButtons: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginTop: 70
+        flex:3,
+        alignItems:"center",
+       
     },
     /*toggleButtonsSingular: {
         transform: [{rotate: '90deg'}],
@@ -366,4 +387,32 @@ const MainPageStyle = StyleSheet.create({
 
 })
 
-export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle }
+const ChargingMenuStyle = StyleSheet.create ({
+    container: {
+        flex: 1,
+        backgroundColor: '#1D1A39',
+        /* alignItems: 'center', */
+        justifyContent: 'space-around'
+    },
+
+    chargingButton: { //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
+        backgroundColor: '#81cb6a',
+        padding: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+        margin: 20,
+
+    },
+    buttonText: {
+        fontSize: 20,
+        color: '#1a1a1a',
+        //fontWeight: 'bold'
+    },
+
+    text: {
+        color: 'white',
+        margin: 20
+    }
+})
+
+export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle }
