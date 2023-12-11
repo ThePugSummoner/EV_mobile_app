@@ -102,10 +102,7 @@ export default ChargingStation = ({ navigation }) => {
 
     useEffect(()=>{
         console.log(showCloseData,"show")
-       if(showCloseData) {
-       return
-       }
-       else{
+      
         if(longitudeDelta<6 && isLoadingData===false){
             setMarkersData(citiesMarkers)
             console.log("Tapahtuu elsen alla oleva if ")
@@ -114,16 +111,19 @@ export default ChargingStation = ({ navigation }) => {
             const zoomInMarkersData=[]
             data.map(data=>{
                 if(50000>haversineDistanceBetweenPoints(data.latitude,data.longitude,latitude,longitude)){
-                    zoomInMarkersData.push({...data})
+                    if(-1===dataClose.findIndex(marker => marker.id === data.id)){
+                        zoomInMarkersData.push({...data})
+                    }
+                    
                 }
             })
             setMarkersData(zoomInMarkersData)
         }
-       }
+       
 
 
 
-    },[longitudeDelta,latitude,longitude,showCloseData])
+    },[longitudeDelta,latitude,longitude,showCloseData,updateCloseData])
 
 
 
@@ -177,7 +177,7 @@ export default ChargingStation = ({ navigation }) => {
                         longitude: answer[i].lon,
                         brand: answer[i].tags.brand,
                         operator: answer[i].tags.operator,
-                        capacity: answer[i].tags.capacity,
+                        capacity: answer[i].tags.capacity===undefined ?  "unknown" : answer[i].tags.capacity,
                         socket: answer[i].tags.socket,
                         selected: false
                     })
@@ -354,52 +354,6 @@ export default ChargingStation = ({ navigation }) => {
             setIndexi(parseInt(event.nativeEvent.contentOffset.x / 320))
             setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
             map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: INITIAL_LATITUDE_DELTA, longitudeDelta: INITIAL_LONGITUDE_DELTA }, 350)
-
-
-
-
-            //    clearTimeout(myTime)
-
-            //     const myTime=setTimeout(()=>{
-            //         const currentMapIndex = data.findIndex(mapData=>mapData.id===item.id)
-            //         const lastMapIndex = data.findIndex(mapData=>mapData.selected===true)
-            //         console.log(currentMapIndex,"indexiä")
-            //         console.log(lastMapIndex,"indexiä")
-            //         const updatedMap ={...data[currentMapIndex],selected:true}
-            //         const secondUpdateMap ={...data[lastMapIndex],selected:false}
-
-            //         const newMapData = [...data]
-            //         newMapData[currentMapIndex]= updatedMap
-            //         newMapData[lastMapIndex]= secondUpdateMap
-            //         setData(newMapData)
-            //         setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
-
-
-
-            //     },10)
-
-
-
-
-
-            // const currentMapIndex = data.findIndex(mapData=>mapData.id===item.id)
-            // const lastMapIndex = data.findIndex(mapData=>mapData.selected===true)
-            // console.log(currentMapIndex,"indexiä")
-            // console.log(lastMapIndex,"indexiä")
-            // const updatedMap ={...data[currentMapIndex],selected:true}
-            // const secondUpdateMap ={...data[lastMapIndex],selected:false}
-
-            // const newMapData = [...data]
-            // newMapData[currentMapIndex]= updatedMap
-            // newMapData[lastMapIndex]= secondUpdateMap
-            // setData(newMapData)
-            // setScrollIndex(Math.floor(parseInt(event.nativeEvent.contentOffset.x / 320)))
-
-
-
-            //console.log(parseInt(event.nativeEvent.contentOffset.x / 320))
-            // console.log(Math.floor(parseInt(event.nativeEvent.contentOffset.x)))
-            //console.log(scrollIndex, "Iffissä scroll index")
         }
 
     }
@@ -425,6 +379,7 @@ export default ChargingStation = ({ navigation }) => {
         if (index === -1) {
             setShowCloseData(false)
             setIndexi("")
+            setDataClose([])
         }
     }, []);
 
@@ -478,7 +433,7 @@ export default ChargingStation = ({ navigation }) => {
                         spiderLineColor="#ff00f2"
 
                     >
-                        {!showCloseData && markersData.map((marker, index) =>
+                        {markersData.map((marker, index) =>
                             <Marker key={marker.id}
                                 title={marker.name}
                                 id={marker.id}
@@ -488,7 +443,7 @@ export default ChargingStation = ({ navigation }) => {
                                 onPress={(e) => marker.category==="city" ? zoomInPress(marker) : handleMarkerPress(e)}
                             >
 
-                                <FontAwesome5 name="map-marker-alt" size={index === indexi ? 1.25 * 24 : 24} color={index === indexi ? "orange" : "red"} />
+                                <FontAwesome5 name="map-marker-alt" size={24} color={"red"} />
                             </Marker>)}
 
                             {showCloseData && dataClose?.map((marker,index)=>
@@ -564,6 +519,8 @@ export default ChargingStation = ({ navigation }) => {
                                             <View style={{ flex: 1 }}>
                                                 <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.name}</Text>
                                                 <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.operator}</Text>
+                                                <Text style={{ flex: 1, flexWrap: "wrap" }}>Capacity: {dataClose.capacity}</Text>
+                                                
 
                                             </View>
 
