@@ -207,7 +207,7 @@ export default ElectricPrice = ({ navigation }) => {
             overScrollMode='never'
         >
             <View style={ePriceStyle.container}>
-
+                {/* <View style={ePriceStyle.header}></View> */}
                 <Text style={ePriceStyle.headline}>Electricity price</Text>
 
                 <View style={ePriceStyle.container2}>
@@ -243,11 +243,11 @@ export default ElectricPrice = ({ navigation }) => {
                         <Text style={ePriceStyle.headline3}>Day: {secondDayPrice?.minPrice.endDate}</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
-                        <View style={ePriceStyle.square2}>
+                        <View style={ePriceStyle.square}>
                             <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price}</Text>
                             <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
                         </View>
-                        <View style={ePriceStyle.square}>
+                        <View style={ePriceStyle.square2}>
                             <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price}</Text>
                             <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
                         </View>

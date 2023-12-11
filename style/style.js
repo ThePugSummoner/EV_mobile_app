@@ -131,6 +131,16 @@ const ePriceStyle = StyleSheet.create({
         backgroundColor: '#1D1A39',
         flex: 1,
     },
+    // header: {
+    //     flexDirection: 'row',
+    //     backgroundColor: '#22203a',
+    //     padding: 10,
+    //     borderBottomWidth: 2,
+    //     borderColor: "#BE9E44", //#b38c1a
+    //     //borderRadius: 5,
+    //     justifyContent: 'space-evenly',
+    //     paddingTop: 50
+    // },
     container2: {
         //backgroundColor: '#094F44',
         //row: 3,
@@ -150,14 +160,15 @@ const ePriceStyle = StyleSheet.create({
         textAlign: 'center',
         margin: 10,
         marginTop: 20,
-        color: '#ffffffff',
+        color: '#E5D9B6',
         fontWeight: 'bold',
     },
     headline3: {
-        fontSize: 30,
+        fontSize: 26,
         textAlign: 'center',
-        margin: 10,
-        color: '#ffffff',
+        margin: 5,
+        marginBottom: 15,
+        color: '#E5D9B6',
     },
     button: {
 
@@ -173,7 +184,7 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         borderWidth: 3,
-        borderColor: '#d8c690'//'#1ED1B1',
+        borderColor: '#Cbb26a'//'#d8c690'//'#1ED1B1',
 
     },
     container3: {
@@ -188,13 +199,13 @@ const ePriceStyle = StyleSheet.create({
         borderRadius: 8,
         width: Dimensions.get('window').width * 0.7,
         height: Dimensions.get('window').width * 0.4,
-        backgroundColor: '#d8c690',
+        backgroundColor: '#094F44',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
         margin: 10,
         borderWidth: 3,
-        borderColor: '#be9e44',
+        borderColor: '#e5d9b6',
     }, testi: {
         margin: 20,
         marginTop: 30,
@@ -207,19 +218,19 @@ const ePriceStyle = StyleSheet.create({
         height: Dimensions.get('window').width * 0.45,
         width: Dimensions.get('window').width * 0.45,
         margin: 5,
-        backgroundColor: '#1ED1B1',
+        backgroundColor: '#094F44',
         borderRadius: 8, //joo
-        borderWidth: 2,
-        borderColor: '#be9e44',
+        borderWidth: 3,
+        borderColor: '#e5d9b6',
 
     }, square2: {
         height: Dimensions.get('window').width * 0.45,
         width: Dimensions.get('window').width * 0.45,
         margin: 5,
-        backgroundColor: '#d8c690',
+        backgroundColor: '#094F44',
         borderRadius: 5,
-        borderWidth: 2,
-        borderColor: '#be9e44',
+        borderWidth: 3,
+        borderColor: '#cbb26a',
 
     }, headline4: {
         fontSize: 20,
@@ -238,7 +249,7 @@ const MainPageStyle = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        backgroundColor: '#22203a',
+        backgroundColor: '#1D1A39', //#094f44'
         padding: 10,
         borderBottomWidth: 2,
         borderColor: "#BE9E44", //#b38c1a
