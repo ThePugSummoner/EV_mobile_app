@@ -59,8 +59,8 @@ const CircularProgression = () => {
                 <CircularProgress
                     value={circleValue}
                     radius={100}
-                    progressValueColor={'#ffffff'}
-                    duration={2500}
+                    progressValueColor={titleColor}
+                    duration={2000}
                     strokeColorConfig={[
                         { color: '#ff0000', value: 1 },
                         { color: '#ff9100', value: 25 },
@@ -69,18 +69,19 @@ const CircularProgression = () => {
                     ]}
                     maxValue={100}
                     valueSuffix={'%'}
-                    inActiveStrokeColor={'#0b091d'}
+                    inActiveStrokeColor={'#b5aef5'}
                     inActiveStrokeOpacity={0.5}
                     inActiveStrokeWidth={20}
-                    activeStrokeWidth={20}
+                    activeStrokeWidth={30}
+                    
                     dashedStrokeConfig={{
                         count: 50,
-                        width: 3,
+                        width: 5,
                     }} 
                     title={titleShow}
                     titleColor={titleColor}
-                    titleStyle={{fontWeight: 'bold'}}
-                    progressValueStyle={MainPageStyle.circleProgress}
+                    titleStyle={{fontWeight: 'bold', fontSize: 28, marginBottom: 3}}
+                    progressValueStyle={{fontWeight: 'bold'}}
                 />
             </View>
             {/*<View style={MainPageStyle.charging}>

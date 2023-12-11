@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View, BackHandler, Alert } from 'react-native';
 import styles, { ProfileStyle } from '../style/style';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { logOut } from './Auth';
@@ -27,9 +27,42 @@ export default Profile = ({ route, navigation }) => {
   }, []);
 
     const handleLogout = () => {
-        logOut()
-        navigation.navigate('Home')
-      }
+
+        /* logOut() */
+        Alert.alert('Log out:', 'Are you sure you want to log out?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'YES', onPress: () => [logOut(), navigation.navigate('Home')]},
+        ]);
+        return true;
+        
+    }
+
+    useEffect(() => {
+      const backAction = () => {
+        Alert.alert('Log out:', 'Are you sure you want to log out?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'YES', onPress: () => handleLogout()},
+        ]);
+        return true;
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+  
+      return () => backHandler.remove();
+    }, []);
+
+
 
     return (
         <View style={ProfileStyle.container}>

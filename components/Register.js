@@ -20,12 +20,11 @@ export default function Register ({ navigation }) {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [error, setError] = useState('');
   const [selectedCar, setSelectedCar] = useState({});
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert('Hold on!', 'Are you sure you want to navigate back?', [
+      Alert.alert('Back to Home Screen', 'Are you sure you want to navigate back?', [
         {
           text: 'Cancel',
           onPress: () => null,
@@ -45,8 +44,7 @@ export default function Register ({ navigation }) {
   }, []);
 
   const navigateToLogin = () => {
-    // Navigate to the login page using your navigation library
-    navigation.navigate('Home'); // Replace 'Login' with the correct screen name
+    navigation.navigate('Home'); 
   };
 
 
@@ -93,21 +91,21 @@ export default function Register ({ navigation }) {
 
   return (
     <ScrollView contentContainerStyle={HomeStyle.container}>
-    <View style={HomeStyle.container}>
-      <Text style={{ color: '#E5D9B6', marginBottom: 10, fontSize: 30, fontWeight: 'bold' }}>Registration</Text>
+    <View style={HomeStyle.containerRegister}>
+      <Text style={HomeStyle.header}>REGISTRATION</Text>
       
       <TextInput
         style={HomeStyle.input}
-        placeholder="Name"
-        placeholderTextColor="#cbb26a"
+        placeholder="Name*"
+        
         value={name}
         onChangeText={(name) => setName(name.trim())}
       />
 
       <TextInput
         style={HomeStyle.input}
-        placeholder="Email"
-        placeholderTextColor="#cbb26a"
+        placeholder="Email*"
+        
         value={email}
         onChangeText={(email) => setEmail(email.trim())}
         keyboardType="email-address"
@@ -116,8 +114,8 @@ export default function Register ({ navigation }) {
 
       <TextInput
         style={HomeStyle.input}
-        placeholder="Phone"
-        placeholderTextColor="#cbb26a"
+        placeholder="Phone*"
+        
         value={phone}
         onChangeText={setPhone}
         keyboardType="phone-pad"
@@ -125,8 +123,8 @@ export default function Register ({ navigation }) {
 
       <TextInput
         style={HomeStyle.input}
-        placeholder="Password"
-        placeholderTextColor="#cbb26a"
+        placeholder="Password*"
+       
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -134,40 +132,30 @@ export default function Register ({ navigation }) {
 
       <TextInput
         style={HomeStyle.input}
-        placeholder="Repeat Password"
-        placeholderTextColor="#cbb26a"
+        placeholder="Repeat Password*"
+        
         value={repeatPassword}
         onChangeText={setRepeatPassword}
         secureTextEntry
       />
-      {/* <Text style={{ color: '#cbb26a', marginTop: 10 }}>Select Car:</Text> */}
-      <View style={[HomeStyle.input, {padding: 0, backgroundColor: '#1d1a39'}]}> 
+      <View style={[HomeStyle.input, {padding: 0, backgroundColor: '#E5D9B6'}]}> 
         <Picker
           selectedValue={selectedCar}
           onValueChange={(itemValue) => setSelectedCar(itemValue)}
-          style={[HomeStyle.input, {padding: 0, color: '#cbb26a', backgroundColor: 'transparent', width: 250, margin: 0}]}
+          style={[HomeStyle.input, {padding: 0, color: '#1D1A39', backgroundColor: '#E5D9B6', width: 200, margin: 0}]}
           dropdownIconColor={'#cbb26a'}
         >
-          <Picker.Item label="Select a car" value="" style={{color: '#cbb26a', fontSize: 18, backgroundColor: '#1d1a39', padding: 0, margin: 5}}/>
+          <Picker.Item label="Select a car" value="" style={{color: '#1D1A39', fontSize: 18, backgroundColor: '#E5D9B6', padding: 0, margin: 5}}/>
           {carOptions.map((car, index) => (
-            <Picker.Item key={index} label={car.label} value={car} style={{color: '#cbb26a', fontSize: 18, backgroundColor: '#1d1a39'}}/>
+            <Picker.Item key={index} label={car.label} value={car} style={{color: '#1D1A39', fontSize: 18, backgroundColor: '#E5D9B6'}}/>
           ))}
         </Picker>
       </View>
-
-      <Text style={{ color: 'red' }}>{error}</Text>
-
       <TouchableOpacity
-        style={{
-          backgroundColor: '#cbb26a',
-          padding: 10,
-          borderRadius: 5,
-          alignItems: 'center',
-          marginTop: 10,
-        }}
+        style={[HomeStyle.loginButton]}
         onPress={handleRegister}
       >
-        <Text style={{ fontSize: 20, color: '#1D1A39' }}>Register</Text>
+        <Text style={HomeStyle.loginButtonText}>REGISTER</Text>
       </TouchableOpacity>
     </View>
     </ScrollView>
