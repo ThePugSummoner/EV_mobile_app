@@ -414,7 +414,7 @@ export default ChargingStation = ({ navigation }) => {
         }
         return answer
     }
-    const heigh = Dimensions.get("window").height * 0.42
+    const heigh = Dimensions.get("window").height * 0.35
     //BottomSheetille snapPoint
     const snapPoints = useMemo(() => [heigh], []);
     //Aukaisee BottomSheetScrollview
