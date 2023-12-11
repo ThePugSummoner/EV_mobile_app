@@ -1,4 +1,4 @@
-import { Button, Text, View, ScrollView } from 'react-native';
+import { Button, Text, View, ScrollView, Pressable } from 'react-native';
 import { ePriceStyle } from '../style/style';
 import { useEffect, useState } from 'react';
 import { child, push, ref, remove, update, onValue, set, get } from '@firebase/database';
@@ -12,12 +12,17 @@ const LATEST_PRICES_ENDPOINT = 'https://api.porssisahko.net/v1/latest-prices.jso
 
 export default ElectricPrice = ({ navigation }) => {
 
-    const [hourPrice, setHourPrice] = useState();
+    const [hourPrice, setHourPrice] = useState([]);
     const [allPrices, setAllPrices] = useState();
     const [isLoading, setIsLoading] = useState(true)
     const [firstDayPrice, setFirstDayPrice] = useState()
     const [secondDayPrice, setSecondDayPrice] = useState()
-    const [allFirstDayPrices,setAllFirstDayPrices]=useState()
+    const [allFirstDayPrices, setAllFirstDayPrices] = useState()
+    const [allSecondDayPrices, setAllSecondDayPrices] = useState()
+    const [barChartFirstData, setBarChartFirstData] = useState([])
+    const [barChartFirstDataSelected, setBarChartFirstDataSelected] = useState(true)
+
+
     const isFocused = useIsFocused();
 
     //Katsoo aikaa ja "onko käyttäjä sovelluksessa tässä näkymässä"
@@ -81,7 +86,7 @@ export default ElectricPrice = ({ navigation }) => {
             const response = await fetch(`https://api.porssisahko.net/v1/price.json?date=${date}&hour=${hour}`);
             try {
                 const { price } = await response.json();
-                setHourPrice(price);
+                setHourPrice({price:price,time:hour});
                 //console.log(`Hinta nyt on ${price}`);
             } catch (error) {
                 alert(error);
@@ -98,7 +103,7 @@ export default ElectricPrice = ({ navigation }) => {
             const data = snapshot.val() ? snapshot.val() : {};
             const dbPrice = { ...data };
 
-            console.log(dbPrice, 'haku db:stä')
+            //console.log(dbPrice, 'haku db:stä')
             //rajapintahaku jos db on tyhjä
             if (Object.keys(dbPrice).length === 0 && isLoading) {
 
@@ -149,37 +154,53 @@ export default ElectricPrice = ({ navigation }) => {
                 pricesFirstDay.push({
                     price: priceData.price,
                     endDate: priceData.endDate,
-                    endTime: priceData.endTime,
+                    endTime: priceData.endTime.split(":")[0],
                     startDate: priceData.startDate,
-                    startTime: priceData.startTime
+                    startTime: priceData.startTime.split(":")[0]
                 })
             } else {
                 pricesSecondDay.push(
                     {
                         price: priceData.price,
                         endDate: priceData.endDate,
-                        endTime: priceData.endTime,
+                        endTime: priceData.endTime.split(":")[0],
                         startDate: priceData.startDate,
-                        startTime: priceData.startTime
+                        startTime: priceData.startTime.split(":")[0]
                     })
             }
         }
 
         )
-       
+
+        const allPricesFirstDay1 = []
+        pricesFirstDay.map(data =>
+            allPricesFirstDay1.push({ value: data.price, label: data.startTime, date: data.startDate })
+        )
+        const sortedFirstDayPrices = allPricesFirstDay1.sort(({ label: a }, { label: b }) => a.split(":")[0] - b.split(":")[0])
+
+        const allPricesFirstDay2 = []
+        pricesSecondDay.map(data =>
+            allPricesFirstDay2.push({ value: data.price, label: data.startTime, date: data.startDate })
+        )
+        const sortedSecondDayPrices = allPricesFirstDay2.sort(({ label: a }, { label: b }) => a.split(":")[0] - b.split(":")[0])
+
+
+
+
+
         const priceFirstDay = pricesFirstDay.sort(({ price: a }, { price: b }) => b - a);
         const priceSecondDAy = pricesSecondDay.sort(({ price: a }, { price: b }) => b - a);
         const firstDayMaxPrice = priceFirstDay[0]
         const firstDayMinPrice = priceFirstDay[priceFirstDay.length - 1]
         const secondDayMaxPrice = priceSecondDAy[0]
         const secondDayMinPrice = priceSecondDAy[priceSecondDAy.length - 1]
-        const allPricesFirstDay1= []
-        pricesFirstDay.map(data => 
-            allPricesFirstDay1.push({value:data.price,label:data.startTime})
-            )
+
+
         setFirstDayPrice({ maxPrice: firstDayMaxPrice, minPrice: firstDayMinPrice })
         setSecondDayPrice({ maxPrice: secondDayMaxPrice, minPrice: secondDayMinPrice })
-        setAllFirstDayPrices(allPricesFirstDay1)
+        setAllFirstDayPrices(sortedFirstDayPrices)
+        setAllSecondDayPrices(sortedSecondDayPrices)
+        setBarChartFirstData(sortedFirstDayPrices)
         console.log(firstDayMaxPrice, "isoin hinta")
         console.log(firstDayMinPrice, "Pienin hinta")
         console.log(secondDayMaxPrice, "isoin hinta")
@@ -187,7 +208,10 @@ export default ElectricPrice = ({ navigation }) => {
 
 
     }
-
+    function handlePress(item, firstData) {
+        setBarChartFirstData(item)
+        setBarChartFirstDataSelected(firstData)
+    }
 
 
     const removePrices = () => {
@@ -195,10 +219,10 @@ export default ElectricPrice = ({ navigation }) => {
 
     }
 
-
-    console.log(isLoading)
-    console.log(firstDayPrice)
-    console.log(allFirstDayPrices,"kaikki ekan päivän")
+    // console.log(isLoading)
+    //console.log(firstDayPrice)
+    //console.log(allSecondDayPrices,"Kaikki tokan päivän")
+    //console.log(allFirstDayPrices,"kaikki ekan päivän")
     //console.log(allPrices,"kaikki hinnat")
     return (
 
@@ -214,17 +238,17 @@ export default ElectricPrice = ({ navigation }) => {
                     {/* <Text style={ePriceStyle.headline2}>Tuntihinta</Text> */}
                     <View style={ePriceStyle.bghourprice}>
                         <Text style={ePriceStyle.headline2}>Hourly price:</Text>
-                        <Text style={ePriceStyle.headline3}>{hourPrice} snt/kWh</Text>
+                        <Text style={ePriceStyle.headline3}>{hourPrice.price} snt/kWh</Text>
                     </View>
                 </View>
                 <View style={ePriceStyle.container3}>
                     <View style={ePriceStyle.bghourprice2}>
-                        <Text style={ePriceStyle.headline3}>Hourly price: {"\n"}{hourPrice} snt/kWh</Text>
+                        <Text style={ePriceStyle.headline3}>Hourly price at {hourPrice.time}: {"\n"}{hourPrice.price} snt/kWh</Text>
                     </View>
                     <View style={ePriceStyle.container3}>
                         <View style={ePriceStyle.bghourprice2}>
                             <Text style={ePriceStyle.headline2}>Hourly price:</Text>
-                            <Text style={ePriceStyle.headline3}>{hourPrice} snt/kWh</Text>
+                            <Text style={ePriceStyle.headline3}>{hourPrice.price} snt/kWh</Text>
                         </View>
                     </View>
                 </View>
@@ -233,7 +257,7 @@ export default ElectricPrice = ({ navigation }) => {
                 <View style={ePriceStyle.container3}><Text style={ePriceStyle.headline3}>Hourly price:</Text>
                     <View style={ePriceStyle.bghourprice2}>
 
-                        <Text style={ePriceStyle.headline3}>{hourPrice} snt/kWh</Text>
+                        <Text style={ePriceStyle.headline3}>{hourPrice.price} snt/kWh</Text>
                     </View>
                 </View>
 
@@ -260,26 +284,52 @@ export default ElectricPrice = ({ navigation }) => {
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
-                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price}</Text>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime}</Text>
+                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price} c/kWh</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text>
                         </View>
                         <View style={ePriceStyle.square2}>
-                            <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price}</Text>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime}</Text>
+                            <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price} c/kWh</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text>
                         </View>
                     </View>
 
                 </View>
-                <View style={{ flex: 2 }}>
-                    <BarChart
-                        frontColor={'#177AD5'}
-                        barWidth={22}
+                <View style={{ flex: 2,padding:10 }}>
+                    <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", marginBottom: 10 }}>
+                        <Pressable style={{ backgroundColor: barChartFirstDataSelected ? "#2cebce" : "#094F44", borderColor: '#e5d9b6', borderWidth: 1, borderRadius: 8, height: 40, width: 85, justifyContent: "center" }}
+                            onPress={() => handlePress(allFirstDayPrices, true)}
+                        >
+                            <Text style={{ textAlign: "center", color: "white" }}>{firstDayPrice?.minPrice.startDate}</Text>
+                        </Pressable>
+                        <Pressable style={{ backgroundColor: !barChartFirstDataSelected ? "#2cebce" : "#094F44", borderColor: '#e5d9b6', borderWidth: 1, borderRadius: 8, height: 40, width: 85, justifyContent: "center" }}
+                            onPress={() => handlePress(allSecondDayPrices, false)}
+                        >
+                            <Text style={{ textAlign: "center", color: "white" }}>{secondDayPrice?.minPrice.startDate}</Text>
+                        </Pressable>
+                    </View>
+                    <View style={{flex:1,justifyContent:"center",alignItems:"flex-start"}}>
+                    <Text style={{color:'lightgray'}}>c/kWh</Text>
+                    </View>
+                    {/* #177AD5 */}
+                   <BarChart
+                        frontColor={'#33cc7f'}
+                        barWidth={16}
+                        initialSpacing={10}
+                        spacing={10}
+                        data={barChartFirstData}
+                        yAxisThickness={2}
+                        xAxisThickness={2}
+                        noOfSections={5}
+                        xAxisColor={'lightgray'}
+                        yAxisColor={'lightgray'}
+                        yAxisTextStyle={{ color: 'lightgray' }}
+                        xAxisLabelTextStyle={{color: 'lightgray', textAlign: 'center'}}
                         
                     />
-                </View>
-
-                <View>
-                    <Button title="Remove" onPress={() => removePrices()}></Button>
+                    <Text style={{color:'lightgray',textAlign:"center"}}>{barChartFirstData[0]?.date}</Text>
+                   
+                    
+                    
 
                 </View>
 
