@@ -414,8 +414,9 @@ export default ChargingStation = ({ navigation }) => {
         }
         return answer
     }
+    const heigh = Dimensions.get("window").height * 0.35
     //BottomSheetille snapPoint
-    const snapPoints = useMemo(() => ["35%"], []);
+    const snapPoints = useMemo(() => [heigh], []);
     //Aukaisee BottomSheetScrollview
     const handleOpenPress = () => bottomSheetRef.current?.expand();
     //antaa indexin missä vaiheessa bottomSheet on -1 ei näkyvillä.

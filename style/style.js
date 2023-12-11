@@ -107,7 +107,7 @@ const ProfileStyle = StyleSheet.create({
         alignItems: "stretch"
     },
     avatar: {
-        flex: 1,
+        flex: 2,
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 1,
@@ -118,12 +118,13 @@ const ProfileStyle = StyleSheet.create({
         width: "40%",
     },
     button: {
-        height: Dimensions.get("window").height * 0.1,
+        //height: Dimensions.get("window").height * 0.1,
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
         gap: 10,
         borderWidth: 1,
+        flex:1
     },
     buttonText: {
         fontSize: 20
@@ -241,7 +242,10 @@ const ePriceStyle = StyleSheet.create({
 const MainPageStyle = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection:"column",
         backgroundColor: '#1D1A39',
+        justifyContent:"flex-start",
+        alignItems:"stretch",
 
     },
     header: {
@@ -251,21 +255,30 @@ const MainPageStyle = StyleSheet.create({
         borderBottomWidth: 2,
         borderColor: "#BE9E44", //#b38c1a
         //borderRadius: 5,
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
     standInText: {
         color: 'white',
     },
     carImage: {
+        justifyContent:"center",
         alignItems: 'center',
+        flex:3,
+      
     },
     battery: {
-        alignItems: 'center'
+        justifyContent:"center",
+        alignItems: 'center',
+        flex:4,
+        padding:20,
+       
     },
     toggleButtons: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginTop: 70
+        flex:3,
+        alignItems:"center",
+       
     },
     /*toggleButtonsSingular: {
         transform: [{rotate: '90deg'}],
