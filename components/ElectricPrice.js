@@ -324,6 +324,7 @@ export default ElectricPrice = ({ navigation }) => {
                         yAxisTextStyle={{ color: 'lightgray' }}
                         xAxisLabelTextStyle={{color: 'lightgray', textAlign: 'center'}}
                         
+                        
                     />
                     <Text style={{color:'lightgray',textAlign:"center"}}>{barChartFirstData[0]?.date}</Text>
                    

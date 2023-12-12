@@ -120,9 +120,9 @@ const ProfileStyle = StyleSheet.create({
         flex: 2,
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 1,
+        borderBottomWidth: 1,
         borderBottomColor: '#cbb26a',
-        borderTopColor: '#00000000',
+        //borderTopColor: '#00000000',
         padding: 10
     },
     avatarText: {
@@ -248,6 +248,8 @@ const ePriceStyle = StyleSheet.create({
         flexDirection: "column",
         justifyContent: 'space-evenly',
         alignItems: 'center',
+        borderWidth:1,
+        backgroundColor:"#451952ff"
 
     }, square: {
         height: Dimensions.get('window').width * 0.40,
