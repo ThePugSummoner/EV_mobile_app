@@ -103,10 +103,27 @@ export default ChargingStation = ({ navigation }) => {
     useEffect(()=>{
         console.log(showCloseData,"show")
       
-        if(longitudeDelta<6 && isLoadingData===false){
+        if(longitudeDelta<=5 && isLoadingData===false){
             setMarkersData(citiesMarkers)
             console.log("Tapahtuu elsen alla oleva if ")
-        }else {
+        }
+        else if(longitudeDelta>=6 && longitudeDelta<8){
+            console.log("KESKIVAIHE")
+            setMarkersData([...data])
+        }
+        else if(longitudeDelta===12){
+            const zoomInMarkersData=[]
+            data.map(data=>{
+                if(RADIUS+5000>haversineDistanceBetweenPoints(data.latitude,data.longitude,latitude,longitude)){
+                    if(-1===dataClose.findIndex(marker => marker.id === data.id)){
+                        zoomInMarkersData.push({...data})
+                    }
+                    
+                }
+            })
+            setMarkersData(zoomInMarkersData)
+        }
+        else {
             console.log("tapahtuu else if")
             const zoomInMarkersData=[]
             data.map(data=>{
@@ -123,7 +140,7 @@ export default ChargingStation = ({ navigation }) => {
 
 
 
-    },[longitudeDelta,latitude,longitude,showCloseData,updateCloseData])
+    },[longitudeDelta,latitude,longitude])
 
 
 
@@ -234,7 +251,7 @@ export default ChargingStation = ({ navigation }) => {
     function handlePress(item) {
         console.log(item)
         console.log(dataClose.length, "datan koko")
-        const currentMapIndex = data.findIndex(mapData => mapData.id === item.id)
+        const currentMapIndex = dataClose.findIndex(mapData => mapData.id === item.id)
         setIndexi(currentMapIndex)
         map.current.animateToRegion({ latitude: item.latitude, longitude: item.longitude, latitudeDelta: ZOOM_LATITUDE_DELTA, longitudeDelta: ZOOM_LONGITUDE_DELTA })
 
@@ -255,6 +272,7 @@ export default ChargingStation = ({ navigation }) => {
             setShowCloseData(true)
             handleOpenPress()
             setScrollIndex(0)
+            setIndexi(0)
             scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true })
             setCloseDataLocation({ latitude: latitude, longitude: longitude })
             setUpdateCloseData(false)
@@ -433,7 +451,7 @@ export default ChargingStation = ({ navigation }) => {
                         spiderLineColor="#ff00f2"
 
                     >
-                        {updateCloseData && markersData.map((marker, index) =>
+                        {markersData.map((marker, index) =>
                             <Marker key={marker.id}
                                 title={marker.name}
                                 id={marker.id}
