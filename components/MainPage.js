@@ -37,7 +37,7 @@ export default function MainPage ({ route, navigation }) {
 
     useEffect(() => {
         const backAction = () => {
-          Alert.alert('Hold on!', 'Are you sure you want to log out?', [
+          Alert.alert('Log out:', 'Are you sure you want to log out?', [
             {
               text: 'Cancel',
               onPress: () => null,

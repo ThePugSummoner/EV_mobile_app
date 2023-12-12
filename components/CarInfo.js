@@ -7,7 +7,6 @@ import { HomeStyle, MainPageStyle } from '../style/style';
 function CarInfo(){
 
     const user = getAuth().currentUser
-    console.log(user)
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
@@ -15,7 +14,6 @@ function CarInfo(){
         try {
             const user = await getUserData();
             setUserData(user);
-            console.log(userData)
         } catch (error) {
             console.error('Error fetching user data:', error.message);
         }

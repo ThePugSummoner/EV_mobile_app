@@ -9,7 +9,6 @@ import styles, { HomeStyle } from '../style/style';
 function ProfileInfo(){
 
     const user = getAuth().currentUser
-    console.log(user)
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
@@ -17,7 +16,6 @@ function ProfileInfo(){
         try {
             const user = await getUserData();
             setUserData(user);
-            console.log(userData)
         } catch (error) {
             console.error('Error fetching user data:', error.message);
         }
