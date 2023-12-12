@@ -104,36 +104,54 @@ const ProfileStyle = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "flex-start",
-        alignItems: "stretch"
+        alignItems: "stretch",
+        backgroundColor: '#1D1A39',
+    },
+    /*profile: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+    }, */
+    profileText: {
+        fontSize: 25,
+        color: '#ffffff'
     },
     avatar: {
         flex: 2,
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 1,
+        borderBottomColor: '#cbb26a',
+        borderTopColor: '#00000000',
         padding: 10
     },
     avatarText: {
-        textAlign: "left",
+        textAlign: "center",
         width: "40%",
+        color: '#E5D9B6',
+        marginBottom: 2,
+        fontSize: 15
     },
     button: {
         //height: Dimensions.get("window").height * 0.1,
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
-        gap: 10,
+        gap: 12,
         borderWidth: 1,
+        borderBottomColor: '#cbb26a',
+        borderTopColor: '#cbb26a',
         flex:1
     },
+    icon: {
+        marginLeft: 10
+    },
     buttonText: {
-        fontSize: 20
+        fontSize: 20,
+        color: '#E5D9B6'
     }
 
-
 })
-
-
 
 const ePriceStyle = StyleSheet.create({
     container: {

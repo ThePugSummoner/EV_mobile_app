@@ -66,8 +66,11 @@ export default Profile = ({ route, navigation }) => {
 
     return (
         <View style={ProfileStyle.container}>
+            {/*<View style={ProfileStyle.profile}>
+              <Text style={ProfileStyle.profileText}>My profile</Text>
+            </View> */}
             <View style={ProfileStyle.avatar}>
-                <MaterialCommunityIcons name="account-box" size={100} color="black" />
+                <MaterialCommunityIcons name="account-box" size={110} color="khaki" />
                 {userData && (
                     <>
                     <Text style={ProfileStyle.avatarText}>Welcome, {userData.name}</Text>
@@ -82,7 +85,9 @@ export default Profile = ({ route, navigation }) => {
                 style={ProfileStyle.button}
                 onPress={()=>navigation.navigate("Profile Info")}
                 >
-                    <MaterialCommunityIcons name="account" size={35} color="black" />
+                    <View style={ProfileStyle.icon}>
+                      <MaterialCommunityIcons name="account" size={35} color="khaki" />
+                    </View>
                     <Text style={ProfileStyle.buttonText}>Profile info</Text>
                 </TouchableOpacity>
 
@@ -90,7 +95,9 @@ export default Profile = ({ route, navigation }) => {
                 style={ProfileStyle.button}
                 onPress={()=>navigation.navigate('Car Info', { userUid: user.uid })}
                 >
-                    <MaterialCommunityIcons name="car-sports" size={35} color="black" />
+                    <View style={ProfileStyle.icon}>
+                      <MaterialCommunityIcons name="car-sports" size={35} color="khaki" />
+                    </View>
                     <Text style={ProfileStyle.buttonText}>Technical Specs</Text>
                 </TouchableOpacity>
 
@@ -98,12 +105,19 @@ export default Profile = ({ route, navigation }) => {
                 style={ProfileStyle.button}
                 onPress={()=>navigation.navigate("Charging Menu")}
                 >
-                    <MaterialCommunityIcons name="lightning-bolt" size={35} color="black" />
+                    <View style={ProfileStyle.icon}>
+                      <MaterialCommunityIcons name="lightning-bolt" size={35} color="khaki" />
+                    </View>
                     <Text style={ProfileStyle.buttonText}>Charging menu</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={ProfileStyle.button} onPress={handleLogout}>
-                    <MaterialCommunityIcons name="logout" size={35} color="black" />
+                <TouchableOpacity 
+                style={ProfileStyle.button} 
+                onPress={handleLogout}
+                >
+                    <View style={ProfileStyle.icon}>
+                      <MaterialCommunityIcons name="logout" size={35} color="khaki" />
+                    </View>
                     <Text style={ProfileStyle.buttonText}>Log Out</Text>
                 </TouchableOpacity>
             </View>
