@@ -35,7 +35,7 @@ function CarInfo(){
         ];
 
         return (
-            <View style={{ borderWidth: 1, borderColor: '#E5D9B6', padding: 10, width: 300 }}>
+            <View style={{ borderWidth: 1, borderColor: '#E5D9B6', padding: 10, width: 300, marginBottom: 20 }}>
               {tableData.map((rowData, index) => (
                 <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                   <Text style={[HomeStyle.text, {fontSize: 18}]}>{rowData[0]}</Text>
