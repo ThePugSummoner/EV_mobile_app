@@ -8,6 +8,7 @@ import { getUserData, logOut } from './Auth';
 import { Dimensions } from 'react-native';
 
 
+
 export default function MainPage ({ route, navigation }) {
 
     const [toggleValueLock, setToggleValueLock] = useState(true)
@@ -43,7 +44,7 @@ export default function MainPage ({ route, navigation }) {
               onPress: () => null,
               style: 'cancel',
             },
-            {text: 'YES', onPress: () => handleLogout()},
+            {text: 'YES', onPress: () => [logOut(), navigation.navigate('Home')]},
           ]);
           return true;
         };

@@ -400,7 +400,7 @@ const ChargingMenuStyle = StyleSheet.create ({
 
     text: {
         color: 'white',
-        margin: 20
+        margin: 10
     }
 })
 

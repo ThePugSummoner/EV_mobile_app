@@ -49,7 +49,7 @@ export default Profile = ({ route, navigation }) => {
             onPress: () => null,
             style: 'cancel',
           },
-          {text: 'YES', onPress: () => handleLogout()},
+          {text: 'YES', onPress: () => [logOut(), navigation.navigate('Home')]},
         ]);
         return true;
       };

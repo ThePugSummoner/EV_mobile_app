@@ -69,14 +69,15 @@ const CircularProgression = () => {
                     ]}
                     maxValue={100}
                     valueSuffix={'%'}
-                    inActiveStrokeColor={'#b5aef5'}
-                    inActiveStrokeOpacity={0.5}
-                    inActiveStrokeWidth={20}
-                    activeStrokeWidth={30}
+                    inActiveStrokeColor={titleColor}
+                    inActiveStrokeOpacity={0.2}
+                    inActiveStrokeWidth={25}
+                    activeStrokeWidth={25}
                     
                     dashedStrokeConfig={{
                         count: 50,
-                        width: 5,
+                        width: 15,
+                        
                     }} 
                     title={titleShow}
                     titleColor={titleColor}
