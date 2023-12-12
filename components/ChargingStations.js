@@ -433,7 +433,7 @@ export default ChargingStation = ({ navigation }) => {
                         spiderLineColor="#ff00f2"
 
                     >
-                        {markersData.map((marker, index) =>
+                        {updateCloseData && markersData.map((marker, index) =>
                             <Marker key={marker.id}
                                 title={marker.name}
                                 id={marker.id}
