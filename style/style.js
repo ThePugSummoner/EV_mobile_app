@@ -104,42 +104,70 @@ const ProfileStyle = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "flex-start",
-        alignItems: "stretch"
+        alignItems: "stretch",
+        backgroundColor: '#1D1A39',
+    },
+    /*profile: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+    }, */
+    profileText: {
+        fontSize: 25,
+        color: '#ffffff'
     },
     avatar: {
         flex: 2,
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 1,
+        borderBottomColor: '#cbb26a',
+        borderTopColor: '#00000000',
         padding: 10
     },
     avatarText: {
-        textAlign: "left",
+        textAlign: "center",
         width: "40%",
+        color: '#E5D9B6',
+        marginBottom: 2,
+        fontSize: 15
     },
     button: {
         //height: Dimensions.get("window").height * 0.1,
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
-        gap: 10,
+        gap: 12,
         borderWidth: 1,
+        borderBottomColor: '#cbb26a',
+        borderTopColor: '#cbb26a',
         flex:1
     },
+    icon: {
+        marginLeft: 10
+    },
     buttonText: {
-        fontSize: 20
+        fontSize: 20,
+        color: '#E5D9B6'
     }
 
-
 })
-
-
 
 const ePriceStyle = StyleSheet.create({
     container: {
         backgroundColor: '#1D1A39',
         flex: 1,
     },
+    // header: {
+    //     flexDirection: 'row',
+    //     backgroundColor: '#22203a',
+    //     padding: 10,
+    //     borderBottomWidth: 2,
+    //     borderColor: "#BE9E44", //#b38c1a
+    //     //borderRadius: 5,
+    //     justifyContent: 'space-evenly',
+    //     paddingTop: 50
+    // },
     container2: {
         //backgroundColor: '#094F44',
         //row: 3,
@@ -159,14 +187,23 @@ const ePriceStyle = StyleSheet.create({
         textAlign: 'center',
         margin: 10,
         marginTop: 20,
-        color: '#ffffffff',
+        color: '#E5D9B6',
         fontWeight: 'bold',
     },
     headline3: {
-        fontSize: 30,
+        fontSize: 26,
         textAlign: 'center',
-        margin: 10,
+        margin: 5,
+        marginBottom: 15,
+        color: '#E5D9B6',
+    },
+    headline5: {
+        fontSize: 22,
+        textAlign: 'center',
+        //margin: 1,
+        marginBottom: 5,
         color: '#ffffff',
+        fontWeight: 'bold',
     },
     button: {
 
@@ -182,7 +219,7 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         borderWidth: 3,
-        borderColor: '#d8c690'//'#1ED1B1',
+        borderColor: '#Cbb26a'//'#d8c690'//'#1ED1B1',
 
     },
     container3: {
@@ -197,14 +234,14 @@ const ePriceStyle = StyleSheet.create({
         borderRadius: 8,
         width: Dimensions.get('window').width * 0.7,
         height: Dimensions.get('window').width * 0.4,
-        backgroundColor: '#d8c690',
+        backgroundColor: '#094F44',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
         margin: 10,
         borderWidth: 3,
-        borderColor: '#be9e44',
-    }, testi: {
+        borderColor: '#cbb26a',
+    }, boxes: {
         margin: 20,
         marginTop: 30,
         flex: 1,
@@ -213,22 +250,22 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
 
     }, square: {
-        height: Dimensions.get('window').width * 0.45,
+        height: Dimensions.get('window').width * 0.40,
         width: Dimensions.get('window').width * 0.45,
         margin: 5,
-        backgroundColor: '#1ED1B1',
+        backgroundColor: '#094F44',
         borderRadius: 8, //joo
-        borderWidth: 2,
-        borderColor: '#be9e44',
+        borderWidth: 3,
+        borderColor: '#cbb26a',
 
     }, square2: {
-        height: Dimensions.get('window').width * 0.45,
+        height: Dimensions.get('window').width * 0.40,
         width: Dimensions.get('window').width * 0.45,
         margin: 5,
-        backgroundColor: '#d8c690',
+        backgroundColor: '#094F44',
         borderRadius: 5,
-        borderWidth: 2,
-        borderColor: '#be9e44',
+        borderWidth: 3,
+        borderColor: '#cbb26a',
 
     }, headline4: {
         fontSize: 20,
@@ -236,8 +273,23 @@ const ePriceStyle = StyleSheet.create({
         margin: 10,
         color: '#ffffff',
     },
+    pressable: {
+        borderColor: '#Cbb26a',
+        borderWidth: 2,
+        borderRadius: 8,
+        height: Dimensions.get('window').width * 0.12,
+        width: Dimensions.get('window').width * 0.22,
+        justifyContent: "center",
+      },
+      pressableSelected: {
+        backgroundColor: "#33cc7f",
+      },
+      pressableNotSelected: {
+        backgroundColor: "#094F44",
+      },
+    });
 
-})
+
 
 const MainPageStyle = StyleSheet.create({
     container: {
@@ -250,7 +302,7 @@ const MainPageStyle = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        backgroundColor: '#22203a',
+        backgroundColor: '#1D1A39', //#094f44'
         padding: 10,
         borderBottomWidth: 2,
         borderColor: "#BE9E44", //#b38c1a
