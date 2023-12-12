@@ -232,76 +232,75 @@ export default ElectricPrice = ({ navigation }) => {
         >
             <View style={ePriceStyle.container}>
                 {/* <View style={ePriceStyle.header}></View> */}
-                <Text style={ePriceStyle.headline}>Electricity price</Text>
+                {/* <Text style={ePriceStyle.headline}>Electricity price</Text> */}
 
-                <View style={ePriceStyle.container2}>
-                    {/* <Text style={ePriceStyle.headline2}>Tuntihinta</Text> */}
-                    <View style={ePriceStyle.bghourprice}>
-                        <Text style={ePriceStyle.headline2}>Hourly price:</Text>
-                        <Text style={ePriceStyle.headline3}>{hourPrice.price} snt/kWh</Text>
-                    </View>
-                </View>
-                <View style={ePriceStyle.container3}>
+             
+                {/* <View style={ePriceStyle.container3}>
                     <View style={ePriceStyle.bghourprice2}>
-                        <Text style={ePriceStyle.headline3}>Hourly price at {hourPrice.time}: {"\n"}{hourPrice.price} snt/kWh</Text>
-                    </View>
+                        <Text style={ePriceStyle.headline3}>Hourly price {"\n"} at {hourPrice.time} o'clock: {"\n"}{hourPrice.price} snt/kWh</Text>
+                    </View> */}
                     <View style={ePriceStyle.container3}>
                         <View style={ePriceStyle.bghourprice2}>
-                            <Text style={ePriceStyle.headline2}>Hourly price:</Text>
+                            <Text style={ePriceStyle.headline2}>Hourly price</Text>
+                            <Text style={ePriceStyle.headline5}>at {hourPrice.time} o'clock:</Text>
                             <Text style={ePriceStyle.headline3}>{hourPrice.price} snt/kWh</Text>
                         </View>
                     </View>
-                </View>
+                {/* </View> */}
 
 
                 <View style={ePriceStyle.container3}><Text style={ePriceStyle.headline3}>Hourly price:</Text>
                     <View style={ePriceStyle.bghourprice2}>
-
+                        <Text style={ePriceStyle.headline5}>at {hourPrice.time} o'clock:</Text>
                         <Text style={ePriceStyle.headline3}>{hourPrice.price} snt/kWh</Text>
                     </View>
                 </View>
 
 
-                <View style={ePriceStyle.testi}>
+                <View style={ePriceStyle.boxes}>
                     <View>
                         <Text style={ePriceStyle.headline3}>Day: {secondDayPrice?.minPrice.startDate}</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
+                        <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
                             <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price}</Text>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
+                           
                         </View>
                         <View style={ePriceStyle.square2}>
+                        <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
                             <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price}</Text>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
+                            
                         </View>
                     </View>
 
                 </View>
-                <View style={ePriceStyle.testi}>
+                <View style={ePriceStyle.boxes}>
                     <View>
                         <Text style={ePriceStyle.headline3}>Day: {firstDayPrice?.minPrice.startDate}</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
+                        <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text>
                             <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price} c/kWh</Text>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text>
+                            
                         </View>
                         <View style={ePriceStyle.square2}>
+                        <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text>
                             <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price} c/kWh</Text>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text>
+                           
                         </View>
                     </View>
 
                 </View>
                 <View style={{ flex: 2,padding:10 }}>
                     <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", marginBottom: 10 }}>
-                        <Pressable style={{ backgroundColor: barChartFirstDataSelected ? "#2cebce" : "#094F44", borderColor: '#e5d9b6', borderWidth: 1, borderRadius: 8, height: 40, width: 85, justifyContent: "center" }}
+                    <Pressable style={[ePriceStyle.pressable, barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]} 
                             onPress={() => handlePress(allFirstDayPrices, true)}
                         >
                             <Text style={{ textAlign: "center", color: "white" }}>{firstDayPrice?.minPrice.startDate}</Text>
                         </Pressable>
-                        <Pressable style={{ backgroundColor: !barChartFirstDataSelected ? "#2cebce" : "#094F44", borderColor: '#e5d9b6', borderWidth: 1, borderRadius: 8, height: 40, width: 85, justifyContent: "center" }}
+                        <Pressable style={[ePriceStyle.pressable, !barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]} 
                             onPress={() => handlePress(allSecondDayPrices, false)}
                         >
                             <Text style={{ textAlign: "center", color: "white" }}>{secondDayPrice?.minPrice.startDate}</Text>

@@ -179,6 +179,14 @@ const ePriceStyle = StyleSheet.create({
         marginBottom: 15,
         color: '#E5D9B6',
     },
+    headline5: {
+        fontSize: 22,
+        textAlign: 'center',
+        //margin: 1,
+        marginBottom: 5,
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
     button: {
 
     },
@@ -214,8 +222,8 @@ const ePriceStyle = StyleSheet.create({
         textAlign: 'center',
         margin: 10,
         borderWidth: 3,
-        borderColor: '#e5d9b6',
-    }, testi: {
+        borderColor: '#cbb26a',
+    }, boxes: {
         margin: 20,
         marginTop: 30,
         flex: 1,
@@ -224,16 +232,16 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
 
     }, square: {
-        height: Dimensions.get('window').width * 0.45,
+        height: Dimensions.get('window').width * 0.40,
         width: Dimensions.get('window').width * 0.45,
         margin: 5,
         backgroundColor: '#094F44',
         borderRadius: 8, //joo
         borderWidth: 3,
-        borderColor: '#e5d9b6',
+        borderColor: '#cbb26a',
 
     }, square2: {
-        height: Dimensions.get('window').width * 0.45,
+        height: Dimensions.get('window').width * 0.40,
         width: Dimensions.get('window').width * 0.45,
         margin: 5,
         backgroundColor: '#094F44',
@@ -247,8 +255,23 @@ const ePriceStyle = StyleSheet.create({
         margin: 10,
         color: '#ffffff',
     },
+    pressable: {
+        borderColor: '#Cbb26a',
+        borderWidth: 2,
+        borderRadius: 8,
+        height: Dimensions.get('window').width * 0.12,
+        width: Dimensions.get('window').width * 0.22,
+        justifyContent: "center",
+      },
+      pressableSelected: {
+        backgroundColor: "#33cc7f",
+      },
+      pressableNotSelected: {
+        backgroundColor: "#094F44",
+      },
+    });
 
-})
+
 
 const MainPageStyle = StyleSheet.create({
     container: {
