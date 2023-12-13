@@ -511,8 +511,6 @@ export default ChargingStation = ({ navigation }) => {
                             enablePanDownToClose={true}
                             backgroundStyle={{borderWidth:1,borderRadius:8, backgroundColor: '#ffffffa4' }}
                             handleIndicatorStyle={[ButtonShadow,{backgroundColor:"#1D1A39"}]}
-
-
                         >
                             <BottomSheetScrollView
                                 ref={scrollViewRef}
@@ -533,8 +531,6 @@ export default ChargingStation = ({ navigation }) => {
                             >
                                 {dataClose.map((dataClose, index) =>
                                     <Pressable style={CharginStationsStyle.sliderItemContainer } key={index} onPress={() => handlePress(dataClose)}>
-                                       
-
                                             <View style={CharginStationsStyle.sliderItemImageContainer}>
                                                 <Image style={CharginStationsStyle.sliderItemImage} source={Logo} resizeMode='contain' />
                                             </View>
@@ -543,7 +539,6 @@ export default ChargingStation = ({ navigation }) => {
                                                 <Text style={CharginStationsStyle.sliderItemText}>{dataClose.operator}</Text>
                                                 <Text style={CharginStationsStyle.sliderItemText}>Capacity: {dataClose.capacity}</Text>
                                             </View>
-                                        
                                     </Pressable>)}
                             </BottomSheetScrollView>
                         </BottomSheet>
