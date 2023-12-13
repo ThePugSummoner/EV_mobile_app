@@ -231,28 +231,32 @@ export default ElectricPrice = ({ navigation }) => {
             overScrollMode='never'
         >
             <View style={ePriceStyle.container}>
-                {/* <View style={ePriceStyle.header}></View> */}
                 {/* <Text style={ePriceStyle.headline}>Electricity price</Text> */}
 
-             
+
                 {/* <View style={ePriceStyle.container3}>
                     <View style={ePriceStyle.bghourprice2}>
                         <Text style={ePriceStyle.headline3}>Hourly price {"\n"} at {hourPrice.time} o'clock: {"\n"}{hourPrice.price} snt/kWh</Text>
                     </View> */}
-                    <View style={ePriceStyle.container3}>
-                        <View style={ePriceStyle.bghourprice2}>
-                            <Text style={ePriceStyle.headline2}>Hourly price</Text>
-                            <Text style={ePriceStyle.headline5}>at {hourPrice.time} o'clock:</Text>
-                            <Text style={ePriceStyle.headline3}>{hourPrice.price} snt/kWh</Text>
-                        </View>
+                <View style={ePriceStyle.bigBox}>
+                    <View>
+                        {/* <Text style={ePriceStyle.headline2}>Hourly price</Text> */}
                     </View>
+                    <View style={ePriceStyle.hourPriceBox}>
+                        <Text style={ePriceStyle.headline2}>Hourly price</Text>
+                        <Text style={ePriceStyle.headline5}>at {hourPrice.time} o'clock:</Text>
+                        <Text style={ePriceStyle.headline3}>{hourPrice.price} c/kWh</Text>
+                    </View>
+                </View>
+
                 {/* </View> */}
 
 
-                <View style={ePriceStyle.container3}><Text style={ePriceStyle.headline3}>Hourly price:</Text>
-                    <View style={ePriceStyle.bghourprice2}>
+                <View style={ePriceStyle.bigBox}>
+                    <View style={ePriceStyle.hourPriceBox}>
+                        <Text style={ePriceStyle.headline3}>Hourly price</Text>
                         <Text style={ePriceStyle.headline5}>at {hourPrice.time} o'clock:</Text>
-                        <Text style={ePriceStyle.headline3}>{hourPrice.price} snt/kWh</Text>
+                        <Text style={ePriceStyle.headline3}>{hourPrice.price} c/kWh</Text>
                     </View>
                 </View>
 
@@ -263,14 +267,14 @@ export default ElectricPrice = ({ navigation }) => {
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
-                        <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
                             <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price}</Text>
-                           
+
                         </View>
                         <View style={ePriceStyle.square2}>
-                        <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
                             <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price}</Text>
-                            
+
                         </View>
                     </View>
 
@@ -281,36 +285,36 @@ export default ElectricPrice = ({ navigation }) => {
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
-                        <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text>
                             <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price} c/kWh</Text>
-                            
+
                         </View>
                         <View style={ePriceStyle.square2}>
-                        <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text>
+                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text>
                             <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price} c/kWh</Text>
-                           
+
                         </View>
                     </View>
 
                 </View>
-                <View style={{ flex: 2,padding:10 }}>
-                    <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", marginBottom: 10 }}>
-                    <Pressable style={[ePriceStyle.pressable, barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]} 
+                <View style={ePriceStyle.diagram}>
+                    <View style={ePriceStyle.pressablesLoc}>
+                        <Pressable style={[ePriceStyle.pressable, barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]}
                             onPress={() => handlePress(allFirstDayPrices, true)}
                         >
-                            <Text style={{ textAlign: "center", color: "white" }}>{firstDayPrice?.minPrice.startDate}</Text>
+                            <Text style={ePriceStyle.pressableText}>{firstDayPrice?.minPrice.startDate}</Text>
                         </Pressable>
-                        <Pressable style={[ePriceStyle.pressable, !barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]} 
+                        <Pressable style={[ePriceStyle.pressable, !barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]}
                             onPress={() => handlePress(allSecondDayPrices, false)}
                         >
-                            <Text style={{ textAlign: "center", color: "white" }}>{secondDayPrice?.minPrice.startDate}</Text>
+                            <Text style={ePriceStyle.pressableText}>{secondDayPrice?.minPrice.startDate}</Text>
                         </Pressable>
                     </View>
-                    <View style={{flex:1,justifyContent:"center",alignItems:"flex-start"}}>
-                    <Text style={{color:'lightgray'}}>c/kWh</Text>
+                    <View style={ePriceStyle.ckwhLoc}>
+                        <Text style={ePriceStyle.ckwh}>c/kWh</Text>
                     </View>
                     {/* #177AD5 */}
-                   <BarChart
+                    <BarChart
                         frontColor={'#33cc7f'}
                         barWidth={16}
                         initialSpacing={10}
@@ -322,14 +326,14 @@ export default ElectricPrice = ({ navigation }) => {
                         xAxisColor={'lightgray'}
                         yAxisColor={'lightgray'}
                         yAxisTextStyle={{ color: 'lightgray' }}
-                        xAxisLabelTextStyle={{color: 'lightgray', textAlign: 'center'}}
-                        
-                        
+                        xAxisLabelTextStyle={{ color: 'lightgray', textAlign: 'center' }}
+
+
                     />
-                    <Text style={{color:'lightgray',textAlign:"center"}}>{barChartFirstData[0]?.date}</Text>
-                   
-                    
-                    
+                    <Text style={ePriceStyle.dateText}>{barChartFirstData[0]?.date}</Text>
+
+
+
 
                 </View>
 

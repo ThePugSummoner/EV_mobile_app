@@ -158,16 +158,6 @@ const ePriceStyle = StyleSheet.create({
         backgroundColor: '#1D1A39',
         flex: 1,
     },
-    // header: {
-    //     flexDirection: 'row',
-    //     backgroundColor: '#22203a',
-    //     padding: 10,
-    //     borderBottomWidth: 2,
-    //     borderColor: "#BE9E44", //#b38c1a
-    //     //borderRadius: 5,
-    //     justifyContent: 'space-evenly',
-    //     paddingTop: 50
-    // },
     container2: {
         //backgroundColor: '#094F44',
         //row: 3,
@@ -205,9 +195,6 @@ const ePriceStyle = StyleSheet.create({
         color: '#ffffff',
         fontWeight: 'bold',
     },
-    button: {
-
-    },
     bghourprice: {
         //backgroundColor: '#1ED1B1',
         //borderRadius: 20,
@@ -222,18 +209,20 @@ const ePriceStyle = StyleSheet.create({
         borderColor: '#Cbb26a'//'#d8c690'//'#1ED1B1',
 
     },
-    container3: {
+    bigBox: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        flex: 1,
+        marginTop: 20,
+        //backgroundColor: '#a29cd4',
+        
+        
+        
     },
-    bghourprice2: {
-        //väritestejä
-        //backgroundColor: '#1ED1B1',
-        //borderRadius: 20,
+    hourPriceBox: {
         borderRadius: 8,
         width: Dimensions.get('window').width * 0.7,
-        height: Dimensions.get('window').width * 0.4,
+        height: Dimensions.get('window').width * 0.48,
         backgroundColor: '#094F44',
         justifyContent: 'center',
         alignItems: 'center',
@@ -241,7 +230,11 @@ const ePriceStyle = StyleSheet.create({
         margin: 10,
         borderWidth: 3,
         borderColor: '#cbb26a',
-    }, boxes: {
+
+    }, 
+    boxes: {
+        height: Dimensions.get('window').width * 0.6,
+        width: Dimensions.get('window').width * 0.90,
         margin: 20,
         marginTop: 30,
         flex: 1,
@@ -249,31 +242,51 @@ const ePriceStyle = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         borderWidth:1,
-        backgroundColor:"#451952ff"
+        backgroundColor:"#094f458f", //#451952ff
+        borderRadius:8,
+        borderColor:"#cbb26a",
+        borderWidth:3,
 
-    }, square: {
+    }, 
+    square: {
         height: Dimensions.get('window').width * 0.40,
-        width: Dimensions.get('window').width * 0.45,
+        width: Dimensions.get('window').width * 0.40,
         margin: 5,
-        backgroundColor: '#094F44',
+        backgroundColor: '#094F44', //#178a62ff
         borderRadius: 8, //joo
-        borderWidth: 3,
-        borderColor: '#cbb26a',
+        // borderWidth: 3,
+        // borderColor: '#cbb26a',
 
-    }, square2: {
+    }, 
+    square2: {
         height: Dimensions.get('window').width * 0.40,
-        width: Dimensions.get('window').width * 0.45,
+        width: Dimensions.get('window').width * 0.40,
         margin: 5,
         backgroundColor: '#094F44',
         borderRadius: 5,
         borderWidth: 3,
         borderColor: '#cbb26a',
 
-    }, headline4: {
+    }, 
+    headline4: {
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
         color: '#ffffff',
+    },
+    diagram:{
+        flex: 2,
+        padding:10,
+    },
+    pressablesLoc:{
+        flex: 1, 
+        flexDirection: "row", 
+        justifyContent: "space-evenly", 
+        alignItems: "center", 
+        marginBottom: 10 ,
+    },
+    pressableText:{
+        textAlign: "center", color: "white" 
     },
     pressable: {
         borderColor: '#Cbb26a',
@@ -285,9 +298,23 @@ const ePriceStyle = StyleSheet.create({
       },
       pressableSelected: {
         backgroundColor: "#33cc7f",
+       
       },
       pressableNotSelected: {
         backgroundColor: "#094F44",
+      },
+      ckwhLoc:{
+        flex:1,
+        justifyContent:"center",
+        alignItems:"flex-start"
+      },
+      ckwh:{
+        color:'lightgray',
+      },
+      dateText:{
+        color:'lightgray',
+        textAlign:"center",
+       
       },
     });
 
