@@ -8,10 +8,10 @@ const getFontSize = size => size / fontScale
 const Text = StyleSheet.create({
     fontSize: getFontSize(16),
     color:"#000000",
-    fontWeight: "200",
-    textShadowColor: "#00000068",
+    fontWeight: "300",
+    textShadowColor: "#000000ff",
     textShadowOffset: { width: 0.5, height: 0 },
-    textShadowRadius: 0.5
+    textShadowRadius:1
 })
 const ButtonShadow = StyleSheet.create({
     shadowColor: "#000000",

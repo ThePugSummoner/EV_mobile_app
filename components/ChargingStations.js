@@ -521,7 +521,7 @@ export default ChargingStation = ({ navigation }) => {
                                 disableIntervalMomentum={true}
                                 contentContainerStyle={{ paddingHorizontal: 20 }}
                                 pagingEnabled
-
+                                showsHorizontalScrollIndicator={true}
                                 decelerationRate={"fast"}
 
                                 //onScroll={(e) => handleScroll(e)}

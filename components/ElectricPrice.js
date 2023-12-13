@@ -327,6 +327,8 @@ export default ElectricPrice = ({ navigation }) => {
                         yAxisColor={'lightgray'}
                         yAxisTextStyle={{ color: 'lightgray' }}
                         xAxisLabelTextStyle={{ color: 'lightgray', textAlign: 'center' }}
+                        
+
 
 
                     />
