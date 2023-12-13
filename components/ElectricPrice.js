@@ -242,8 +242,8 @@ export default ElectricPrice = ({ navigation }) => {
                     <View>
                         {/* <Text style={ePriceStyle.headline2}>Hourly price</Text> */}
                     </View>
+                    <Text style={ePriceStyle.headline2}>Hourly price</Text>
                     <View style={ePriceStyle.hourPriceBox}>
-                        <Text style={ePriceStyle.headline2}>Hourly price</Text>
                         <Text style={ePriceStyle.headline5}>at {hourPrice.time} o'clock:</Text>
                         <Text style={ePriceStyle.headline3}>{hourPrice.price} c/kWh</Text>
                     </View>
@@ -298,7 +298,7 @@ export default ElectricPrice = ({ navigation }) => {
 
                 </View>
                 <View style={ePriceStyle.diagram}>
-                    <View style={ePriceStyle.pressablesLoc}>
+                    <View style={ePriceStyle.pressablesContainer}>
                         <Pressable style={[ePriceStyle.pressable, barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]}
                             onPress={() => handlePress(allFirstDayPrices, true)}
                         >
@@ -314,8 +314,9 @@ export default ElectricPrice = ({ navigation }) => {
                         <Text style={ePriceStyle.ckwh}>c/kWh</Text>
                     </View>
                     {/* #177AD5 */}
+                    {/* #33cc7f */}
                     <BarChart
-                        frontColor={'#33cc7f'}
+                        frontColor={'#9315b9ff'}
                         barWidth={16}
                         initialSpacing={10}
                         spacing={10}

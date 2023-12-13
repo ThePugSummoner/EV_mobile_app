@@ -15,7 +15,7 @@ const Text = StyleSheet.create({
 })
 const ButtonShadow = StyleSheet.create({
     shadowColor: "#000000",
-    elevation: 5,
+    elevation: 2,
 })
 
 const CharginStationsStyle = StyleSheet.create({
@@ -124,9 +124,9 @@ const HomeStyle = StyleSheet.create({
         justifyContent: 'center',
     },
     header: {
-        fontSize: 24,
+        fontSize:getFontSize(24),
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 15,
         textAlign: "center"
     },
     containerLogin: {
@@ -139,9 +139,10 @@ const HomeStyle = StyleSheet.create({
     containerRegister: {
         backgroundColor: '#E5D9B6', //tämä sama sävy laitettu bottomnaviin
         alignItems: "stretch",
-        justifyContent: 'space-around',
-        padding: 20,
+        justifyContent:"space-evenly",
+        padding:20,
         borderRadius: 8,
+        
     },
     textInput: {
         borderWidth: 2,
@@ -162,16 +163,17 @@ const HomeStyle = StyleSheet.create({
         margin: 10,
         width: 250,
         alignItems: 'center',
-        fontSize: 18,
+        fontSize: 16,
         textAlign: 'center',
         color: '#000000'
     },
     text: {
         color: '#cbb26a',
-        fontSize: 20,
+        fontSize: 18,
 
     },
-    loginButton: { //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
+    loginButton: {
+        ...ButtonShadow,
         backgroundColor: '#cbb26a',
         padding: 10,
         borderRadius: 8,
@@ -180,6 +182,7 @@ const HomeStyle = StyleSheet.create({
 
     },
     loginButtonText: {
+        
         fontSize: 20,
         color: '#1a1a1a',
         //fontWeight: 'bold'
@@ -243,6 +246,7 @@ const ePriceStyle = StyleSheet.create({
     container: {
         backgroundColor: '#1D1A39',
         flex: 1,
+       
     },
     container2: {
         //backgroundColor: '#094F44',
@@ -300,15 +304,19 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         marginTop: 20,
-        //backgroundColor: '#a29cd4',
+        backgroundColor: '#451952af',
+        borderRadius:8,
+        width:Dimensions.get("window").width * 0.80,
+        height:Dimensions.get("window").height * 0.45,
+        alignSelf:"center"
 
 
 
     },
     hourPriceBox: {
         borderRadius: 8,
-        width: Dimensions.get('window').width * 0.7,
-        height: Dimensions.get('window').width * 0.48,
+        width: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').width * 0.45,
         backgroundColor: '#094F44',
         justifyContent: 'center',
         alignItems: 'center',
@@ -363,8 +371,9 @@ const ePriceStyle = StyleSheet.create({
     diagram: {
         flex: 2,
         padding: 10,
+        marginBottom:20
     },
-    pressablesLoc: {
+    pressablesContainer: {
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-evenly",
@@ -372,7 +381,9 @@ const ePriceStyle = StyleSheet.create({
         marginBottom: 10,
     },
     pressableText: {
-        textAlign: "center", color: "white"
+        textAlign: "center",
+         color:"white",
+         fontWeight:"500",
     },
     pressable: {
         borderColor: '#Cbb26a',
@@ -383,11 +394,12 @@ const ePriceStyle = StyleSheet.create({
         justifyContent: "center",
     },
     pressableSelected: {
-        backgroundColor: "#33cc7f",
+        backgroundColor: "#9315b9ff",
 
     },
     pressableNotSelected: {
         backgroundColor: "#094F44",
+        
     },
     ckwhLoc: {
         flex: 1,
@@ -396,10 +408,14 @@ const ePriceStyle = StyleSheet.create({
     },
     ckwh: {
         color: 'lightgray',
+        fontSize:getFontSize(16),
+        marginLeft:5
     },
     dateText: {
         color: 'lightgray',
         textAlign: "center",
+        fontSize:getFontSize(18),
+        marginTop:5
 
     },
 });
