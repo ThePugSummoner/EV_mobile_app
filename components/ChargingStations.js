@@ -3,7 +3,7 @@ import { Alert, Image, Pressable, ScrollView, Text, TouchableOpacity, View, Anim
 import { Marker, Circle, animateToRegion } from 'react-native-maps';
 import MapView from "react-native-map-clustering";
 import * as Location from "expo-location"
-import { CharginStationsStyle } from '../style/style';
+import { ButtonShadow, CharginStationsStyle } from '../style/style';
 import { Dimensions } from 'react-native';
 import Constants from "expo-constants"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
@@ -401,7 +401,7 @@ export default ChargingStation = ({ navigation }) => {
         if (index === -1) {
             setShowCloseData(false)
             setIndexi("")
-            setDataClose([])
+            
         }
     }, []);
 
@@ -416,7 +416,7 @@ export default ChargingStation = ({ navigation }) => {
     //console.log(markersData.length,"pituus marker")
     console.log(longitudeDelta, "longis")
     if (isLoading && isLoadingData) {
-        return <View style={CharginStationsStyle.container}><Text>Please wait a moment</Text></View>
+        return <View style={CharginStationsStyle.container}><Text style={CharginStationsStyle.loadingText}>Please wait a moment</Text></View>
     } else {
 
         return (
@@ -470,7 +470,7 @@ export default ChargingStation = ({ navigation }) => {
                                 <FontAwesome5 name="map-marker-alt" size={MARKER_SIZE} color={MARKER_BASE_COLOR} />
                             </Marker>)}
 
-                            {showCloseData && dataClose?.map((marker,index)=>
+                            {dataClose?.map((marker,index)=>
                             <Marker key={marker.id}
                             title={marker.name}
                             id={marker.id}
@@ -492,16 +492,13 @@ export default ChargingStation = ({ navigation }) => {
 
 
                     </MapView>
-                    {updateCloseData && <View style={CharginStationsStyle.updateButtonContainer}>
-                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={CharginStationsStyle.updateButton}>
-                            <Text style={CharginStationsStyle.updateText}>Update List</Text>
-                        </TouchableOpacity>
-                    </View>}
+                    {updateCloseData && 
+                    <TouchableOpacity onPress={() => handleCloseDataPress()} style={CharginStationsStyle.updateButtonContainer}>
+                        <Text style={CharginStationsStyle.updateText}>Update List</Text>
+                    </TouchableOpacity>}
 
                     {!showCloseData ?
                         <TouchableOpacity onPress={() => handleCloseDataPress()} style={CharginStationsStyle.listButton}>
-
-
                             <Text style={CharginStationsStyle.listText}>Show list</Text>
                         </TouchableOpacity>
                         :
@@ -512,7 +509,8 @@ export default ChargingStation = ({ navigation }) => {
                             onChange={handleSheetChange}
                             enableContentPanningGesture={false}
                             enablePanDownToClose={true}
-                            backgroundStyle={{ backgroundColor: '#ffffff' }}
+                            backgroundStyle={{borderWidth:1,borderRadius:8, backgroundColor: '#ffffffa4' }}
+                            handleIndicatorStyle={[ButtonShadow,{backgroundColor:"#1D1A39"}]}
 
 
                         >
@@ -534,8 +532,8 @@ export default ChargingStation = ({ navigation }) => {
 
                             >
                                 {dataClose.map((dataClose, index) =>
-                                    <Pressable key={index} onPress={() => handlePress(dataClose)}>
-                                        <View style={CharginStationsStyle.sliderItemContainer }>
+                                    <Pressable style={CharginStationsStyle.sliderItemContainer } key={index} onPress={() => handlePress(dataClose)}>
+                                       
 
                                             <View style={CharginStationsStyle.sliderItemImageContainer}>
                                                 <Image style={CharginStationsStyle.sliderItemImage} source={Logo} resizeMode='contain' />
@@ -545,7 +543,7 @@ export default ChargingStation = ({ navigation }) => {
                                                 <Text style={CharginStationsStyle.sliderItemText}>{dataClose.operator}</Text>
                                                 <Text style={CharginStationsStyle.sliderItemText}>Capacity: {dataClose.capacity}</Text>
                                             </View>
-                                        </View>
+                                        
                                     </Pressable>)}
                             </BottomSheetScrollView>
                         </BottomSheet>

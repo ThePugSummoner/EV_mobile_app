@@ -1,37 +1,56 @@
 import { StyleSheet } from "react-native";
-import { Dimensions } from 'react-native';
+import { Dimensions, PixelRatio } from 'react-native';
 import Constants from "expo-constants";
 
+const fontScale = PixelRatio.getFontScale()
+const getFontSize = size => size / fontScale
+
+const Text = StyleSheet.create({
+    fontSize: getFontSize(16),
+    color:"#000000",
+    fontWeight: "200",
+    textShadowColor: "#00000068",
+    textShadowOffset: { width: 0.5, height: 0 },
+    textShadowRadius: 0.5
+})
+const ButtonShadow = StyleSheet.create({
+    shadowColor: "#000000",
+    elevation: 5,
+})
+
 const CharginStationsStyle = StyleSheet.create({
-    markerColorBase:"red",
-    markerColorSelected:"orange",
-    markerSize:24,
+    markerColorBase: "red",
+    markerColorSelected: "orange",
+    markerSize: 24,
     container: {
-        paddingTop: Constants.statusBarHeight+5,
+        paddingTop: Constants.statusBarHeight + 5,
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
+    loadingText: {
+        ...Text
+    },
     updateButtonContainer: {
+        ...ButtonShadow,
         height: Dimensions.get("window").height * 0.05,
         width: Dimensions.get("window").width * 0.5,
         position: 'absolute',
-        top: 10, left: "25%",
-        right: "25%", bottom: 0,
+        top: Dimensions.get("window").height * 0.003,
+        left: "25%",
+        right: "25%",
         justifyContent: 'center',
-        alignSelf: "center"
-    },
-    updateButton: {
-        flex: 1,
-        backgroundColor: "#ffffffd7",
-        padding: 10,
-        borderRadius: 4
+        alignSelf: "center",
+        backgroundColor: "#ffffffff",
+        borderRadius:8
     },
     updateText: {
+        ...Text,
         textAlign: "center"
     },
     listButton: {
+        ...ButtonShadow,
         flex: 1,
         position: "absolute",
         bottom: Dimensions.get("window").height * 0.01,
@@ -42,9 +61,11 @@ const CharginStationsStyle = StyleSheet.create({
         marginRight: 8
     },
     listText: {
+        ...Text,
         textAlign: "center"
     },
     sliderItemContainer: {
+        ...ButtonShadow,
         borderWidth: 1,
         height: Dimensions.get("window").height * 0.2,
         width: 300,
@@ -58,6 +79,7 @@ const CharginStationsStyle = StyleSheet.create({
         flexDirection: "row-reverse"
     },
     sliderItemImageContainer: {
+        ...ButtonShadow,
         height: 80,
         width: 100,
         borderWidth: 1,
@@ -71,6 +93,7 @@ const CharginStationsStyle = StyleSheet.create({
         flex: 1
     },
     sliderItemText: {
+        ...Text,
         flex: 1,
         flexWrap: "wrap"
     }
@@ -548,4 +571,4 @@ const ChargingMenuStyle = StyleSheet.create({
     }
 })
 
-export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle }
+export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle,ButtonShadow }
