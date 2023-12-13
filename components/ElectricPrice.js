@@ -314,6 +314,7 @@ export default ElectricPrice = ({ navigation }) => {
                         <Text style={ePriceStyle.ckwh}>c/kWh</Text>
                     </View>
                     {/* #177AD5 */}
+                    {/* #33cc7f */}
                     <BarChart
                         frontColor={'#9315b9ff'}
                         barWidth={16}
