@@ -268,12 +268,12 @@ export default ElectricPrice = ({ navigation }) => {
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
                             <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
-                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price} c/kWh</Text>
 
                         </View>
                         <View style={ePriceStyle.square2}>
                             <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
-                            <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price}</Text>
+                            <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price} c/kWh</Text>
 
                         </View>
                     </View>
