@@ -3,15 +3,78 @@ import { Dimensions } from 'react-native';
 import Constants from "expo-constants";
 
 const CharginStationsStyle = StyleSheet.create({
+    markerColorBase:"red",
+    markerColorSelected:"orange",
+    markerSize:24,
     container: {
-        container: {
-            /* paddingTop: Constants.statusBarHeight, */
-            flex: 1,
-            backgroundColor: '#fff',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
+        paddingTop: Constants.statusBarHeight+5,
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    updateButtonContainer: {
+        height: Dimensions.get("window").height * 0.05,
+        width: Dimensions.get("window").width * 0.5,
+        position: 'absolute',
+        top: 10, left: "25%",
+        right: "25%", bottom: 0,
+        justifyContent: 'center',
+        alignSelf: "center"
+    },
+    updateButton: {
+        flex: 1,
+        backgroundColor: "#ffffffd7",
+        padding: 10,
+        borderRadius: 4
+    },
+    updateText: {
+        textAlign: "center"
+    },
+    listButton: {
+        flex: 1,
+        position: "absolute",
+        bottom: Dimensions.get("window").height * 0.01,
+        right: 0,
+        backgroundColor: "#ffffffd7",
+        padding: 10,
+        borderRadius: 8,
+        marginRight: 8
+    },
+    listText: {
+        textAlign: "center"
+    },
+    sliderItemContainer: {
+        borderWidth: 1,
+        height: Dimensions.get("window").height * 0.2,
+        width: 300,
+        backgroundColor: "#fff3be",
+        marginHorizontal: 10,
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        padding: 10,
+        gap: 20,
+        borderRadius: 4,
+        flexDirection: "row-reverse"
+    },
+    sliderItemImageContainer: {
+        height: 80,
+        width: 100,
+        borderWidth: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        marginTop: 10,
+        backgroundColor: "#1D1A39",
+        borderRadius: 4
+    },
+    sliderItemImage: {
+        flex: 1
+    },
+    sliderItemText: {
+        flex: 1,
+        flexWrap: "wrap"
     }
+
 })
 
 const LogoAnimationStyle = StyleSheet.create({
@@ -141,7 +204,7 @@ const ProfileStyle = StyleSheet.create({
         borderWidth: 1,
         borderBottomColor: '#cbb26a',
         borderTopColor: '#cbb26a',
-        flex:1
+        flex: 1
     },
     icon: {
         marginLeft: 10
@@ -215,9 +278,9 @@ const ePriceStyle = StyleSheet.create({
         flex: 1,
         marginTop: 20,
         //backgroundColor: '#a29cd4',
-        
-        
-        
+
+
+
     },
     hourPriceBox: {
         borderRadius: 8,
@@ -231,7 +294,7 @@ const ePriceStyle = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#cbb26a',
 
-    }, 
+    },
     boxes: {
         height: Dimensions.get('window').width * 0.6,
         width: Dimensions.get('window').width * 0.90,
@@ -241,13 +304,13 @@ const ePriceStyle = StyleSheet.create({
         flexDirection: "column",
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        borderWidth:1,
-        backgroundColor:"#094f458f", //#451952ff
-        borderRadius:8,
-        borderColor:"#cbb26a",
-        borderWidth:3,
+        borderWidth: 1,
+        backgroundColor: "#094f458f", //#451952ff
+        borderRadius: 8,
+        borderColor: "#cbb26a",
+        borderWidth: 3,
 
-    }, 
+    },
     square: {
         height: Dimensions.get('window').width * 0.40,
         width: Dimensions.get('window').width * 0.40,
@@ -257,7 +320,7 @@ const ePriceStyle = StyleSheet.create({
         // borderWidth: 3,
         // borderColor: '#cbb26a',
 
-    }, 
+    },
     square2: {
         height: Dimensions.get('window').width * 0.40,
         width: Dimensions.get('window').width * 0.40,
@@ -267,26 +330,26 @@ const ePriceStyle = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#cbb26a',
 
-    }, 
+    },
     headline4: {
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
         color: '#ffffff',
     },
-    diagram:{
+    diagram: {
         flex: 2,
-        padding:10,
+        padding: 10,
     },
-    pressablesLoc:{
-        flex: 1, 
-        flexDirection: "row", 
-        justifyContent: "space-evenly", 
-        alignItems: "center", 
-        marginBottom: 10 ,
+    pressablesLoc: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        marginBottom: 10,
     },
-    pressableText:{
-        textAlign: "center", color: "white" 
+    pressableText: {
+        textAlign: "center", color: "white"
     },
     pressable: {
         borderColor: '#Cbb26a',
@@ -295,38 +358,38 @@ const ePriceStyle = StyleSheet.create({
         height: Dimensions.get('window').width * 0.12,
         width: Dimensions.get('window').width * 0.22,
         justifyContent: "center",
-      },
-      pressableSelected: {
+    },
+    pressableSelected: {
         backgroundColor: "#33cc7f",
-       
-      },
-      pressableNotSelected: {
+
+    },
+    pressableNotSelected: {
         backgroundColor: "#094F44",
-      },
-      ckwhLoc:{
-        flex:1,
-        justifyContent:"center",
-        alignItems:"flex-start"
-      },
-      ckwh:{
-        color:'lightgray',
-      },
-      dateText:{
-        color:'lightgray',
-        textAlign:"center",
-       
-      },
-    });
+    },
+    ckwhLoc: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "flex-start"
+    },
+    ckwh: {
+        color: 'lightgray',
+    },
+    dateText: {
+        color: 'lightgray',
+        textAlign: "center",
+
+    },
+});
 
 
 
 const MainPageStyle = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection:"column",
+        flexDirection: "column",
         backgroundColor: '#1D1A39',
-        justifyContent:"flex-start",
-        alignItems:"stretch",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
 
     },
     header: {
@@ -342,24 +405,24 @@ const MainPageStyle = StyleSheet.create({
         color: 'white',
     },
     carImage: {
-        justifyContent:"center",
+        justifyContent: "center",
         alignItems: 'center',
-        flex:3,
-      
+        flex: 3,
+
     },
     battery: {
-        justifyContent:"center",
+        justifyContent: "center",
         alignItems: 'center',
-        flex:4,
-        padding:20,
-       
+        flex: 4,
+        padding: 20,
+
     },
     toggleButtons: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        flex:3,
-        alignItems:"center",
-       
+        flex: 3,
+        alignItems: "center",
+
     },
     /*toggleButtonsSingular: {
         transform: [{rotate: '90deg'}],
@@ -457,7 +520,7 @@ const MainPageStyle = StyleSheet.create({
 
 })
 
-const ChargingMenuStyle = StyleSheet.create ({
+const ChargingMenuStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1D1A39',

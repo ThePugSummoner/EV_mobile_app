@@ -21,6 +21,9 @@ const ZOOM_LATITUDE_DELTA = 0.0922
 const ZOOM_LONGITUDE_DELTA = 0.0421
 const RADIUS = 10000
 
+const MARKER_BASE_COLOR=CharginStationsStyle.markerColorBase
+const MARKER_SELECTED_COLOR=CharginStationsStyle.markerColorSelected
+const MARKER_SIZE=CharginStationsStyle.markerSize
 
 
 export default ChargingStation = ({ navigation }) => {
@@ -66,12 +69,11 @@ export default ChargingStation = ({ navigation }) => {
         }
     }, [latitude, longitude, showCloseData])
 
-
+    //kaupunkien koordinaatit missä on latauspisteitä
     useEffect(() => {
-        console.log("esetapahtuma")
+
         const cityMarkersData = []
         if (isLoadingData === false) {
-            console.log("if tapahtuma")
             for (let i = 0; i < FinCities.length; i++) {
                 for (let j = 0; j < data.length; j++) {
                     if (5000 > haversineDistanceBetweenPoints(data[j].latitude, data[j].longitude, FinCities[i].lat, FinCities[i].lng)) {
@@ -99,10 +101,9 @@ export default ChargingStation = ({ navigation }) => {
             setCitiesMarkers(cityMarkersData)
         }
     }, [isLoadingData])
-
+//Zoomin ja zoomout antaa eri markkerit näkyville.
     useEffect(()=>{
-        console.log(showCloseData,"show")
-      
+ 
         if(longitudeDelta<=5 && isLoadingData===false){
             setMarkersData(citiesMarkers)
             console.log("Tapahtuu elsen alla oleva if ")
@@ -114,7 +115,7 @@ export default ChargingStation = ({ navigation }) => {
         else if(longitudeDelta===12){
             const zoomInMarkersData=[]
             data.map(data=>{
-                if(RADIUS+5000>haversineDistanceBetweenPoints(data.latitude,data.longitude,latitude,longitude)){
+                if(RADIUS>haversineDistanceBetweenPoints(data.latitude,data.longitude,latitude,longitude)){
                     if(-1===dataClose.findIndex(marker => marker.id === data.id)){
                         zoomInMarkersData.push({...data})
                     }
@@ -136,10 +137,6 @@ export default ChargingStation = ({ navigation }) => {
             })
             setMarkersData(zoomInMarkersData)
         }
-       
-
-
-
     },[longitudeDelta,latitude,longitude])
 
 
@@ -280,6 +277,8 @@ export default ChargingStation = ({ navigation }) => {
 
         }
     }
+
+    // testataan onko objecti sama vai ei
     function testie(obj) {
         console.log(obj, "Objecti")
         if (obj.length !== dataClose.length) {
@@ -299,6 +298,8 @@ export default ChargingStation = ({ navigation }) => {
 
         return arr.length !== dataClose.length ? false : true
     }
+
+    //lähimmäisten asemien tarkastelu
     function handleAddDataClose(coordinates) {
 
         const coordinate = coordinates
@@ -315,6 +316,8 @@ export default ChargingStation = ({ navigation }) => {
         }
         return check
     }
+
+    //markkerin painaminen
     function handleMarkerPress(event) {
 
         const coordinate = event.nativeEvent.coordinate
@@ -341,7 +344,7 @@ export default ChargingStation = ({ navigation }) => {
         }
     }
 
-
+// Sliderin oikeassa reunassa.
     const isCloseToRight = ({ layoutMeasurement, contentOffset, contentSize }) => {
         const paddingToRight = 20;
         return layoutMeasurement.width + contentOffset.x >= contentSize.width - paddingToRight;
@@ -376,7 +379,7 @@ export default ChargingStation = ({ navigation }) => {
 
     }
 
-
+// kahden numeron modulo
     function modulo(number, modulo) {
         let answer
         if (number % modulo === 0) {
@@ -386,9 +389,10 @@ export default ChargingStation = ({ navigation }) => {
         }
         return answer
     }
-    const heigh = Dimensions.get("window").height * 0.35
+
+    const heightSnap = Dimensions.get("window").height * 0.25
     //BottomSheetille snapPoint
-    const snapPoints = useMemo(() => [heigh], []);
+    const snapPoints = useMemo(() => [heightSnap], []);
     //Aukaisee BottomSheetScrollview
     const handleOpenPress = () => bottomSheetRef.current?.expand();
     //antaa indexin missä vaiheessa bottomSheet on -1 ei näkyvillä.
@@ -420,7 +424,9 @@ export default ChargingStation = ({ navigation }) => {
 
                 <View style={CharginStationsStyle.container}>
                     <MapView
-                        style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height - Constants.statusBarHeight }}
+                        style={{
+                             width: Dimensions.get("window").width,
+                              height: Dimensions.get("window").height - Constants.statusBarHeight }}
                         ref={map}
                         initialRegion={{
                             latitude: latitude,
@@ -461,7 +467,7 @@ export default ChargingStation = ({ navigation }) => {
                                 onPress={(e) => marker.category==="city" ? zoomInPress(marker) : handleMarkerPress(e)}
                             >
 
-                                <FontAwesome5 name="map-marker-alt" size={24} color={"red"} />
+                                <FontAwesome5 name="map-marker-alt" size={MARKER_SIZE} color={MARKER_BASE_COLOR} />
                             </Marker>)}
 
                             {showCloseData && dataClose?.map((marker,index)=>
@@ -474,7 +480,7 @@ export default ChargingStation = ({ navigation }) => {
                             onPress={(e) => marker.category==="city" ? zoomInPress(marker) : handleMarkerPress(e)}
                         >
 
-                            <FontAwesome5 name="map-marker-alt" size={index === indexi ? 1.25 * 24 : 24} color={index === indexi ? "orange" : "red"} />
+                            <FontAwesome5 name="map-marker-alt" size={index === indexi ? 1.25 * MARKER_SIZE : MARKER_SIZE} color={index === indexi ? MARKER_SELECTED_COLOR : MARKER_BASE_COLOR} />
                         </Marker>
                             )}
 
@@ -486,17 +492,17 @@ export default ChargingStation = ({ navigation }) => {
 
 
                     </MapView>
-                    {updateCloseData && <View style={{ height: Dimensions.get("window").height * 0.05, width: Dimensions.get("window").width * 0.5, position: 'absolute', top: 10, left: "25%", right: "25%", bottom: 0, justifyContent: 'center', alignSelf: "center" }}>
-                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, backgroundColor: "#ffffffd7", padding: 10, borderRadius: 4 }}>
-                            <Text style={{ textAlign: "center" }}>Update List</Text>
+                    {updateCloseData && <View style={CharginStationsStyle.updateButtonContainer}>
+                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={CharginStationsStyle.updateButton}>
+                            <Text style={CharginStationsStyle.updateText}>Update List</Text>
                         </TouchableOpacity>
                     </View>}
 
                     {!showCloseData ?
-                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={{ flex: 1, position: "absolute", bottom: 80, right: 0, backgroundColor: "#ffffffd7", marginBottom: 20, padding: 10 }}>
+                        <TouchableOpacity onPress={() => handleCloseDataPress()} style={CharginStationsStyle.listButton}>
 
 
-                            <Text style={{ textAlign: "center" }}>Show list</Text>
+                            <Text style={CharginStationsStyle.listText}>Show list</Text>
                         </TouchableOpacity>
                         :
                         <BottomSheet
@@ -529,20 +535,16 @@ export default ChargingStation = ({ navigation }) => {
                             >
                                 {dataClose.map((dataClose, index) =>
                                     <Pressable key={index} onPress={() => handlePress(dataClose)}>
-                                        <View style={{ borderWidth: 1, height: 150, width: 300, backgroundColor: "#fff3be", marginHorizontal: 10, justifyContent: "flex-start", alignItems: "flex-start", padding: 10, gap: 20, borderRadius: 4, flexDirection: "row-reverse" }}>
+                                        <View style={CharginStationsStyle.sliderItemContainer }>
 
-                                            <View style={{ height: 80, width: 100, borderWidth: 1, justifyContent: "flex-start", alignItems: "center", marginTop: 10, backgroundColor: "#1D1A39", borderRadius: 4 }}>
-                                                <Image style={{ flex: 1 }} source={Logo} resizeMode='contain' />
+                                            <View style={CharginStationsStyle.sliderItemImageContainer}>
+                                                <Image style={CharginStationsStyle.sliderItemImage} source={Logo} resizeMode='contain' />
                                             </View>
-                                            <View style={{ flex: 1 }}>
-                                                <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.name}</Text>
-                                                <Text style={{ flex: 1, flexWrap: "wrap" }}>{dataClose.operator}</Text>
-                                                <Text style={{ flex: 1, flexWrap: "wrap" }}>Capacity: {dataClose.capacity}</Text>
-                                                
-
+                                            <View style={CharginStationsStyle.sliderItemImage}>
+                                                <Text style={CharginStationsStyle.sliderItemText}>{dataClose.name}</Text>
+                                                <Text style={CharginStationsStyle.sliderItemText}>{dataClose.operator}</Text>
+                                                <Text style={CharginStationsStyle.sliderItemText}>Capacity: {dataClose.capacity}</Text>
                                             </View>
-
-
                                         </View>
                                     </Pressable>)}
                             </BottomSheetScrollView>
