@@ -506,7 +506,7 @@ const MainPageStyle = StyleSheet.create({
     modalView: {
         margin: 20,
         backgroundColor: '#cbb26a',
-        borderRadius: 15,
+        borderRadius: 8,
         padding: 25,
         alignItems: 'center',
         shadowColor: '#000',
@@ -519,7 +519,7 @@ const MainPageStyle = StyleSheet.create({
         elevation: 10,
     },
     button: {
-        borderRadius: 15,
+        borderRadius: 8,
         padding: 10,
         elevation: 4,
         marginTop: 5
