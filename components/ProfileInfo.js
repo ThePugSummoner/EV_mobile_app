@@ -3,7 +3,8 @@ import { getUserData } from './Auth';
 import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import styles, { HomeStyle } from '../style/style';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Dimensions } from 'react-native';
 
 
 function ProfileInfo(){
@@ -33,11 +34,16 @@ function ProfileInfo(){
         ];
       
         return (
-          <View style={{ padding: 10 }}>
+          <View style={{height:Dimensions.get("window").height * 0.45,width:Dimensions.get("window").width * 0.73, borderRadius:8,padding: 10, backgroundColor:"#E5D9B6",borderColor:"#cbb26a",borderWidth:3,shadowColor: "#000000", elevation: 4}}>
+            <View style={{alignItems:"center"}}>
+            <MaterialCommunityIcons name="account-box" size={110} color="#1D1A39" />
+          
+            </View>
+           
             {tableData.map((rowData, index) => (
-              <View key={index} style={{ borderBottomWidth: 1, borderColor: '#E5D9B6', paddingVertical: 8, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={[HomeStyle.text, {marginRight: 50}]}>{rowData.label}</Text>
-                <Text style={[HomeStyle.text]}>{rowData.value}</Text>
+              <View key={index} style={{ borderBottomWidth: 1, borderColor: '#cbb26a', paddingVertical: 6, flexDirection: 'row', justifyContent: 'space-between',alignItems:"center" }}>
+                <Text style={[HomeStyle.text, {color:"#1a1a1a",fontSize: 18}]}>{rowData.label}</Text>
+                <Text style={[HomeStyle.text,{color:"#1a1a1a",fontSize: 18}]}>{rowData.value}</Text>
               </View>
             ))}
           </View>
@@ -45,7 +51,7 @@ function ProfileInfo(){
       };
 
     return(
-        <View style={HomeStyle.container}>
+        <View style={[HomeStyle.container]}>
             {userData && /* (
                     <>
                     <Text style={HomeStyle.text}>User name: {userData.name}</Text>

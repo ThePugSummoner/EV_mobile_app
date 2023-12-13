@@ -49,8 +49,12 @@ const MainNavigator = () => (
     })}>
     <MainStack.Screen name="My Car" component={MainPage} initialParams={{ userUid: null }} options={{headerShown: false }}/>
     <MainStack.Screen name="Profile" component={CustomStackNavigator}  options={{headerShown: false }}/>
-    <MainStack.Screen name="Charging Stations" component={ChargingStations}/>
-    <MainStack.Screen name="Electricity Price" component={ElectricPrice}  />
+    <MainStack.Screen name="Charging Stations" component={ChargingStations}
+    options={{headerStyle:{backgroundColor:"#1D1A39",borderBottomColor:"#BE9E44",borderBottomWidth:2},headerTintColor:"#ffffff",headerTitleAlign:"center"}}
+    />
+    <MainStack.Screen name="Electricity Price" component={ElectricPrice}
+    options={{headerStyle:{backgroundColor:"#1D1A39",borderBottomColor:"#BE9E44",borderBottomWidth:2},headerTintColor:"#ffffff",headerTitleAlign:"center"}}
+    />
   </MainStack.Navigator>
 );
 

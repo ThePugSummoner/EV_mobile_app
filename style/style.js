@@ -1,17 +1,103 @@
 import { StyleSheet } from "react-native";
-import { Dimensions } from 'react-native';
+import { Dimensions, PixelRatio } from 'react-native';
 import Constants from "expo-constants";
 
+const fontScale = PixelRatio.getFontScale()
+const getFontSize = size => size / fontScale
+
+const Text = StyleSheet.create({
+    fontSize: getFontSize(16),
+    color:"#000000",
+    fontWeight: "200",
+    textShadowColor: "#00000068",
+    textShadowOffset: { width: 0.5, height: 0 },
+    textShadowRadius: 0.5
+})
+const ButtonShadow = StyleSheet.create({
+    shadowColor: "#000000",
+    elevation: 5,
+})
+
 const CharginStationsStyle = StyleSheet.create({
+    markerColorBase: "red",
+    markerColorSelected: "orange",
+    markerSize: 24,
     container: {
-        container: {
-            /* paddingTop: Constants.statusBarHeight, */
-            flex: 1,
-            backgroundColor: '#fff',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
+        paddingTop: Constants.statusBarHeight + 5,
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    loadingText: {
+        ...Text
+    },
+    updateButtonContainer: {
+        ...ButtonShadow,
+        height: Dimensions.get("window").height * 0.05,
+        width: Dimensions.get("window").width * 0.5,
+        position: 'absolute',
+        top: Dimensions.get("window").height * 0.003,
+        left: "25%",
+        right: "25%",
+        justifyContent: 'center',
+        alignSelf: "center",
+        backgroundColor: "#ffffffff",
+        borderRadius:8
+    },
+    updateText: {
+        ...Text,
+        textAlign: "center"
+    },
+    listButton: {
+        ...ButtonShadow,
+        flex: 1,
+        position: "absolute",
+        bottom: Dimensions.get("window").height * 0.01,
+        right: 0,
+        backgroundColor: "#ffffffd7",
+        padding: 10,
+        borderRadius: 8,
+        marginRight: 8
+    },
+    listText: {
+        ...Text,
+        textAlign: "center"
+    },
+    sliderItemContainer: {
+        ...ButtonShadow,
+        borderWidth: 1,
+        height: Dimensions.get("window").height * 0.2,
+        width: 300,
+        backgroundColor: "#fff3be",
+        marginHorizontal: 10,
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        padding: 10,
+        gap: 20,
+        borderRadius: 4,
+        flexDirection: "row-reverse"
+    },
+    sliderItemImageContainer: {
+        ...ButtonShadow,
+        height: 80,
+        width: 100,
+        borderWidth: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        marginTop: 10,
+        backgroundColor: "#1D1A39",
+        borderRadius: 4
+    },
+    sliderItemImage: {
+        flex: 1
+    },
+    sliderItemText: {
+        ...Text,
+        flex: 1,
+        flexWrap: "wrap"
     }
+
 })
 
 const LogoAnimationStyle = StyleSheet.create({
@@ -120,9 +206,9 @@ const ProfileStyle = StyleSheet.create({
         flex: 2,
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 1,
+        borderBottomWidth: 1,
         borderBottomColor: '#cbb26a',
-        borderTopColor: '#00000000',
+        //borderTopColor: '#00000000',
         padding: 10
     },
     avatarText: {
@@ -141,7 +227,7 @@ const ProfileStyle = StyleSheet.create({
         borderWidth: 1,
         borderBottomColor: '#cbb26a',
         borderTopColor: '#cbb26a',
-        flex:1
+        flex: 1
     },
     icon: {
         marginLeft: 10
@@ -158,16 +244,6 @@ const ePriceStyle = StyleSheet.create({
         backgroundColor: '#1D1A39',
         flex: 1,
     },
-    // header: {
-    //     flexDirection: 'row',
-    //     backgroundColor: '#22203a',
-    //     padding: 10,
-    //     borderBottomWidth: 2,
-    //     borderColor: "#BE9E44", //#b38c1a
-    //     //borderRadius: 5,
-    //     justifyContent: 'space-evenly',
-    //     paddingTop: 50
-    // },
     container2: {
         //backgroundColor: '#094F44',
         //row: 3,
@@ -205,9 +281,6 @@ const ePriceStyle = StyleSheet.create({
         color: '#ffffff',
         fontWeight: 'bold',
     },
-    button: {
-
-    },
     bghourprice: {
         //backgroundColor: '#1ED1B1',
         //borderRadius: 20,
@@ -222,18 +295,20 @@ const ePriceStyle = StyleSheet.create({
         borderColor: '#Cbb26a'//'#d8c690'//'#1ED1B1',
 
     },
-    container3: {
+    bigBox: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        flex: 1,
+        marginTop: 20,
+        //backgroundColor: '#a29cd4',
+
+
+
     },
-    bghourprice2: {
-        //väritestejä
-        //backgroundColor: '#1ED1B1',
-        //borderRadius: 20,
+    hourPriceBox: {
         borderRadius: 8,
         width: Dimensions.get('window').width * 0.7,
-        height: Dimensions.get('window').width * 0.4,
+        height: Dimensions.get('window').width * 0.48,
         backgroundColor: '#094F44',
         justifyContent: 'center',
         alignItems: 'center',
@@ -241,37 +316,63 @@ const ePriceStyle = StyleSheet.create({
         margin: 10,
         borderWidth: 3,
         borderColor: '#cbb26a',
-    }, boxes: {
+
+    },
+    boxes: {
+        height: Dimensions.get('window').width * 0.6,
+        width: Dimensions.get('window').width * 0.90,
         margin: 20,
         marginTop: 30,
         flex: 1,
         flexDirection: "column",
         justifyContent: 'space-evenly',
         alignItems: 'center',
-
-    }, square: {
-        height: Dimensions.get('window').width * 0.40,
-        width: Dimensions.get('window').width * 0.45,
-        margin: 5,
-        backgroundColor: '#094F44',
-        borderRadius: 8, //joo
+        borderWidth: 1,
+        backgroundColor: "#094f458f", //#451952ff
+        borderRadius: 8,
+        borderColor: "#cbb26a",
         borderWidth: 3,
-        borderColor: '#cbb26a',
 
-    }, square2: {
+    },
+    square: {
         height: Dimensions.get('window').width * 0.40,
-        width: Dimensions.get('window').width * 0.45,
+        width: Dimensions.get('window').width * 0.40,
+        margin: 5,
+        backgroundColor: '#094F44', //#178a62ff
+        borderRadius: 8, //joo
+        // borderWidth: 3,
+        // borderColor: '#cbb26a',
+
+    },
+    square2: {
+        height: Dimensions.get('window').width * 0.40,
+        width: Dimensions.get('window').width * 0.40,
         margin: 5,
         backgroundColor: '#094F44',
         borderRadius: 5,
         borderWidth: 3,
         borderColor: '#cbb26a',
 
-    }, headline4: {
+    },
+    headline4: {
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
         color: '#ffffff',
+    },
+    diagram: {
+        flex: 2,
+        padding: 10,
+    },
+    pressablesLoc: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        marginBottom: 10,
+    },
+    pressableText: {
+        textAlign: "center", color: "white"
     },
     pressable: {
         borderColor: '#Cbb26a',
@@ -280,24 +381,38 @@ const ePriceStyle = StyleSheet.create({
         height: Dimensions.get('window').width * 0.12,
         width: Dimensions.get('window').width * 0.22,
         justifyContent: "center",
-      },
-      pressableSelected: {
+    },
+    pressableSelected: {
         backgroundColor: "#33cc7f",
-      },
-      pressableNotSelected: {
+
+    },
+    pressableNotSelected: {
         backgroundColor: "#094F44",
-      },
-    });
+    },
+    ckwhLoc: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "flex-start"
+    },
+    ckwh: {
+        color: 'lightgray',
+    },
+    dateText: {
+        color: 'lightgray',
+        textAlign: "center",
+
+    },
+});
 
 
 
 const MainPageStyle = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection:"column",
+        flexDirection: "column",
         backgroundColor: '#1D1A39',
-        justifyContent:"flex-start",
-        alignItems:"stretch",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
 
     },
     header: {
@@ -313,24 +428,24 @@ const MainPageStyle = StyleSheet.create({
         color: 'white',
     },
     carImage: {
-        justifyContent:"center",
+        justifyContent: "center",
         alignItems: 'center',
-        flex:3,
-      
+        flex: 3,
+
     },
     battery: {
-        justifyContent:"center",
+        justifyContent: "center",
         alignItems: 'center',
-        flex:4,
-        padding:20,
-       
+        flex: 4,
+        padding: 20,
+
     },
     toggleButtons: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        flex:3,
-        alignItems:"center",
-       
+        flex: 3,
+        alignItems: "center",
+
     },
     /*toggleButtonsSingular: {
         transform: [{rotate: '90deg'}],
@@ -428,7 +543,7 @@ const MainPageStyle = StyleSheet.create({
 
 })
 
-const ChargingMenuStyle = StyleSheet.create ({
+const ChargingMenuStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1D1A39',
@@ -456,4 +571,4 @@ const ChargingMenuStyle = StyleSheet.create ({
     }
 })
 
-export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle }
+export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle,ButtonShadow }
