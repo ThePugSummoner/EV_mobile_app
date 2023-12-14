@@ -66,7 +66,7 @@ const CharginStationsStyle = StyleSheet.create({
     },
     sliderItemContainer: {
         ...ButtonShadow,
-        borderWidth: 1,
+        borderWidth: 2,
         height: Dimensions.get("window").height * 0.2,
         width: 300,
         backgroundColor: "#fff3be",
@@ -76,7 +76,8 @@ const CharginStationsStyle = StyleSheet.create({
         padding: 10,
         gap: 20,
         borderRadius: 4,
-        flexDirection: "row-reverse"
+        flexDirection: "row-reverse",
+        borderColor:"#cbb26a"
     },
     sliderItemImageContainer: {
         ...ButtonShadow,
@@ -94,8 +95,8 @@ const CharginStationsStyle = StyleSheet.create({
     },
     sliderItemText: {
         ...Text,
-        flex: 1,
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        marginBottom:4
     }
 
 })
@@ -409,7 +410,8 @@ const ePriceStyle = StyleSheet.create({
     ckwh: {
         color: 'lightgray',
         fontSize:getFontSize(16),
-        marginLeft:5
+        marginLeft:5,
+        marginBottom:5
     },
     dateText: {
         color: 'lightgray',

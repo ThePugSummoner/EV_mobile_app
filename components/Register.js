@@ -146,7 +146,7 @@ export default function Register ({ navigation }) {
           dropdownIconColor={'#cbb26a'}
 
         >
-          <Picker.Item label="Select a car" value="" style={{color: '#1D1A39', fontSize: 15, backgroundColor: '#E5D9B6', padding: 0, margin: 5}}/>
+          <Picker.Item label="Select a car" value="" style={{color: '#1D1A39', fontSize: 15, backgroundColor: '#E5D9B6', padding: 0, margin: 5,}}/>
           {carOptions.map((car, index) => (
             <Picker.Item  key={index} label={car.label} value={car} style={{color: '#1D1A39', fontSize: 18, backgroundColor: '#E5D9B6'}}/>
           ))}
