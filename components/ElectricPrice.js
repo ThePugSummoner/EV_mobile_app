@@ -1,4 +1,4 @@
-import { Button, Text, View, ScrollView, Pressable } from 'react-native';
+import { Button, Text, View, ScrollView, Pressable, Dimensions } from 'react-native';
 import { ePriceStyle } from '../style/style';
 import { useEffect, useState } from 'react';
 import { child, push, ref, remove, update, onValue, set, get } from '@firebase/database';
@@ -86,7 +86,7 @@ export default ElectricPrice = ({ navigation }) => {
             const response = await fetch(`https://api.porssisahko.net/v1/price.json?date=${date}&hour=${hour}`);
             try {
                 const { price } = await response.json();
-                setHourPrice({price:price,time:hour});
+                setHourPrice({ price: price, time: hour });
                 //console.log(`Hinta nyt on ${price}`);
             } catch (error) {
                 alert(error);
@@ -184,6 +184,9 @@ export default ElectricPrice = ({ navigation }) => {
         )
         const sortedSecondDayPrices = allPricesFirstDay2.sort(({ label: a }, { label: b }) => a.split(":")[0] - b.split(":")[0])
 
+        const wrongDateIndex = sortedSecondDayPrices.findIndex(date => sortedSecondDayPrices[0].date !== date.date)
+        sortedSecondDayPrices.splice(wrongDateIndex, 1)
+
 
 
 
@@ -195,12 +198,14 @@ export default ElectricPrice = ({ navigation }) => {
         const secondDayMaxPrice = priceSecondDAy[0]
         const secondDayMinPrice = priceSecondDAy[priceSecondDAy.length - 1]
 
+        const updatedFirstDayPrices = removeLabels(sortedFirstDayPrices)
+        const updatedSecondDayPrices = removeLabels(sortedSecondDayPrices)
 
         setFirstDayPrice({ maxPrice: firstDayMaxPrice, minPrice: firstDayMinPrice })
         setSecondDayPrice({ maxPrice: secondDayMaxPrice, minPrice: secondDayMinPrice })
-        setAllFirstDayPrices(sortedFirstDayPrices)
-        setAllSecondDayPrices(sortedSecondDayPrices)
-        setBarChartFirstData(sortedFirstDayPrices)
+        setAllFirstDayPrices(updatedFirstDayPrices)
+        setAllSecondDayPrices(updatedSecondDayPrices)
+        setBarChartFirstData(updatedFirstDayPrices)
         console.log(firstDayMaxPrice, "isoin hinta")
         console.log(firstDayMinPrice, "Pienin hinta")
         console.log(secondDayMaxPrice, "isoin hinta")
@@ -213,7 +218,17 @@ export default ElectricPrice = ({ navigation }) => {
         setBarChartFirstDataSelected(firstData)
     }
 
-
+    function removeLabels(item) {
+        const arr = []
+        for (let i = 0; i < item.length; i++) {
+            if (i % 2 === 0) {
+                arr.push({ ...item[i] })
+            } else {
+                arr.push({ value: item[i].value, date: item[i].date })
+            }
+        }
+        return arr
+    }
     const removePrices = () => {
         remove(ref(db, PRICES_REF));
 
@@ -224,6 +239,8 @@ export default ElectricPrice = ({ navigation }) => {
     //console.log(allSecondDayPrices,"Kaikki tokan päivän")
     //console.log(allFirstDayPrices,"kaikki ekan päivän")
     //console.log(allPrices,"kaikki hinnat")
+    //console.log(allFirstDayPrices,"ekan kaikki")
+    //console.log(allSecondDayPrices,"tokan kaikki")
     return (
 
         <ScrollView style={{ flex: 1, }}
@@ -317,9 +334,10 @@ export default ElectricPrice = ({ navigation }) => {
                     {/* #33cc7f */}
                     <BarChart
                         frontColor={'#9315b9ff'}
-                        barWidth={16}
-                        initialSpacing={10}
-                        spacing={10}
+                        barWidth={Dimensions.get("window").width * 0.0255}
+                        labelWidth={18}
+                        initialSpacing={2}
+                        spacing={4}
                         data={barChartFirstData}
                         yAxisThickness={2}
                         xAxisThickness={2}
@@ -327,7 +345,9 @@ export default ElectricPrice = ({ navigation }) => {
                         xAxisColor={'lightgray'}
                         yAxisColor={'lightgray'}
                         yAxisTextStyle={{ color: 'lightgray' }}
-                        xAxisLabelTextStyle={{ color: 'lightgray', textAlign: 'center' }}
+                        xAxisLabelTextStyle={{fontSize:13 ,color: 'lightgray', textAlign: 'center' }}
+                        xAxisLength={Dimensions.get("window").width * 0.85}
+                        rulesLength={Dimensions.get("window").width * 0.85}
                         
 
 

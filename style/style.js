@@ -66,7 +66,7 @@ const CharginStationsStyle = StyleSheet.create({
     },
     sliderItemContainer: {
         ...ButtonShadow,
-        borderWidth: 1,
+        borderWidth: 2,
         height: Dimensions.get("window").height * 0.2,
         width: 300,
         backgroundColor: "#fff3be",
@@ -76,7 +76,8 @@ const CharginStationsStyle = StyleSheet.create({
         padding: 10,
         gap: 20,
         borderRadius: 4,
-        flexDirection: "row-reverse"
+        flexDirection: "row-reverse",
+        borderColor:"#cbb26a"
     },
     sliderItemImageContainer: {
         ...ButtonShadow,
@@ -94,8 +95,8 @@ const CharginStationsStyle = StyleSheet.create({
     },
     sliderItemText: {
         ...Text,
-        flex: 1,
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        marginBottom:4
     }
 
 })
@@ -411,7 +412,8 @@ const ePriceStyle = StyleSheet.create({
     ckwh: {
         color: 'lightgray',
         fontSize:getFontSize(16),
-        marginLeft:5
+        marginLeft:5,
+        marginBottom:5
     },
     dateText: {
         color: 'lightgray',
@@ -591,4 +593,29 @@ const ChargingMenuStyle = StyleSheet.create({
     }
 })
 
-export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle,ButtonShadow }
+const chargingTableStyle = StyleSheet.create({
+    tableContainer: {
+      backgroundColor: '#e5d9b6d5',
+      marginVertical: 10,
+      padding: 5,
+      margin: 20,
+      borderRadius: 8,
+    },
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    cell: {
+      flex: 1,
+      padding: 10,
+    },
+    label: {
+      fontWeight: 'bold',
+      marginBottom: 5,
+    },
+    value: {
+      color: 'black',
+    },
+  })
+
+export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle, chargingTableStyle }

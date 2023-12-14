@@ -10,7 +10,7 @@ import { Picker } from '@react-native-picker/picker';
 const carOptions = [
   { label: 'Flash EV', value: 'Flash EV', drive: 'rear', totalPower: 150, torque: 250, range: 374, capacity: 64, chargePower: 6.6, consumption: 17.1, capacityLeft: 40},
   { label: 'Lightning EV', value: 'Lightning EV', drive: 'dual motor AWD', totalPower: 340, torque: 510, range: 400, capacity: 75, chargePower: 11, consumption: 18.7, capacityLeft: 20},
-  { label: 'Bolt EV', value: 'Bolt EV', drive: 'rear',  totalPower: 250, torque: 320, range: 384, capacity: 70, chargePower: 11, consumption: 18.2, capacityLeft: 60},
+  { label: 'Bolt EV', value: 'Bolt EV', drive: 'rear',  totalPower: 250, torque: 320, range: 384, capacity: 70, chargePower: 9.2, consumption: 18.2, capacityLeft: 60},
 
 ];
 
@@ -142,14 +142,15 @@ export default function Register ({ navigation }) {
         <Picker
           selectedValue={selectedCar}
           onValueChange={(itemValue) => setSelectedCar(itemValue)}
-          style={[HomeStyle.input, {padding: 0, color: '#1D1A39', backgroundColor: '#E5D9B6', width: 200, margin: 0}]}
+          style={[HomeStyle.input, {color: '#1D1A39', backgroundColor: '#E5D9B6', width: 200, margin: 0}]}
           dropdownIconColor={'#cbb26a'}
 
         >
-          <Picker.Item label="Select a car" value="" style={{color: '#1D1A39', fontSize: 15, backgroundColor: '#E5D9B6', padding: 0, margin: 5}}/>
+          <Picker.Item label="Select a car" value="" style={{color: '#1D1A39', fontSize: 15, backgroundColor: '#E5D9B6', padding: 0, margin: 5,}}/>
           {carOptions.map((car, index) => (
             <Picker.Item  key={index} label={car.label} value={car} style={{color: '#1D1A39', fontSize: 18, backgroundColor: '#E5D9B6'}}/>
           ))}
+          
         </Picker>
       </View>
       <TouchableOpacity
