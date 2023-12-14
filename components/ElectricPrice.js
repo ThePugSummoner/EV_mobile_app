@@ -334,7 +334,7 @@ export default ElectricPrice = ({ navigation }) => {
                     {/* #33cc7f */}
                     <BarChart
                         frontColor={'#9315b9ff'}
-                        barWidth={11.2}
+                        barWidth={Dimensions.get("window").width * 0.0255}
                         labelWidth={18}
                         initialSpacing={2}
                         spacing={4}
