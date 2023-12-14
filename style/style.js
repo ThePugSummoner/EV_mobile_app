@@ -216,10 +216,10 @@ const ProfileStyle = StyleSheet.create({
     },
     avatarText: {
         textAlign: "center",
-        width: "40%",
+        width: "44%",
         color: '#E5D9B6',
         marginBottom: 2,
-        fontSize: 15
+        fontSize: getFontSize(18)
     },
     button: {
         //height: Dimensions.get("window").height * 0.1,
@@ -304,11 +304,13 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         marginTop: 20,
-        backgroundColor: '#451952af',
+        backgroundColor: '#094f458f',//'#451952af',
         borderRadius:8,
-        width:Dimensions.get("window").width * 0.80,
-        height:Dimensions.get("window").height * 0.45,
-        alignSelf:"center"
+        width:Dimensions.get("window").width * 0.70,
+        height:Dimensions.get("window").height * 0.35,
+        alignSelf:"center",
+        borderWidth: 3,
+        borderColor: '#Cbb26a'
 
 
 
@@ -322,8 +324,8 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         margin: 10,
-        borderWidth: 3,
-        borderColor: '#cbb26a',
+        // borderWidth: 3,
+        // borderColor: '#cbb26a',
 
     },
     boxes: {
@@ -440,8 +442,10 @@ const MainPageStyle = StyleSheet.create({
         //borderRadius: 5,
         justifyContent: 'space-evenly',
     },
-    standInText: {
+    standInText: { 
         color: 'white',
+        fontSize:getFontSize(18),
+        fontWeight: '400',
     },
     carImage: {
         justifyContent: "center",
@@ -510,7 +514,7 @@ const MainPageStyle = StyleSheet.create({
         fontSize: 18,
         alignSelf: 'center',
         marginTop: 12,
-        color: "#cbb26a"
+        color: "#cbb26a",
     },
     centeredView: {
         flex: 1,

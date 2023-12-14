@@ -342,6 +342,7 @@ export default ElectricPrice = ({ navigation }) => {
 
 
             </View>
+            
         </ScrollView>
 
     );
