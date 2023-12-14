@@ -3,10 +3,10 @@ import { Text, View, Image, TouchableOpacity } from "react-native"
 import { getUserData } from "./Auth";
 import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
-import {ChargingMenuStyle, MainPageStyle} from '../style/style';
+import {ChargingMenuStyle, MainPageStyle, chargingTableStyle} from '../style/style';
 import { CircularProgression } from './CircularProgress';
 import { db, PRICES_REF } from '../firebase/Config';
-import { child, push, ref, remove, update, onValue, set, get } from '@firebase/database';
+import { ref, get } from '@firebase/database';
 
 
 
@@ -15,12 +15,12 @@ function ChargingMenu(){
     const user = getAuth().currentUser
     const [userData, setUserData] = useState(null);
     const [formattedChargingFinishTime, setFormattedChargingFinishTime] = useState('--:--');
-    /* const [currentDateTime, setCurrentDateTime] = useState() */
     const [formattedChargingFinishDate, setFormattedChargingFinishDate] = useState([])
     const [formattedChargingStartDate, setFormattedChargingStartDate] = useState([])
     const [chargingStatus, setChargingStatus] = useState(false)
     const [allPrices, setAllPrices] = useState();
     const [isLoading, setIsLoading] = useState(true)
+    const [totalPrice, setTotalPrice] = useState()
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -54,8 +54,8 @@ function ChargingMenu(){
     
                 setAllPrices(dataArray);
                 setIsLoading(false);
-                console.log('Fetching data from Firebase successful!');
-                console.log(allPrices)
+                /* console.log('Fetching data from Firebase successful!');
+                console.log(allPrices) */
             } else if (isLoading) {
                 fetchPrices();
             }
@@ -70,10 +70,17 @@ function ChargingMenu(){
     
     let capacityLeft
     let chargingTime
+    let chargingHoursMinutes
+    let charging_hours
+    let charging_minutes
     
     if (userData && userData.car) {
         capacityLeft = parseFloat(userData.car.capacity / 100 * userData.car.capacityLeft).toFixed(1)
-        chargingTime = (parseFloat((userData.car.capacity - capacityLeft) / userData.car.chargePower * 60).toFixed(2)) 
+        chargingTime = parseFloat((userData.car.capacity - capacityLeft) / userData.car.chargePower * 60).toFixed(2)
+        chargingHoursMinutes = parseFloat((userData.car.capacity - capacityLeft) / userData.car.chargePower).toFixed(2)
+        charging_hours = Math.floor(chargingHoursMinutes)
+        charging_minutes = Math.round((chargingHoursMinutes-charging_hours) * 60)
+        console.log('Charging Time:', charging_hours, ':', charging_minutes)
     }
 
     const ChargingTimeCalculation = () => {
@@ -81,20 +88,16 @@ function ChargingMenu(){
         setChargingStatus((prevChargingStatus) => !prevChargingStatus)
         if (chargingStatus === false ) {
             const chargingFinishTime = new Date(currentDateTime.getTime() + chargingTime * 60000);
-            /* const hours = chargingFinishTime.getHours();
-            const minutes = chargingFinishTime.getMinutes();
-
-            const formattedChargingFinishTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`; */
-            const formattedChargingFinishTime = `${chargingFinishTime.getHours()}:${chargingFinishTime.getMinutes() < 10 ? '0' : ''}${chargingFinishTime.getMinutes()}`
+            const formattedChargingFinishTime = `${charging_hours}:${charging_minutes < 10 ? '0' : ''}${charging_minutes}`
             setFormattedChargingFinishTime(formattedChargingFinishTime)
             
-            const hours = chargingFinishTime.getHours().toString().padStart(2, '0');
-            const minutes = chargingFinishTime.getMinutes().toString().padStart(2, '0');
-            const year = chargingFinishTime.getFullYear();
-            const month = (chargingFinishTime.getMonth() + 1).toString().padStart(2, '0');
-            const day = chargingFinishTime.getDate().toString().padStart(2, '0');
+            const finish_hours = chargingFinishTime.getHours().toString().padStart(2, '0');
+            const finish_minutes = chargingFinishTime.getMinutes().toString().padStart(2, '0');
+            const finish_year = chargingFinishTime.getFullYear();
+            const finish_month = (chargingFinishTime.getMonth() + 1).toString().padStart(2, '0');
+            const finish_day = chargingFinishTime.getDate().toString().padStart(2, '0');
 
-            const formattedChargingFinishDate = `${hours} : 00T${year}-${month}-${day}`;
+            const formattedChargingFinishDate = `${finish_hours} : 00T${finish_year}-${finish_month}-${finish_day}`;
             setFormattedChargingFinishDate(formattedChargingFinishDate)
 
             const start_hours = currentDateTime.getHours().toString().padStart(2, '0');
@@ -110,73 +113,138 @@ function ChargingMenu(){
             
             const [time, date] = formattedChargingStartDate.split('T');
             const targetDate = date;
-            const targetTime = time;
+            const [hours, minutes] = time.split(':')
+            const targetTime = hours + ':' + minutes;
+            console.log(targetTime)
 
-            // Function to find the object with the specified startDate and startTime
+            const [finish_time, finish_date] = formattedChargingFinishDate.split('T');
+            const finish_targetDate = date;
+            const [formattedFinish_hours, formattedFinish_minutes] = finish_time.split(':')
+            const finish_targetTime = formattedFinish_hours + ':' + formattedFinish_minutes;
+            console.log(finish_targetTime)
+
+            const initialStartHours = parseInt(hours, 10);
+            const initialStartMinutes = parseInt(minutes, 10);
+            const initialFinishHours = parseInt(formattedFinish_hours, 10)
+            const initialFinishMinutes = parseInt(formattedFinish_minutes, 10)
+            const chargingStartMinutes = parseInt(start_minutes, 10)
+            const chargingFinishMinutes = parseInt(finish_minutes, 10)
+
+            console.log ('Start/Finish minutes:', chargingStartMinutes, chargingFinishMinutes)
+        
+            const incrementedTimes = [];
+
+            if (charging_minutes > 0) {
+                charging_hours = charging_hours + 1
+                for (let i = 0; i < charging_hours; i++) {
+                    const incrementedHours = (initialStartHours + i) % 24
+                    const incrementedMinutes = initialStartMinutes;
+        
+                    const incrementedTime = `${incrementedHours < 10 ? '0' : ''}${incrementedHours} : ${incrementedMinutes < 10 ? '0' : ''}${incrementedMinutes}`;
+        
+                    incrementedTimes.push({targetTime: incrementedTime, targetDate: finish_targetDate});
+                    }
+            } 
+            else {
+                
+                    for (let i = 0; i < charging_hours; i++) {
+                    const incrementedHours = (initialStartHours + i) % 24
+                    const incrementedMinutes = initialStartMinutes;
+
+                    const incrementedTime = `${incrementedHours < 10 ? '0' : ''}${incrementedHours} : ${incrementedMinutes < 10 ? '0' : ''}${incrementedMinutes}`;
+
+                    incrementedTimes.push({targetTime: incrementedTime, targetDate: finish_targetDate});
+                    }
+            }
+            console.log('Incremented Times:', incrementedTimes);
+
+            const targetDateTimePairs = [];
+            
+            targetDateTimePairs.push(...incrementedTimes)
+              
             const findObject = (startDate, startTime) => {
             return allPrices[0].find((item) => item.startDate === startDate && item.startTime === startTime);
             };
+              
+            const prices = [];
+              
+              targetDateTimePairs.forEach(({ targetDate, targetTime }) => {
+                const resultObject = findObject(targetDate, targetTime);
+              
+                if (resultObject) {
+                  prices.push(resultObject.price);
+                  console.log(`Found. Price for ${targetDate} ${targetTime}:`, resultObject.price);
+                } else {
+                  console.log(`Not found for ${targetDate} ${targetTime}`);
+                }
+                });
+              
+                console.log('Saved Prices:', prices);
 
-            // Example usage
-            const resultObject = findObject(targetDate, targetTime);
+            
+                const first_hourPrice = ((prices[0] * userData.car.chargePower) / 60) * (60 - chargingStartMinutes) 
+                console.log(first_hourPrice)
+    
+                const last_hourPrice = ((prices[prices.length - 1] * userData.car.chargePower) / 60) * chargingFinishMinutes
+                console.log(last_hourPrice)
+                
+                const rest_hours = prices.slice(1, -1)
 
-            let price;
+                const rest_huorsPrice = (rest_hours.reduce((acc,value) => acc + value, 0)) * userData.car.chargePower
 
-            if (resultObject) {
-            // Extract the price from the found object
-            price = resultObject.price;
-            console.log('Found. Price:', price);
-            } else {
-            console.log('Not found');
-            }
+                setTotalPrice(parseFloat((last_hourPrice + first_hourPrice + rest_huorsPrice) / 100).toFixed(2))
 
-            // Now, the "price" variable contains the price from the found object
-            console.log('Saved Price:', price);
+                
+
+                
+           
         }
         else {
-            setFormattedChargingFinishTime('--:--')
+                setFormattedChargingFinishTime(' -- : --')
+                setTotalPrice(' -- ')
         }
+
+           
+        console.log(totalPrice)
+
         
     }
-
-    /* const ChargingPriceCalculation = () => {
-        const currentDateTime = new Date ()
-        const start_hours = currentDateTime.getHours().toString().padStart(2, '0');
-        const start_minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
-        const start_year = currentDateTime.getFullYear();
-        const start_month = (currentDateTime.getMonth() + 1).toString().padStart(2, '0');
-        const start_day = currentDateTime.getDate().toString().padStart(2, '0');
-
-        const formattedChargingStartDate = `${start_hours} : ${start_minutes} ${start_year}-${start_month}-${start_day}`;
-        console.log(formattedChargingStartDate)
-        console.log(formattedChargingFinishDate)
-    } */
 
     return(
         <View style={ChargingMenuStyle.container}>
             { userData && 
             <>
-            <Text style={ChargingMenuStyle.text}>Charging Status: {chargingStatus ? 'Charging': 'Not charging'}</Text>
-            <View style={[MainPageStyle.battery, {marginBottom: 10}]}>
+            <Text style={ChargingMenuStyle.text}>Charging Status: {chargingStatus ? 'On Charge': 'Not charging'}</Text>
+            <View style={[MainPageStyle.battery]}>
                 <CircularProgression />
+            </View>
+            <View style={chargingTableStyle.tableContainer}>
+            <View style={chargingTableStyle.row}>
+                <View style={chargingTableStyle.cell}>
+                <Text style={chargingTableStyle.label}>Finishing Time:</Text>
+                <Text style={chargingTableStyle.value}>{formattedChargingFinishTime}</Text>
+                </View>
+                <View style={chargingTableStyle.cell}>
+                <Text style={chargingTableStyle.label}>Charging Power:</Text>
+                <Text style={chargingTableStyle.value}>{userData.car.chargePower} kW</Text>
+                </View>
+                <View style={chargingTableStyle.cell}>
+                <Text style={chargingTableStyle.label}>Charging Total Price:</Text>
+                <Text style={chargingTableStyle.value}>{totalPrice} €</Text>
+                </View>
+            </View>
             </View>
             <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={ChargingMenuStyle.chargingButton}>
                 <Text style={ChargingMenuStyle.buttonText}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
-            </TouchableOpacity>
-            <Text style={ChargingMenuStyle.text}>Finishing Time: {formattedChargingFinishTime}</Text>
-            <Text style={ChargingMenuStyle.text}>Charging Power: {userData.car.chargePower} kW</Text>
-            <Text style={ChargingMenuStyle.text}>Battery Total Capacity: {userData.car.capacity} kWh</Text>
-            <Text style={ChargingMenuStyle.text}>Battery Capacity Left: {capacityLeft} kWh</Text>
-            {/* <Text style={ChargingMenuStyle.text}>Current Time: {}</Text> */}
+            </TouchableOpacity>           
             </>
             }
-            {allPrices && 
-            <>
-                <Text style={ChargingMenuStyle.text}>Time/Date Price: {[allPrices[0][0].startTime, ' ', allPrices[0][0].startDate]}</Text>
-            </>}
-            <Text style={ChargingMenuStyle.text}>Charging Start date/time: {formattedChargingStartDate}</Text>
-            <Text style={ChargingMenuStyle.text}>Charging Finish date/time: {formattedChargingFinishDate}</Text>
+            
+            
         </View>
-    )
-}
+    
+    
+        )
+    }
+
 export default ChargingMenu

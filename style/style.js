@@ -456,4 +456,29 @@ const ChargingMenuStyle = StyleSheet.create ({
     }
 })
 
-export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle }
+const chargingTableStyle = StyleSheet.create({
+    tableContainer: {
+      backgroundColor: '#e5d9b6d5',
+      marginVertical: 10,
+      padding: 5,
+      margin: 20,
+      borderRadius: 8,
+    },
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    cell: {
+      flex: 1,
+      padding: 10,
+    },
+    label: {
+      fontWeight: 'bold',
+      marginBottom: 5,
+    },
+    value: {
+      color: 'black',
+    },
+  })
+
+export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle, chargingTableStyle }
