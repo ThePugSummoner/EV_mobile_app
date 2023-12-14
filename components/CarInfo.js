@@ -3,7 +3,7 @@ import { getUserData } from "./Auth";
 import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { HomeStyle, MainPageStyle } from '../style/style';
-
+import { Dimensions } from 'react-native';
 function CarInfo(){
 
     const user = getAuth().currentUser
@@ -35,11 +35,11 @@ function CarInfo(){
         ];
 
         return (
-            <View style={{ borderWidth: 1, borderColor: '#E5D9B6', padding: 10, width: 300, marginBottom: 20 }}>
+            <View style={{ borderWidth: 1,borderRadius:8, borderColor: '#cbb26a',backgroundColor:"#E5D9B6" ,padding: 18, width:Dimensions.get("window").width * 0.75, height:Dimensions.get("window").height * 0.49,marginBottom:10,shadowColor: "#000000", elevation: 4,}}>
               {tableData.map((rowData, index) => (
-                <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={[HomeStyle.text, {fontSize: 18}]}>{rowData[0]}</Text>
-                  <Text style={[HomeStyle.text, {fontSize: 18}]}>{rowData[1]}</Text>
+                <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-between',borderBottomWidth: 1, borderColor: '#cbb26a', paddingVertical: 6 }}>
+                  <Text style={[HomeStyle.text, {fontSize: 18,color:"#1a1a1a"}]}>{rowData[0]}</Text>
+                  <Text style={[HomeStyle.text, {fontSize: 18,color:"#1a1a1a"}]}>{rowData[1]}</Text>
                 </View>
               ))}
             </View>
@@ -54,7 +54,7 @@ function CarInfo(){
                 componentToShow = (
                 <Image
                     source={require('../images/CarTransparent.png')}
-                    style={{ width: 330, height: 230, resizeMode: 'contain' }}
+                    style={{ width: Dimensions.get("window").width * 0.8, height:Dimensions.get("window").height * 0.28, resizeMode: 'contain' }}
                 />
                 );
                 break;
@@ -62,14 +62,14 @@ function CarInfo(){
                 componentToShow = (
                 <Image
                     source={require('../images/CarEV.png')}
-                    style={{ width: 330, height: 330, resizeMode: 'contain' }}
+                    style={{ width:Dimensions.get("window").width * 0.8, height: Dimensions.get("window").height * 0.28, resizeMode: 'contain' }}
                 />
                 );
                 break;
             case 'Bolt EV':
                 componentToShow = <Image
                 source={require('../images/VOlterraBoltEV2.png')}
-                style={{ width: 430, height: 330, resizeMode: 'contain' }}
+                style={{ width: Dimensions.get("window").width * 1, height: Dimensions.get("window").height * 0.3, resizeMode: 'contain' }}
                 />
                 break;
             default:
@@ -80,8 +80,8 @@ function CarInfo(){
         }
 
     return(
-        <View style={HomeStyle.container}>
-            <View style={MainPageStyle.carImage}>
+        <View style={{flex:1,flexDirection:"column",justifyContent:"flex-start",alignItems:"center",backgroundColor: '#1D1A39'}}>
+            <View style={{justifyContent:"flex-start",alignItems:"center"}}>
                 {componentToShow}
             </View>
             {userData && <CarInfoTable userData={userData}/>}

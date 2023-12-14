@@ -90,7 +90,7 @@ export default function Register ({ navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={HomeStyle.container}>
+    <View style={HomeStyle.container}>
     <View style={HomeStyle.containerRegister}>
       <Text style={HomeStyle.header}>REGISTRATION</Text>
       
@@ -144,13 +144,11 @@ export default function Register ({ navigation }) {
           onValueChange={(itemValue) => setSelectedCar(itemValue)}
           style={[HomeStyle.input, {color: '#1D1A39', backgroundColor: '#E5D9B6', width: 200, margin: 0}]}
           dropdownIconColor={'#cbb26a'}
-          containerStyle={{ height: 20 }}
-          
+
         >
-          
-            <Picker.Item label="Select a car" value="" style={{color: '#1D1A39', fontSize: 15, backgroundColor: '#E5D9B6'}}/>
+          <Picker.Item label="Select a car" value="" style={{color: '#1D1A39', fontSize: 15, backgroundColor: '#E5D9B6', padding: 0, margin: 5}}/>
           {carOptions.map((car, index) => (
-            <Picker.Item key={index} label={car.label} value={car} style={{color: '#1D1A39', fontSize: 16, backgroundColor: '#E5D9B6'}}/>
+            <Picker.Item  key={index} label={car.label} value={car} style={{color: '#1D1A39', fontSize: 18, backgroundColor: '#E5D9B6'}}/>
           ))}
           
         </Picker>
@@ -162,6 +160,6 @@ export default function Register ({ navigation }) {
         <Text style={HomeStyle.loginButtonText}>REGISTER</Text>
       </TouchableOpacity>
     </View>
-    </ScrollView>
+    </View>
   );
 }
