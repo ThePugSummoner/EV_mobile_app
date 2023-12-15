@@ -256,35 +256,47 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         flex: 1
     },
-    headline: {
-        fontSize: 30,
-        color: '#E5D9B6',
-        textAlign: 'center',
-        marginTop: 30,
-        marginBottom: 20,
-    },
-    headline2: {
-        fontSize: 30,
+    hourPriceValue: {
+        fontSize: getFontSize(25),
+        color: 'white',
         textAlign: 'center',
         margin: 10,
-        marginTop: 20,
-        color: '#E5D9B6',
-        fontWeight: 'bold',
     },
-    headline3: {
-        fontSize: 26,
+    hourAtClock: {
+        fontSize: getFontSize(22),
+        color: '#E5D9B6',
         textAlign: 'center',
         margin: 5,
+    },
+    headline2: {
+        fontSize: getFontSize(29),
+        textAlign: 'center',
+        margin: 10,
+        //marginTop: 20,
+        color: '#E5D9B6',
+        fontWeight: '400',
+    },
+    headline3: {
+        fontSize: getFontSize(25),
+        textAlign: 'center',
+        margin: 10,
         marginBottom: 15,
+        color: '#E5D9B6',
+        fontWeight: '400',
+    },
+    headline4: {
+        fontSize:getFontSize(19),
+        textAlign: 'center',
+        margin: 5,
         color: '#E5D9B6',
     },
     headline5: {
-        fontSize: 22,
+        fontSize: getFontSize(21),
         textAlign: 'center',
         //margin: 1,
-        marginBottom: 5,
+        marginBottom: 4,
         color: '#ffffff',
-        fontWeight: 'bold',
+        fontWeight: '500',
     },
     bghourprice: {
         //backgroundColor: '#1ED1B1',
@@ -305,21 +317,20 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         marginTop: 20,
+        marginBottom: 20,
         backgroundColor: '#094f458f',//'#451952af',
         borderRadius:8,
-        width:Dimensions.get("window").width * 0.70,
-        height:Dimensions.get("window").height * 0.35,
+        width:Dimensions.get("window").width * 0.65,
+        height:Dimensions.get("window").height * 0.30,
         alignSelf:"center",
         borderWidth: 3,
         borderColor: '#Cbb26a'
 
-
-
     },
     hourPriceBox: {
         borderRadius: 8,
-        width: Dimensions.get('window').width * 0.6,
-        height: Dimensions.get('window').width * 0.45,
+        width: Dimensions.get('window').width * 0.55,
+        height: Dimensions.get('window').width * 0.35,
         backgroundColor: '#094F44',
         justifyContent: 'center',
         alignItems: 'center',
@@ -330,10 +341,10 @@ const ePriceStyle = StyleSheet.create({
 
     },
     boxes: {
-        height: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').width * 0.62,
         width: Dimensions.get('window').width * 0.90,
         margin: 20,
-        marginTop: 30,
+        marginTop: 10,
         flex: 1,
         flexDirection: "column",
         justifyContent: 'space-evenly',
@@ -359,18 +370,14 @@ const ePriceStyle = StyleSheet.create({
         height: Dimensions.get('window').width * 0.40,
         width: Dimensions.get('window').width * 0.40,
         margin: 5,
+     
         backgroundColor: '#094F44',
-        borderRadius: 5,
-        borderWidth: 3,
-        borderColor: '#cbb26a',
+        borderRadius: 8,
+        // borderWidth: 3,
+        // borderColor: '#cbb26a',
 
     },
-    headline4: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-        color: '#ffffff',
-    },
+   
     diagram: {
         flex: 2,
         padding: 10,
@@ -574,16 +581,18 @@ const ChargingMenuStyle = StyleSheet.create({
     },
 
     chargingButton: { //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
-        backgroundColor: '#81cb6a',
+        backgroundColor: '#094F44',
         padding: 10,
         borderRadius: 8,
         alignItems: 'center',
         margin: 20,
+        borderColor:'#cbb26a',
+        borderWidth: 2,
 
     },
     buttonText: {
         fontSize: 20,
-        color: '#1a1a1a',
+        color: '#E5D9B6',
         //fontWeight: 'bold'
     },
 

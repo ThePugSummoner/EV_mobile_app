@@ -261,21 +261,22 @@ export default ElectricPrice = ({ navigation }) => {
                     </View>
                     <Text style={ePriceStyle.headline2}>Hourly price</Text>
                     <View style={ePriceStyle.hourPriceBox}>
-                        <Text style={ePriceStyle.headline5}>at {hourPrice.time} o'clock:</Text>
-                        <Text style={ePriceStyle.headline3}>{hourPrice.price} c/kWh</Text>
+                        {/* <Text style={ePriceStyle.hourAtClock}>at {hourPrice.time} o'clock:</Text> */}
+                        <Text style={ePriceStyle.hourAtClock}>at <Text style={ePriceStyle.hourPriceValue}>{hourPrice.time} </Text>o'clock:</Text>
+                        <Text style={ePriceStyle.hourPriceValue}>{parseFloat(hourPrice.price).toFixed(2)} c/kWh</Text>
                     </View>
                 </View>
 
                 {/* </View> */}
 
 
-                <View style={ePriceStyle.bigBox}>
+                {/* <View style={ePriceStyle.bigBox}>
                     <View style={ePriceStyle.hourPriceBox}>
-                        <Text style={ePriceStyle.headline3}>Hourly price</Text>
+                        <Text style={ePriceStyle.headline2}>Hourly price</Text>
                         <Text style={ePriceStyle.headline5}>at {hourPrice.time} o'clock:</Text>
                         <Text style={ePriceStyle.headline3}>{hourPrice.price} c/kWh</Text>
                     </View>
-                </View>
+                </View> */}
 
 
                 <View style={ePriceStyle.boxes}>
@@ -284,13 +285,21 @@ export default ElectricPrice = ({ navigation }) => {
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
-                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price} c/kWh</Text>
+                            {/* <Text style={ePriceStyle.headline3}>Time:{"\n"}{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text> */}
+                            <Text style={ePriceStyle.headline4}>Time:</Text>
+                            <Text style={ePriceStyle.headline5}>{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
+                            {/* <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price} c/kWh</Text> */}
+                            <Text style={ePriceStyle.headline4}>Lowest price:</Text>
+                            <Text style={ePriceStyle.headline5}>{parseFloat(secondDayPrice?.minPrice.price).toFixed(2)} c/kWh</Text>
 
                         </View>
                         <View style={ePriceStyle.square2}>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
-                            <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price} c/kWh</Text>
+                            {/* <Text style={ePriceStyle.headline4}>Time:{"\n"}{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text> */}
+                            <Text style={ePriceStyle.headline4}>Time:</Text>
+                            <Text style={ePriceStyle.headline5}>{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
+                            {/* <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price} c/kWh</Text> */}
+                            <Text style={ePriceStyle.headline4}>Highest price:</Text>
+                            <Text style={ePriceStyle.headline5}>{parseFloat(secondDayPrice?.maxPrice.price).toFixed(2)} c/kWh</Text>
 
                         </View>
                     </View>
@@ -302,13 +311,20 @@ export default ElectricPrice = ({ navigation }) => {
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text>
-                            <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price} c/kWh</Text>
-
+                            {/* <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text> */}
+                            <Text style={ePriceStyle.headline4}>Time:</Text>
+                            <Text style={ePriceStyle.headline5}>{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text>
+                            {/* <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price} c/kWh</Text> */}
+                            <Text style={ePriceStyle.headline4}>Lowest price:</Text>
+                            <Text style={ePriceStyle.headline5}>{firstDayPrice?.minPrice.price} c/kWh</Text>
                         </View>
                         <View style={ePriceStyle.square2}>
-                            <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text>
-                            <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price} c/kWh</Text>
+                            {/* <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text> */}
+                            <Text style={ePriceStyle.headline4}>Time:</Text>
+                            <Text style={ePriceStyle.headline5}>{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text>
+                            {/* <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price} c/kWh</Text> */}
+                            <Text style={ePriceStyle.headline4}>Highest price:</Text>
+                            <Text style={ePriceStyle.headline5}>{firstDayPrice?.maxPrice.price} c/kWh</Text>
 
                         </View>
                     </View>
