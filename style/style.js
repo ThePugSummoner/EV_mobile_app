@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Dimensions, PixelRatio } from 'react-native';
 import Constants from "expo-constants";
+//import { get } from "firebase/database";
 
 const fontScale = PixelRatio.getFontScale()
 const getFontSize = size => size / fontScale
@@ -111,8 +112,9 @@ const LogoAnimationStyle = StyleSheet.create({
         // borderWidth:2,
     },
     animationBtext: {
-        fontSize: 20,
-        color: '#1a1a1a'
+        fontSize: getFontSize(20),
+        color: '#1a1a1a',
+       
     },
 })
 
@@ -136,6 +138,8 @@ const HomeStyle = StyleSheet.create({
         justifyContent: 'space-around',
         padding: 30,
         borderRadius: 8,
+        borderWidth: 3, //Login ja Register containereihin lisätty borderit. Jääkö vaiko ei?
+        borderColor: '#cbb26a',
     },
     containerRegister: {
         backgroundColor: '#E5D9B6', //tämä sama sävy laitettu bottomnaviin
@@ -143,6 +147,8 @@ const HomeStyle = StyleSheet.create({
         justifyContent:"space-evenly",
         padding:20,
         borderRadius: 8,
+        borderWidth: 3,
+        borderColor: '#cbb26a',
         
     },
     textInput: {
@@ -153,7 +159,7 @@ const HomeStyle = StyleSheet.create({
         margin: 10,
         width: 200,
         alignItems: 'center',
-        fontSize: 15,
+        fontSize: getFontSize(15),
         textAlign: 'center'
     },
     input: {
@@ -164,13 +170,13 @@ const HomeStyle = StyleSheet.create({
         margin: 10,
         width: 250,
         alignItems: 'center',
-        fontSize: 16,
+        fontSize: getFontSize(16),
         textAlign: 'center',
         color: '#000000'
     },
     text: {
         color: '#cbb26a',
-        fontSize: 18,
+        fontSize: getFontSize(18),
 
     },
     loginButton: {
@@ -184,9 +190,9 @@ const HomeStyle = StyleSheet.create({
     },
     loginButtonText: {
         
-        fontSize: 20,
+        fontSize: getFontSize(20),
         color: '#1a1a1a',
-        //fontWeight: 'bold'
+        //fontWeight: '500'
     },
 })
 
@@ -377,7 +383,6 @@ const ePriceStyle = StyleSheet.create({
         // borderColor: '#cbb26a',
 
     },
-   
     diagram: {
         flex: 2,
         padding: 10,
@@ -447,7 +452,7 @@ const MainPageStyle = StyleSheet.create({
         backgroundColor: '#1D1A39', //#094f44'
         padding: 10,
         borderBottomWidth: 2,
-        borderColor: "#BE9E44", //#b38c1a
+        borderColor: '#cbb26a',//'#BE9E44',//#b38c1a
         //borderRadius: 5,
         justifyContent: 'space-evenly',
     },
@@ -577,9 +582,23 @@ const ChargingMenuStyle = StyleSheet.create({
         flex: 1,
         backgroundColor: '#1D1A39',
         /* alignItems: 'center', */
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
+    hourPriceBox: {
+        borderRadius: 8,
+        width: Dimensions.get('window').width * 0.55,
+        height: Dimensions.get('window').width * 0.35,
+        backgroundColor: '#094F44',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        margin: 10,
+        marginTop: 20,
+        borderWidth: 3,
+        borderColor: '#cbb26a',
+        alignSelf: 'center',
 
+    },
     chargingButton: { //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
         backgroundColor: '#094F44',
         padding: 10,
@@ -598,8 +617,14 @@ const ChargingMenuStyle = StyleSheet.create({
 
     text: {
         color: 'white',
+        fontSize: getFontSize(18),
         margin: 10
-    }
+    },
+    text2: {
+        color: 'white',
+        fontSize: getFontSize(21),
+        margin: 10
+    },
 })
 
 const chargingTableStyle = StyleSheet.create({

@@ -35,7 +35,7 @@ function CarInfo(){
         ];
 
         return (
-            <View style={{ borderWidth: 1,borderRadius:8, borderColor: '#cbb26a',backgroundColor:"#E5D9B6" ,padding: 18, width:Dimensions.get("window").width * 0.75, height:Dimensions.get("window").height * 0.49,marginBottom:10,shadowColor: "#000000", elevation: 4,}}>
+            <View style={{ borderWidth: 3,borderRadius:8, borderColor: '#cbb26a',backgroundColor:"#E5D9B6" ,padding: 18, width:Dimensions.get("window").width * 0.75, height:Dimensions.get("window").height * 0.49,marginBottom:10,shadowColor: "#000000", elevation: 4,}}>
               {tableData.map((rowData, index) => (
                 <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-between',borderBottomWidth: 1, borderColor: '#cbb26a', paddingVertical: 6 }}>
                   <Text style={[HomeStyle.text, {fontSize: 18,color:"#1a1a1a"}]}>{rowData[0]}</Text>

@@ -214,7 +214,10 @@ function ChargingMenu(){
         <View style={ChargingMenuStyle.container}>
             { userData && 
             <>
-            <Text style={ChargingMenuStyle.text}>Charging Status: {chargingStatus ? 'On Charge': 'Not charging'}</Text>
+            <View style={ChargingMenuStyle.hourPriceBox}>
+            <Text style={ChargingMenuStyle.text}>Charging Status:</Text> 
+            <Text style={ChargingMenuStyle.text2}>{chargingStatus ? 'On Charge': 'Not charging'}</Text>
+            </View>
             <View style={[MainPageStyle.battery]}>
                 <CircularProgression />
             </View>
