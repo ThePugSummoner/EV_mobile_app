@@ -324,7 +324,7 @@ const ePriceStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        marginTop: 20,
+        marginTop: 30,
         marginBottom: 20,
         backgroundColor: '#094f458f',//'#451952af',
         borderRadius:8,
@@ -343,7 +343,7 @@ const ePriceStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        margin: 10,
+        margin: 5,
         // borderWidth: 3,
         // borderColor: '#cbb26a',
 
@@ -357,7 +357,6 @@ const ePriceStyle = StyleSheet.create({
         flexDirection: "column",
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        borderWidth: 1,
         backgroundColor: "#094f458f", //#451952ff
         borderRadius: 8,
         borderColor: "#cbb26a",
@@ -370,6 +369,7 @@ const ePriceStyle = StyleSheet.create({
         margin: 5,
         backgroundColor: '#094F44', //#178a62ff
         borderRadius: 8, //joo
+        paddingTop: 5,
         // borderWidth: 3,
         // borderColor: '#cbb26a',
 
@@ -381,6 +381,7 @@ const ePriceStyle = StyleSheet.create({
      
         backgroundColor: '#094F44',
         borderRadius: 8,
+        paddingTop: 5,
         // borderWidth: 3,
         // borderColor: '#cbb26a',
 
@@ -591,18 +592,34 @@ const ChargingMenuStyle = StyleSheet.create({
         /* alignItems: 'center', */
         justifyContent: 'space-around',
     },
-    hourPriceBox: {
+    bigStatusBox: {
+        height: Dimensions.get('window').width * 0.39,
+        width: Dimensions.get('window').width * 0.65,
+        margin: 10,
+        marginTop: 20,
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        alignSelf: "center",
+        backgroundColor: "#094f458f", //#451952ff
         borderRadius: 8,
-        width: Dimensions.get('window').width * 0.55,
-        height: Dimensions.get('window').width * 0.35,
-        backgroundColor: '#094F44',
+        borderColor: "#cbb26a", //reunan kanssa tai ilman
+        borderWidth: 3,
+    },
+    StatusBox: {
+        borderRadius: 8,
+        width: Dimensions.get('window').width * 0.50,
+        height: Dimensions.get('window').width * 0.20,
+        backgroundColor: '#094F44', //'#cbb26a',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        margin: 10,
-        marginTop: 20,
-        borderWidth: 3,
-        borderColor: '#cbb26a',
+        margin: 5,
+        marginTop: 10,
+        marginBottom: 15,
+        //borderWidth: 3,
+        //borderColor: '#cbb26a',
         alignSelf: 'center',
 
     },
@@ -623,14 +640,15 @@ const ChargingMenuStyle = StyleSheet.create({
     },
 
     text: {
-        color: 'white',
-        fontSize: getFontSize(18),
+        color: '#E5D9B6',
+        fontSize: getFontSize(20),
         margin: 10
     },
     text2: {
         color: 'white',
-        fontSize: getFontSize(21),
-        margin: 10
+        fontSize: getFontSize(24),
+        margin: 10,
+        fontWeight:'500'
     },
 })
 
@@ -651,12 +669,51 @@ const chargingTableStyle = StyleSheet.create({
       padding: 10,
     },
     label: {
-      fontWeight: 'bold',
+      fontWeight: '500',
+      marginTop: 5,
       marginBottom: 5,
+      margin: 5,
+      color: '#E5D9B6',
+      fontSize: getFontSize(16),
+      textAlign: 'center',
     },
     value: {
-      color: 'black',
+      color: 'white',
+      fontSize: getFontSize(20),
+      textAlign: 'center',
+      margin: 5,
+
     },
-  })
+    bigCSquare: {
+        height: Dimensions.get('window').width * 0.34,
+        width: Dimensions.get('window').width * 0.95,
+        margin: 10,
+        marginTop: 10,
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        alignSelf: "center",
+        backgroundColor: "#094f458f", //#451952ff
+        borderRadius: 8,
+        borderColor: "#cbb26a",
+        borderWidth: 3,
+    },
+    cSquare: {
+        height: Dimensions.get('window').width * 0.26,
+        width: Dimensions.get('window').width * 0.28,
+        margin: 3,
+        marginTop: 10,
+        padding: 5,
+        backgroundColor: '#094F44',//'#cbb26a',  //#178a62ff
+        borderRadius: 8, //joo
+        paddingTop: 5,
+         //borderWidth: 2,
+         //borderColor: '#094F44',
+         //alignItems: "center",
+    },
+    
+  }
+  )
 
 export { HomeStyle, ProfileStyle, CharginStationsStyle, ePriceStyle, MainPageStyle, LogoAnimationStyle, ChargingMenuStyle, chargingTableStyle }

@@ -1,5 +1,5 @@
 
-import { Text, View, Image, TouchableOpacity } from "react-native"
+import { Text, View, Image, TouchableOpacity,ScrollView } from "react-native"
 import { getUserData } from "./Auth";
 import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
@@ -211,17 +211,25 @@ function ChargingMenu(){
     }
 
     return(
+
+        <ScrollView style={{ flex: 1, }}
+        contentContainerStyle={{ justifyContent: "flex-start", alignItems: "stretch" }}
+        overScrollMode='never'
+    >
         <View style={ChargingMenuStyle.container}>
             { userData && 
             <>
-            <View style={ChargingMenuStyle.hourPriceBox}>
+            <View style={ChargingMenuStyle.bigStatusBox}>
             <Text style={ChargingMenuStyle.text}>Charging Status:</Text> 
+            <View style={ChargingMenuStyle.StatusBox}>
+           
             <Text style={ChargingMenuStyle.text2}>{chargingStatus ? 'On Charge': 'Not charging'}</Text>
+            </View>
             </View>
             <View style={[MainPageStyle.battery]}>
                 <CircularProgression />
             </View>
-            <View style={chargingTableStyle.tableContainer}>
+            {/* <View style={chargingTableStyle.tableContainer}>
             <View style={chargingTableStyle.row}>
                 <View style={chargingTableStyle.cell}>
                 <Text style={chargingTableStyle.label}>Finishing Time:</Text>
@@ -236,6 +244,24 @@ function ChargingMenu(){
                 <Text style={chargingTableStyle.value}>{totalPrice} €</Text>
                 </View>
             </View>
+            </View> */}
+
+           
+                <View style = {chargingTableStyle.bigCSquare}>
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                <View style = {chargingTableStyle.cSquare}> 
+                <Text style={chargingTableStyle.label}>Finishing Time:</Text>
+                <Text style={chargingTableStyle.value}>{formattedChargingFinishTime}</Text>
+                </View>
+                <View style = {chargingTableStyle.cSquare}>
+                <Text style={chargingTableStyle.label}>Charging Power:</Text>
+                <Text style={chargingTableStyle.value}>{userData.car.chargePower} kW</Text>
+                </View>
+                <View style = {chargingTableStyle.cSquare}>
+                <Text style={chargingTableStyle.label}>Charging Total Price:</Text>
+                <Text style={chargingTableStyle.value}>{totalPrice} €</Text>
+                </View>
+                </View>
             </View>
             <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={ChargingMenuStyle.chargingButton}>
                 <Text style={ChargingMenuStyle.buttonText}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
@@ -246,7 +272,7 @@ function ChargingMenu(){
             
         </View>
     
-    
+    </ScrollView>
         )
     }
 
