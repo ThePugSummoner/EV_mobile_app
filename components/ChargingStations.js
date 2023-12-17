@@ -110,7 +110,15 @@ export default ChargingStation = ({ navigation }) => {
         }
         else if(longitudeDelta>=6 && longitudeDelta<8){
             console.log("KESKIVAIHE")
-            setMarkersData([...data])
+            const zoomInMarkersData=[]
+            data.map(data=>{
+                    if(-1===dataClose.findIndex(marker => marker.id === data.id)){
+                        zoomInMarkersData.push({...data})
+                    }
+                    
+                }
+            )
+            setMarkersData(zoomInMarkersData)
         }
         else if(longitudeDelta===12){
             const zoomInMarkersData=[]
@@ -199,6 +207,7 @@ export default ChargingStation = ({ navigation }) => {
 
             }
             setData(arr)
+            setMarkersData(arr)
             setIsloadingData(false)
 
         } catch (e) {
@@ -273,6 +282,15 @@ export default ChargingStation = ({ navigation }) => {
             scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: true })
             setCloseDataLocation({ latitude: latitude, longitude: longitude })
             setUpdateCloseData(false)
+            const zoomInMarkersData=[]
+            data.map(data=>{
+                    if(-1===arr.findIndex(marker => marker.id === data.id)){
+                        zoomInMarkersData.push({...data})
+                    }
+                    
+                }
+            )
+            setMarkersData(zoomInMarkersData)
 
 
         }

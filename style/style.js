@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Dimensions, PixelRatio } from 'react-native';
 import Constants from "expo-constants";
+//import { get } from "firebase/database";
 
 const fontScale = PixelRatio.getFontScale()
 const getFontSize = size => size / fontScale
@@ -11,7 +12,8 @@ const Text = StyleSheet.create({
     fontWeight: "300",
     textShadowColor: "#000000ff",
     textShadowOffset: { width: 0.5, height: 0 },
-    textShadowRadius:1
+    textShadowRadius:1,
+    
 })
 const ButtonShadow = StyleSheet.create({
     shadowColor: "#000000",
@@ -55,14 +57,15 @@ const CharginStationsStyle = StyleSheet.create({
         position: "absolute",
         bottom: Dimensions.get("window").height * 0.01,
         right: 0,
-        backgroundColor: "#ffffffd7",
+        backgroundColor: "#ffffffff",
         padding: 10,
         borderRadius: 8,
         marginRight: 8
     },
     listText: {
         ...Text,
-        textAlign: "center"
+        textAlign: "center",
+        
     },
     sliderItemContainer: {
         ...ButtonShadow,
@@ -111,8 +114,9 @@ const LogoAnimationStyle = StyleSheet.create({
         // borderWidth:2,
     },
     animationBtext: {
-        fontSize: 20,
-        color: '#1a1a1a'
+        fontSize: getFontSize(20),
+        color: '#1a1a1a',
+       
     },
 })
 
@@ -136,6 +140,8 @@ const HomeStyle = StyleSheet.create({
         justifyContent: 'space-around',
         padding: 30,
         borderRadius: 8,
+        borderWidth: 3, //Login ja Register containereihin lisätty borderit. Jääkö vaiko ei?
+        borderColor: '#cbb26a',
     },
     containerRegister: {
         backgroundColor: '#E5D9B6', //tämä sama sävy laitettu bottomnaviin
@@ -143,6 +149,8 @@ const HomeStyle = StyleSheet.create({
         justifyContent:"space-evenly",
         padding:20,
         borderRadius: 8,
+        borderWidth: 3,
+        borderColor: '#cbb26a',
         
     },
     textInput: {
@@ -153,7 +161,7 @@ const HomeStyle = StyleSheet.create({
         margin: 10,
         width: 200,
         alignItems: 'center',
-        fontSize: 15,
+        fontSize: getFontSize(15),
         textAlign: 'center'
     },
     input: {
@@ -164,13 +172,13 @@ const HomeStyle = StyleSheet.create({
         margin: 10,
         width: 250,
         alignItems: 'center',
-        fontSize: 16,
+        fontSize: getFontSize(16),
         textAlign: 'center',
         color: '#000000'
     },
     text: {
         color: '#cbb26a',
-        fontSize: 18,
+        fontSize: getFontSize(18),
 
     },
     loginButton: {
@@ -184,9 +192,9 @@ const HomeStyle = StyleSheet.create({
     },
     loginButtonText: {
         
-        fontSize: 20,
+        fontSize: getFontSize(20),
         color: '#1a1a1a',
-        //fontWeight: 'bold'
+        //fontWeight: '500'
     },
 })
 
@@ -256,35 +264,47 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         flex: 1
     },
-    headline: {
-        fontSize: 30,
-        color: '#E5D9B6',
-        textAlign: 'center',
-        marginTop: 30,
-        marginBottom: 20,
-    },
-    headline2: {
-        fontSize: 30,
+    hourPriceValue: {
+        fontSize: getFontSize(25),
+        color: 'white',
         textAlign: 'center',
         margin: 10,
-        marginTop: 20,
-        color: '#E5D9B6',
-        fontWeight: 'bold',
     },
-    headline3: {
-        fontSize: 26,
+    hourAtClock: {
+        fontSize: getFontSize(22),
+        color: '#E5D9B6',
         textAlign: 'center',
         margin: 5,
+    },
+    headline2: {
+        fontSize: getFontSize(29),
+        textAlign: 'center',
+        margin: 10,
+        //marginTop: 20,
+        color: '#E5D9B6',
+        fontWeight: '400',
+    },
+    headline3: {
+        fontSize: getFontSize(25),
+        textAlign: 'center',
+        margin: 10,
         marginBottom: 15,
+        color: '#E5D9B6',
+        fontWeight: '400',
+    },
+    headline4: {
+        fontSize:getFontSize(19),
+        textAlign: 'center',
+        margin: 5,
         color: '#E5D9B6',
     },
     headline5: {
-        fontSize: 22,
+        fontSize: getFontSize(21),
         textAlign: 'center',
         //margin: 1,
-        marginBottom: 5,
+        marginBottom: 4,
         color: '#ffffff',
-        fontWeight: 'bold',
+        fontWeight: '500',
     },
     bghourprice: {
         //backgroundColor: '#1ED1B1',
@@ -305,21 +325,20 @@ const ePriceStyle = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         marginTop: 20,
+        marginBottom: 20,
         backgroundColor: '#094f458f',//'#451952af',
         borderRadius:8,
-        width:Dimensions.get("window").width * 0.70,
-        height:Dimensions.get("window").height * 0.35,
+        width:Dimensions.get("window").width * 0.65,
+        height:Dimensions.get("window").height * 0.30,
         alignSelf:"center",
         borderWidth: 3,
         borderColor: '#Cbb26a'
 
-
-
     },
     hourPriceBox: {
         borderRadius: 8,
-        width: Dimensions.get('window').width * 0.6,
-        height: Dimensions.get('window').width * 0.45,
+        width: Dimensions.get('window').width * 0.55,
+        height: Dimensions.get('window').width * 0.35,
         backgroundColor: '#094F44',
         justifyContent: 'center',
         alignItems: 'center',
@@ -330,10 +349,10 @@ const ePriceStyle = StyleSheet.create({
 
     },
     boxes: {
-        height: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').width * 0.62,
         width: Dimensions.get('window').width * 0.90,
         margin: 20,
-        marginTop: 30,
+        marginTop: 10,
         flex: 1,
         flexDirection: "column",
         justifyContent: 'space-evenly',
@@ -359,17 +378,12 @@ const ePriceStyle = StyleSheet.create({
         height: Dimensions.get('window').width * 0.40,
         width: Dimensions.get('window').width * 0.40,
         margin: 5,
+     
         backgroundColor: '#094F44',
-        borderRadius: 5,
-        borderWidth: 3,
-        borderColor: '#cbb26a',
+        borderRadius: 8,
+        // borderWidth: 3,
+        // borderColor: '#cbb26a',
 
-    },
-    headline4: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-        color: '#ffffff',
     },
     diagram: {
         flex: 2,
@@ -422,6 +436,11 @@ const ePriceStyle = StyleSheet.create({
         marginTop:5
 
     },
+    barChartText:{
+        fontSize:getFontSize(11) ,
+        color: 'lightgray', 
+        textAlign:"center"
+    }
 });
 
 
@@ -440,7 +459,7 @@ const MainPageStyle = StyleSheet.create({
         backgroundColor: '#1D1A39', //#094f44'
         padding: 10,
         borderBottomWidth: 2,
-        borderColor: "#BE9E44", //#b38c1a
+        borderColor: '#cbb26a',//'#BE9E44',//#b38c1a
         //borderRadius: 5,
         justifyContent: 'space-evenly',
     },
@@ -570,27 +589,49 @@ const ChargingMenuStyle = StyleSheet.create({
         flex: 1,
         backgroundColor: '#1D1A39',
         /* alignItems: 'center', */
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
+    hourPriceBox: {
+        borderRadius: 8,
+        width: Dimensions.get('window').width * 0.55,
+        height: Dimensions.get('window').width * 0.35,
+        backgroundColor: '#094F44',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        margin: 10,
+        marginTop: 20,
+        borderWidth: 3,
+        borderColor: '#cbb26a',
+        alignSelf: 'center',
 
+    },
     chargingButton: { //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
-        backgroundColor: '#81cb6a',
+        backgroundColor: '#094F44',
         padding: 10,
         borderRadius: 8,
         alignItems: 'center',
         margin: 20,
+        borderColor:'#cbb26a',
+        borderWidth: 2,
 
     },
     buttonText: {
         fontSize: 20,
-        color: '#1a1a1a',
+        color: '#E5D9B6',
         //fontWeight: 'bold'
     },
 
     text: {
         color: 'white',
+        fontSize: getFontSize(18),
         margin: 10
-    }
+    },
+    text2: {
+        color: 'white',
+        fontSize: getFontSize(21),
+        margin: 10
+    },
 })
 
 const chargingTableStyle = StyleSheet.create({
