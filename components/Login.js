@@ -9,14 +9,21 @@ import { auth } from '../firebase/Config';
 export default function Login ({ navigation }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('');
+    const [conditionError, setConditionError] = useState(false)
+
 
     const handleLogin = async () => {
         
       if (!email) {
         Alert.alert('Email is required!')
+        setError('Email is required!')
+        setConditionError(true)
       }
       else if (!password) {
         Alert.alert('Password is required!')
+        setError('Password is required!')
+        setConditionError(true)
       }
       else {
         /* await signIn(email, password) */
@@ -29,6 +36,7 @@ export default function Login ({ navigation }) {
               Alert.alert('Login failed!');
               setEmail('')
               setPassword('')
+              setError('Login failed!')
             }
           } catch (error) {
             console.error('Error during login: ', error.message);
@@ -40,9 +48,10 @@ export default function Login ({ navigation }) {
     <View style={HomeStyle.container}>
     <View style={HomeStyle.containerLogin}>
       <Text style={HomeStyle.header}>LOGIN</Text>
+      {error ? <Text style={{color:'red', textAlign: 'center', marginBottom: 5}}>{error}</Text> : null}
       <TextInput
         style={HomeStyle.textInput}
-        placeholder="Enter your email*"
+        placeholder={conditionError ? "Email is required!" : "Enter your email*"}
         value={email}
         onChangeText={(email) => setEmail(email.trim())}
         keyboardType="email-address"
@@ -50,7 +59,7 @@ export default function Login ({ navigation }) {
       />
       <TextInput
         style={HomeStyle.textInput}
-        placeholder="Enter your password*"
+        placeholder={conditionError ? "Password is required!" : "Enter your password*"}
         value={password}
         onChangeText={(password) => setPassword(password)}
         secureTextEntry={true}
@@ -58,7 +67,7 @@ export default function Login ({ navigation }) {
       <TouchableOpacity
         style={HomeStyle.loginButton} onPress={handleLogin}
       >
-        <Text style={HomeStyle.loginButtonText}>LOGIN</Text>
+        <Text style={HomeStyle.loginButtonText}>LOG IN</Text>
       </TouchableOpacity>
       </View>
     </View>
