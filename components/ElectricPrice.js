@@ -233,6 +233,17 @@ export default ElectricPrice = ({ navigation }) => {
         remove(ref(db, PRICES_REF));
 
     }
+    function negativeXAxis(){
+        const result = barChartFirstData.find(({ value }) => value < 0 )
+        if(result!==undefined){
+            const temp=[...barChartFirstData]
+           const lovestPrice= temp.sort(({ value: a }, { value: b }) => a - b)
+            return lovestPrice[0].value
+        }
+        else{
+            return 0
+        }
+    }
 
     // console.log(isLoading)
     //console.log(firstDayPrice)
@@ -241,6 +252,7 @@ export default ElectricPrice = ({ navigation }) => {
     //console.log(allPrices,"kaikki hinnat")
     //console.log(allFirstDayPrices,"ekan kaikki")
     //console.log(allSecondDayPrices,"tokan kaikki")
+    console.log(negativeXAxis(),"jotain")
     return (
 
         <ScrollView style={{ flex: 1, }}
@@ -290,7 +302,7 @@ export default ElectricPrice = ({ navigation }) => {
                             <Text style={ePriceStyle.headline5}>{secondDayPrice?.minPrice.startTime} - {secondDayPrice?.minPrice.endTime}</Text>
                             {/* <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{secondDayPrice?.minPrice.price} c/kWh</Text> */}
                             <Text style={ePriceStyle.headline4}>Lowest price:</Text>
-                            <Text style={ePriceStyle.headline5}>{parseFloat(secondDayPrice?.minPrice.price).toFixed(2)} c/kWh</Text>
+                            <Text style={ePriceStyle.headline5}>{secondDayPrice?.minPrice.price.toFixed(2)} c/kWh</Text>
 
                         </View>
                         <View style={ePriceStyle.square2}>
@@ -299,7 +311,7 @@ export default ElectricPrice = ({ navigation }) => {
                             <Text style={ePriceStyle.headline5}>{secondDayPrice?.maxPrice.startTime} - {secondDayPrice?.maxPrice.endTime}</Text>
                             {/* <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{secondDayPrice?.maxPrice.price} c/kWh</Text> */}
                             <Text style={ePriceStyle.headline4}>Highest price:</Text>
-                            <Text style={ePriceStyle.headline5}>{parseFloat(secondDayPrice?.maxPrice.price).toFixed(2)} c/kWh</Text>
+                            <Text style={ePriceStyle.headline5}>{secondDayPrice?.maxPrice.price.toFixed(2)} c/kWh</Text>
 
                         </View>
                     </View>
@@ -316,7 +328,7 @@ export default ElectricPrice = ({ navigation }) => {
                             <Text style={ePriceStyle.headline5}>{firstDayPrice?.minPrice.startTime} - {firstDayPrice?.minPrice.endTime} </Text>
                             {/* <Text style={ePriceStyle.headline4}>Lowest price:{"\n"}{firstDayPrice?.minPrice.price} c/kWh</Text> */}
                             <Text style={ePriceStyle.headline4}>Lowest price:</Text>
-                            <Text style={ePriceStyle.headline5}>{firstDayPrice?.minPrice.price} c/kWh</Text>
+                            <Text style={ePriceStyle.headline5}>{firstDayPrice?.minPrice.price.toFixed(2)} c/kWh</Text>
                         </View>
                         <View style={ePriceStyle.square2}>
                             {/* <Text style={ePriceStyle.headline4}>Time:{"\n"}{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text> */}
@@ -324,7 +336,7 @@ export default ElectricPrice = ({ navigation }) => {
                             <Text style={ePriceStyle.headline5}>{firstDayPrice?.maxPrice.startTime} - {firstDayPrice?.maxPrice.endTime} </Text>
                             {/* <Text style={ePriceStyle.headline4}>Highest price:{"\n"}{firstDayPrice?.maxPrice.price} c/kWh</Text> */}
                             <Text style={ePriceStyle.headline4}>Highest price:</Text>
-                            <Text style={ePriceStyle.headline5}>{firstDayPrice?.maxPrice.price} c/kWh</Text>
+                            <Text style={ePriceStyle.headline5}>{firstDayPrice?.maxPrice.price.toFixed(2)} c/kWh</Text>
 
                         </View>
                     </View>
@@ -351,9 +363,9 @@ export default ElectricPrice = ({ navigation }) => {
                     <BarChart
                         frontColor={'#9315b9ff'}
                         barWidth={Dimensions.get("window").width * 0.0255}
-                        labelWidth={18}
-                        initialSpacing={2}
-                        spacing={4}
+                        labelWidth={16}
+                        initialSpacing={8}
+                        spacing={3.5}
                         data={barChartFirstData}
                         yAxisThickness={2}
                         xAxisThickness={2}
@@ -361,11 +373,11 @@ export default ElectricPrice = ({ navigation }) => {
                         xAxisColor={'lightgray'}
                         yAxisColor={'lightgray'}
                         yAxisTextStyle={{ color: 'lightgray' }}
-                        xAxisLabelTextStyle={{fontSize:13 ,color: 'lightgray', textAlign: 'center' }}
+                        xAxisLabelTextStyle={ePriceStyle.barChartText}
                         xAxisLength={Dimensions.get("window").width * 0.85}
                         rulesLength={Dimensions.get("window").width * 0.85}
-                        
-
+                        autoShiftLabels
+                        noOfSectionsBelowXAxis={negativeXAxis()<0 ? 2 : 0}
 
 
                     />

@@ -12,7 +12,8 @@ const Text = StyleSheet.create({
     fontWeight: "300",
     textShadowColor: "#000000ff",
     textShadowOffset: { width: 0.5, height: 0 },
-    textShadowRadius:1
+    textShadowRadius:1,
+    
 })
 const ButtonShadow = StyleSheet.create({
     shadowColor: "#000000",
@@ -56,14 +57,15 @@ const CharginStationsStyle = StyleSheet.create({
         position: "absolute",
         bottom: Dimensions.get("window").height * 0.01,
         right: 0,
-        backgroundColor: "#ffffffd7",
+        backgroundColor: "#ffffffff",
         padding: 10,
         borderRadius: 8,
         marginRight: 8
     },
     listText: {
         ...Text,
-        textAlign: "center"
+        textAlign: "center",
+        
     },
     sliderItemContainer: {
         ...ButtonShadow,
@@ -434,6 +436,11 @@ const ePriceStyle = StyleSheet.create({
         marginTop:5
 
     },
+    barChartText:{
+        fontSize:getFontSize(11) ,
+        color: 'lightgray', 
+        textAlign:"center"
+    }
 });
 
 
