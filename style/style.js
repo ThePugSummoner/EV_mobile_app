@@ -127,7 +127,7 @@ const HomeStyle = StyleSheet.create({
     header: {
         fontSize:getFontSize(24),
         fontWeight: 'bold',
-        marginBottom: 15,
+        marginBottom: 10,
         textAlign: "center"
     },
     containerLogin: {

@@ -7,23 +7,7 @@ import { createRef } from 'react';
 const navigationRef = createRef();
 
 export const signUp = async (name, email, password, phone, selectedCar) => {
-    /* try {
-        await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            set(ref(db, USERS_REF + userCredential.user.uid), {
-                name: name,
-                email: userCredential.user.email,
-                phone: phone,
-                car: selectedCar
-            })
-        })
-        return true
-    }
-    catch (error) {
-        console.log("Registration failed. ", error.message)
-        Alert.alert("Registration failed. ", error.message)
-        return false
-    } */
+    
 
     const authorization = getAuth(); 
 

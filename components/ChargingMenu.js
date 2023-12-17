@@ -172,8 +172,13 @@ function ChargingMenu(){
                 const resultObject = findObject(targetDate, targetTime);
               
                 if (resultObject) {
-                  prices.push(resultObject.price);
-                  console.log(`Found. Price for ${targetDate} ${targetTime}:`, resultObject.price);
+                    if (resultObject.price < 0) {
+                        prices.push(0);
+                    } 
+                    else {
+                    prices.push(resultObject.price);
+                    console.log(`Found. Price for ${targetDate} ${targetTime}:`, resultObject.price)
+                    }
                 } else {
                   console.log(`Not found for ${targetDate} ${targetTime}`);
                 }

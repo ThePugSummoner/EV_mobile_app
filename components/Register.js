@@ -21,6 +21,9 @@ export default function Register ({ navigation }) {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [selectedCar, setSelectedCar] = useState({});
+  const [error, setError] = useState('');
+  const [conditionError, setConditionError] = useState(false)
+
 
   useEffect(() => {
     const backAction = () => {
@@ -47,28 +50,43 @@ export default function Register ({ navigation }) {
     navigation.navigate('Home'); 
   };
 
-
-
-  const handleRegister = async () => {
+   const handleRegister = async () => {
+    setError('');
     if(!name) {
+      setError('Name is required!');
       Alert.alert('Name is required!')
+      setConditionError(true)
     }
     else if (!email) {
-        Alert.alert('Email is required!')
+      setError('Email is required!');
+      Alert.alert('Email is required!')
     }
     else if (!phone) {
-      Alert.alert('Phonenumber is required!')
+      setError('Phone number is required!');
+      Alert.alert('Phone number is required!')
+      setConditionError(true)
     }
     else if (!password) {
-        Alert.alert('Password is required!')
+      setError('Password is required!');
+      Alert.alert('Password is required!')
+      setConditionError(true)
     }
     else if (!repeatPassword) {
         setPassword('')
+        setError('Confirm password is required!');
         Alert.alert('Confirm password is required!')
+        setConditionError(true)
     }
     else if (password !== repeatPassword) {
+        setError('Password do not match!')
         Alert.alert('Password do not match!')
+        setConditionError(true)
     }
+    else if (Object.keys(selectedCar).length === 0) {
+      setError('Choose your car model!')
+      Alert.alert('Choose your car model!')
+      setConditionError(true)
+  }
     else {
         try {
           const registrationSuccess = await signUp(name, email, password, phone, selectedCar);
@@ -80,7 +98,7 @@ export default function Register ({ navigation }) {
           }
         } catch (error) {      
           if (error.code === 'auth/email-already-in-use') {
-            Alert.alert('Registration failed. Email is already in use.');
+            setError('Registration failed. Email is already in use.');
           } else {
             console.error('Error during registration: ', error.message);
           }
@@ -93,10 +111,10 @@ export default function Register ({ navigation }) {
     <View style={HomeStyle.container}>
     <View style={HomeStyle.containerRegister}>
       <Text style={HomeStyle.header}>REGISTRATION</Text>
-      
+      {error ? <Text style={{color:'red', textAlign: 'center', marginBottom: 5}}>{error}</Text> : null}
       <TextInput
         style={HomeStyle.input}
-        placeholder="Name*"
+        placeholder={conditionError ? "Name is required!" : "Name*"}
         
         value={name}
         onChangeText={(name) => setName(name.trim())}
@@ -104,7 +122,7 @@ export default function Register ({ navigation }) {
 
       <TextInput
         style={HomeStyle.input}
-        placeholder="Email*"
+        placeholder={conditionError ? "Email is required!" : "Email*"}
         
         value={email}
         onChangeText={(email) => setEmail(email.trim())}
@@ -114,7 +132,7 @@ export default function Register ({ navigation }) {
 
       <TextInput
         style={HomeStyle.input}
-        placeholder="Phone*"
+        placeholder={conditionError ? "Phone is required!" : "Phone*"}
         
         value={phone}
         onChangeText={setPhone}
@@ -123,7 +141,7 @@ export default function Register ({ navigation }) {
 
       <TextInput
         style={HomeStyle.input}
-        placeholder="Password*"
+        placeholder={conditionError ? "Password missed!" : "Password*"}
        
         value={password}
         onChangeText={setPassword}
@@ -132,7 +150,7 @@ export default function Register ({ navigation }) {
 
       <TextInput
         style={HomeStyle.input}
-        placeholder="Repeat Password*"
+        placeholder={conditionError ? "Password don't match!" : "Repeat Password*"}
         
         value={repeatPassword}
         onChangeText={setRepeatPassword}
@@ -159,6 +177,7 @@ export default function Register ({ navigation }) {
       >
         <Text style={HomeStyle.loginButtonText}>REGISTER</Text>
       </TouchableOpacity>
+      
     </View>
     </View>
   );
