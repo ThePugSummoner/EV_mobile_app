@@ -119,7 +119,7 @@ export default function MainPage ({ route, navigation }) {
         case 'Flash EV':
             componentToShow = (
             <Image
-                source={require('../images/CarTransparent.png')}
+                source={require('../images/CarTransparent2.png')}
                 style={{ width: 330, height: 230, resizeMode: 'contain'}}
             />
             );
@@ -127,14 +127,14 @@ export default function MainPage ({ route, navigation }) {
         case 'Lightning EV':
             componentToShow = (
             <Image
-                source={require('../images/CarEV.png')}
+                source={require('../images/CarEV1.png')}
                 style={{ width: 330, height: 230, resizeMode: 'contain'}}
             />
             );
             break;
         case 'Bolt EV':
             componentToShow = <Image
-            source={require('../images/VOlterraBoltEV2.png')}
+            source={require('../images/VolterraBoltEV.png')}
             style={{ width: 400, height: 230, resizeMode: 'contain', paddingTop: 0}}
             />
             break;
