@@ -30,7 +30,8 @@ export default ElectricPrice = ({ navigation }) => {
 
         if (isFocused && isLoading === false) {
             const time = checkTime()
-            const endDateDb = allPrices.testi[0].endDate
+            const endDateDb = allPrices[0].endDate
+            
             const date1 = date()
 
             console.log(date1, 'date1')
@@ -109,7 +110,7 @@ export default ElectricPrice = ({ navigation }) => {
 
                 fetchPrices()
             } else {
-                setAllPrices(dbPrice)
+                setAllPrices(dbPrice.testi)
                 setIsLoading(false)
                 testi(dbPrice.testi)
                 console.log("Haku firebasesta onnistui!")
