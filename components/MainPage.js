@@ -8,7 +8,6 @@ import { getUserData, logOut } from './Auth';
 import { Dimensions } from 'react-native';
 
 
-
 export default function MainPage ({ route, navigation }) {
 
     const [toggleValueLock, setToggleValueLock] = useState(true)
@@ -22,7 +21,6 @@ export default function MainPage ({ route, navigation }) {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [modalText, setModalText] = useState("");
-    //const [modalPressableText, setModalPressableText] = useState("");
 
     const { userUid } = route.params;
     const [userData, setUserData] = useState(null);
@@ -61,8 +59,6 @@ export default function MainPage ({ route, navigation }) {
         logOut()
         navigation.navigate('Home')
       }
-
-
 
     function changeLockValue() {
         if (toggleValueLock === true) {
@@ -149,8 +145,6 @@ export default function MainPage ({ route, navigation }) {
         componentToShow = null;
     }
 
-
-    
     return (
         <View style={MainPageStyle.container}>
           {userData && (
@@ -165,7 +159,6 @@ export default function MainPage ({ route, navigation }) {
             </View>
             
             <View style={MainPageStyle.battery}>
-                {/*<Text style={MainPageStyle.standInText}>BATTERY</Text> */}
                 <CircularProgression />
             </View>
             <View style={MainPageStyle.toggleButtons}>

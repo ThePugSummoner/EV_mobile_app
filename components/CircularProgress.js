@@ -85,9 +85,6 @@ const CircularProgression = () => {
                     progressValueStyle={{fontWeight: 'bold'}}
                 />
             </View>
-            {/*<View style={MainPageStyle.charging}>
-                <Text style={MainPageStyle.chargingText}>CHARGING</Text>
-            </View> */}
         </View>
     )
 }
