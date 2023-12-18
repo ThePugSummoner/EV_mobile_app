@@ -205,11 +205,6 @@ const ProfileStyle = StyleSheet.create({
         alignItems: "stretch",
         backgroundColor: '#1D1A39',
     },
-    /*profile: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1
-    }, */
     profileText: {
         fontSize: 25,
         color: '#ffffff'
@@ -220,7 +215,6 @@ const ProfileStyle = StyleSheet.create({
         alignItems: "center",
         borderBottomWidth: 1,
         borderBottomColor: '#cbb26a',
-        //borderTopColor: '#00000000',
         padding: 10
     },
     avatarText: {
@@ -461,7 +455,6 @@ const MainPageStyle = StyleSheet.create({
         padding: 10,
         borderBottomWidth: 2,
         borderColor: '#cbb26a',//'#BE9E44',//#b38c1a
-        //borderRadius: 5,
         justifyContent: 'space-evenly',
     },
     standInText: { 
@@ -489,9 +482,6 @@ const MainPageStyle = StyleSheet.create({
         alignItems: "center",
 
     },
-    /*toggleButtonsSingular: {
-        transform: [{rotate: '90deg'}],
-    } */
     animatedText: {
         color: "#37306B",
         fontSize: 24,
