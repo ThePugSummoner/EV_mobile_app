@@ -217,25 +217,29 @@ function ChargingMenu(){
 
     return(
 
-        <ScrollView style={{ flex: 1, }}
+       <ScrollView style={{ flex: 1, }}
         contentContainerStyle={{ justifyContent: "flex-start", alignItems: "stretch" }}
-        overScrollMode='never'
-    >
+        overScrollMode='never'>
+
         <View style={ChargingMenuStyle.container}>
-        
+            
             { userData && 
             <>
-            <View style={ChargingMenuStyle.bigStatusBox}>
-            <Text style={ChargingMenuStyle.text}>Charging Status:</Text> 
+            <View style={[ChargingMenuStyle.bigStatusBox, {borderColor: chargingStatus ? '#1ED1B1' : '#cbb26a' }]}>
+            {/* <Text style={ChargingMenuStyle.text}>Charging Status:</Text>  */}
+            {/* <View style={[ChargingMenuStyle.StatusBox, {backgroundColor: chargingStatus ? '#1ED1B1' : '#094F44'  }]}> */}
             <View style={ChargingMenuStyle.StatusBox}>
            
             <Text style={ChargingMenuStyle.text2}>{chargingStatus ? 'On Charge': 'Not charging'}</Text>
             </View>
             </View>
+           
             <View style={[MainPageStyle.battery]}>
                 <CircularProgression />
             </View>
-           
+
+            
+
             {/* <View style={chargingTableStyle.tableContainer}>
             <View style={chargingTableStyle.row}>
                 <View style={chargingTableStyle.cell}>
@@ -253,6 +257,9 @@ function ChargingMenu(){
             </View>
             </View> */}
 
+<TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={[ChargingMenuStyle.chargingButton, {borderColor: chargingStatus ? '#1ED1B1' : '#9315b9ff'}]}>
+                <Text style={[ChargingMenuStyle.buttonText]}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
+            </TouchableOpacity>   
            
                 <View style = {chargingTableStyle.bigCSquare}>
                 <View style={{ flex: 1, flexDirection: "row" }}>
@@ -270,12 +277,13 @@ function ChargingMenu(){
                 </View>
                 </View>
             </View>
-            <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={[ChargingMenuStyle.chargingButton, {backgroundColor: chargingStatus ? '#9315b9ff' : '#094F44'}]}>
-                <Text style={[ChargingMenuStyle.buttonText]}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
-            </TouchableOpacity>           
+                  
             </>
             }
             
+            
+           
+
             
         </View>
     

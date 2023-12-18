@@ -407,7 +407,7 @@ const ePriceStyle = StyleSheet.create({
         justifyContent: "center",
     },
     pressableSelected: {
-        backgroundColor: "#9315b9ff",
+        backgroundColor: "#1ED1B1",
 
     },
     pressableNotSelected: {
@@ -581,13 +581,15 @@ const ChargingMenuStyle = StyleSheet.create({
         flex: 1,
         backgroundColor: '#1D1A39',
         /* alignItems: 'center', */
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
+
     },
     bigStatusBox: {
-        height: Dimensions.get('window').width * 0.39,
-        width: Dimensions.get('window').width * 0.65,
+        height: Dimensions.get('window').width * 0.28,
+        width: Dimensions.get('window').width * 0.58,
         margin: 10,
-        marginTop: 20,
+        marginTop: 30,
+        marginBottom: 20,
         flex: 1,
         flexDirection: "column",
         justifyContent: 'space-evenly',
@@ -600,15 +602,15 @@ const ChargingMenuStyle = StyleSheet.create({
     },
     StatusBox: {
         borderRadius: 8,
-        width: Dimensions.get('window').width * 0.50,
-        height: Dimensions.get('window').width * 0.20,
+        width: Dimensions.get('window').width * 0.48,
+        height: Dimensions.get('window').width * 0.18,
         backgroundColor: '#094F44', //'#cbb26a',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
         margin: 5,
-        marginTop: 10,
-        marginBottom: 15,
+        // marginTop: 10,
+        // marginBottom: 15,
         //borderWidth: 3,
         //borderColor: '#cbb26a',
         alignSelf: 'center',
@@ -619,9 +621,13 @@ const ChargingMenuStyle = StyleSheet.create({
         padding: 10,
         borderRadius: 8,
         alignItems: 'center',
-        margin: 20,
+        margin: 14,
         borderColor:'#cbb26a',
-        borderWidth: 2,
+        borderWidth: 3,
+        marginBottom: 20,
+        marginTop: 20,
+       
+        
         
 
     // },//testi
@@ -650,7 +656,7 @@ const ChargingMenuStyle = StyleSheet.create({
         margin: 10
     },
     text2: {
-        color: 'white',
+        color: '#E5D9B6',
         fontSize: getFontSize(24),
         margin: 10,
         fontWeight:'500',
@@ -695,6 +701,7 @@ const chargingTableStyle = StyleSheet.create({
         width: Dimensions.get('window').width * 0.93,
         margin: 10,
         marginTop: 10,
+        marginBottom: 20,
         flex: 1,
         flexDirection: "column",
         justifyContent: 'space-evenly',
@@ -702,14 +709,15 @@ const chargingTableStyle = StyleSheet.create({
         alignSelf: "center",
         backgroundColor: "#094f458f", //#451952ff
         borderRadius: 8,
-        borderColor: "#cbb26a",
-        borderWidth: 3,
+        // borderColor: "#cbb26a",
+        // borderWidth: 3,
     },
     cSquare: {
         height: Dimensions.get('window').width * 0.26,
         width: Dimensions.get('window').width * 0.28,
-        margin: 3,
-        marginTop: 10,
+        margin: 4,
+        marginTop: 14,
+        marginBottom: 14,
         padding: 5,
         backgroundColor: '#094F44',//'#cbb26a',  //#178a62ff
         borderRadius: 8, //joo
