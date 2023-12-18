@@ -652,7 +652,8 @@ const ChargingMenuStyle = StyleSheet.create({
         color: 'white',
         fontSize: getFontSize(24),
         margin: 10,
-        fontWeight:'500'
+        fontWeight:'500',
+        
     },
 })
 
@@ -689,8 +690,8 @@ const chargingTableStyle = StyleSheet.create({
 
     },
     bigCSquare: {
-        height: Dimensions.get('window').width * 0.34,
-        width: Dimensions.get('window').width * 0.95,
+        height: Dimensions.get('window').width * 0.33,
+        width: Dimensions.get('window').width * 0.93,
         margin: 10,
         marginTop: 10,
         flex: 1,
