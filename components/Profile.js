@@ -88,7 +88,7 @@ export default Profile = ({ route, navigation }) => {
 
                 <TouchableOpacity 
                 style={ProfileStyle.button}
-                onPress={()=>navigation.navigate('Car Info', { userUid: user.uid })}
+                onPress={()=>navigation.navigate('Technical Specs', { userUid: user.uid })}
                 >
                     <View style={ProfileStyle.icon}>
                       <MaterialCommunityIcons name="car-sports" size={35} color="khaki" />
