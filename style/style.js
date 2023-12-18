@@ -585,8 +585,8 @@ const ChargingMenuStyle = StyleSheet.create({
 
     },
     bigStatusBox: {
-        height: Dimensions.get('window').width * 0.28,
-        width: Dimensions.get('window').width * 0.58,
+        height: Dimensions.get('window').width * 0.26,
+        width: Dimensions.get('window').width * 0.56,
         margin: 10,
         marginTop: 30,
         marginBottom: 20,
@@ -598,7 +598,7 @@ const ChargingMenuStyle = StyleSheet.create({
         backgroundColor: "#094f458f", //#451952ff
         borderRadius: 8,
         borderColor: "#cbb26a", //reunan kanssa tai ilman
-        borderWidth: 0,
+        //borderWidth: 0,
         padding: 15
     },
     StatusBox: {
@@ -701,8 +701,8 @@ const chargingTableStyle = StyleSheet.create({
         height: Dimensions.get('window').width * 0.33,
         width: Dimensions.get('window').width * 0.93,
         margin: 10,
-        marginTop: 10,
-        marginBottom: 20,
+        marginTop: 15,
+        marginBottom: 26,
         flex: 1,
         flexDirection: "column",
         justifyContent: 'space-evenly',
