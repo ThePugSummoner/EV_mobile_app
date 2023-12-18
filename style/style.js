@@ -598,7 +598,8 @@ const ChargingMenuStyle = StyleSheet.create({
         backgroundColor: "#094f458f", //#451952ff
         borderRadius: 8,
         borderColor: "#cbb26a", //reunan kanssa tai ilman
-        borderWidth: 3,
+        borderWidth: 0,
+        padding: 15
     },
     StatusBox: {
         borderRadius: 8,
