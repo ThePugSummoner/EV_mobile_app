@@ -270,7 +270,7 @@ function ChargingMenu(){
                 </View>
                 </View>
             </View>
-            <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={[ChargingMenuStyle.chargingButton, {backgroundColor: chargingStatus ? 'red' : '#094F44'}]}>
+            <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={[ChargingMenuStyle.chargingButton, {backgroundColor: chargingStatus ? '#9315b9ff' : '#094F44'}]}>
                 <Text style={[ChargingMenuStyle.buttonText]}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
             </TouchableOpacity>           
             </>
