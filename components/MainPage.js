@@ -155,7 +155,16 @@ export default function MainPage ({ route, navigation }) {
             </View> )}
             <View style={MainPageStyle.carImage}>
                 {componentToShow}
-                <MaterialCommunityIcons name={toggleValueLock ? 'lock' : 'lock-open-variant'} size={40} style={{position: 'absolute', top: Dimensions.get("window").height * 0.07, color: toggleValueLock ? 'red' : 'green', backgroundColor: '#1d1a39af', borderRadius: 30, padding: 8}}/>
+                <MaterialCommunityIcons name={toggleValueLock ? 'lock' : 'lock-open-variant'} 
+                    size={40} 
+                    style={{
+                        position: 'absolute',
+                        top: Dimensions.get("window").height * 0.07,
+                        color: toggleValueLock ? 'red' : 'green',
+                        backgroundColor: '#1d1a39af',
+                        borderRadius: 30,
+                        padding: 8
+                    }}/>
             </View>
             
             <View style={MainPageStyle.battery}>
