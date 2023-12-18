@@ -98,7 +98,7 @@ export default Profile = ({ route, navigation }) => {
         >
           <View style={[ProfileStyle.icon, { flexDirection: "row", justifyContent: "center", alignItems: "center" }]}>
             <MaterialCommunityIcons name="car-sports" size={35} color="khaki" />
-            <Text style={ProfileStyle.buttonText}>Car Info</Text>
+            <Text style={ProfileStyle.buttonText}>Technical Specs</Text>
           </View>
 
           <View style={{ marginRight: 10 }}>
