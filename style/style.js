@@ -226,7 +226,7 @@ const ProfileStyle = StyleSheet.create({
     },
     button: {
         //height: Dimensions.get("window").height * 0.1,
-        justifyContent: "flex-start",
+        justifyContent:"space-between",
         alignItems: "center",
         flexDirection: "row",
         gap: 12,
@@ -240,7 +240,8 @@ const ProfileStyle = StyleSheet.create({
     },
     buttonText: {
         fontSize: 20,
-        color: '#E5D9B6'
+        color: '#E5D9B6',
+        marginLeft:10
     }
 
 })
