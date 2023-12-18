@@ -6,9 +6,6 @@ import ChargingStations from './ChargingStations';
 import ElectricPrice from './ElectricPrice';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-
-
-
 const MainStack = createBottomTabNavigator();
 
 const MainNavigator = () => (
@@ -50,10 +47,26 @@ const MainNavigator = () => (
     <MainStack.Screen name="My Car" component={MainPage} initialParams={{ userUid: null }} options={{headerShown: false }}/>
     <MainStack.Screen name="Profile" component={CustomStackNavigator}  options={{headerShown: false }}/>
     <MainStack.Screen name="Charging Stations" component={ChargingStations}
-    options={{headerStyle:{backgroundColor:"#1D1A39",borderBottomColor:"#cbb26a",borderBottomWidth:2},headerTintColor:"#ffffff",headerTitleAlign:"center"}}
+        options={{
+            headerStyle:{
+                backgroundColor:"#1D1A39",
+                borderBottomColor:"#cbb26a",
+                borderBottomWidth:2
+            },
+                headerTintColor:"#ffffff",
+                headerTitleAlign:"center"
+        }}
     />
     <MainStack.Screen name="Electricity Price" component={ElectricPrice}
-    options={{headerStyle:{backgroundColor:"#1D1A39",borderBottomColor:"#cbb26a",borderBottomWidth:2},headerTintColor:"#ffffff",headerTitleAlign:"center"}}
+        options={{
+            headerStyle:{
+                backgroundColor:"#1D1A39",
+                borderBottomColor:"#cbb26a",
+                borderBottomWidth:2
+            },
+                headerTintColor:"#ffffff",
+                headerTitleAlign:"center"
+        }}
     />
   </MainStack.Navigator>
 );

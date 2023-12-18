@@ -62,13 +62,8 @@ export default Profile = ({ route, navigation }) => {
       return () => backHandler.remove();
     }, []);
 
-
-
     return (
         <View style={ProfileStyle.container}>
-            {/*<View style={ProfileStyle.profile}>
-              <Text style={ProfileStyle.profileText}>My profile</Text>
-            </View> */}
             <View style={ProfileStyle.avatar}>
                 <MaterialCommunityIcons name="account-box" size={110} color="khaki" />
                 {userData && (

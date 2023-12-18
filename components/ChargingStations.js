@@ -527,7 +527,7 @@ export default ChargingStation = ({ navigation }) => {
                             onChange={handleSheetChange}
                             enableContentPanningGesture={false}
                             enablePanDownToClose={true}
-                            backgroundStyle={{borderWidth:1,borderRadius:8, backgroundColor: '#ffffffa4' }}
+                            backgroundStyle={{borderWidth:1,borderColor:'#CBB26A',borderRadius:8, backgroundColor: '#ffffffa4' }}
                             handleIndicatorStyle={[ButtonShadow,{backgroundColor:"#1D1A39"}]}
                         >
                             <BottomSheetScrollView
