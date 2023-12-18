@@ -54,8 +54,8 @@ function ChargingMenu(){
     
                 setAllPrices(dataArray);
                 setIsLoading(false);
-                /* console.log('Fetching data from Firebase successful!');
-                console.log(allPrices) */
+                console.log('Fetching data from Firebase successful!');
+                console.log(allPrices)
             } else if (isLoading) {
                 fetchPrices();
             }
@@ -242,8 +242,8 @@ function ChargingMenu(){
                 </View>
             </View>
             </View>
-            <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={ChargingMenuStyle.chargingButton}>
-                <Text style={ChargingMenuStyle.buttonText}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
+            <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={[ChargingMenuStyle.chargingButton, {backgroundColor: chargingStatus ? 'red': '#094F44'}]}>
+                <Text style={[ChargingMenuStyle.buttonText]}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
             </TouchableOpacity>           
             </>
             }
