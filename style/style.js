@@ -631,6 +631,20 @@ const ChargingMenuStyle = StyleSheet.create({
         margin: 20,
         borderColor:'#cbb26a',
         borderWidth: 2,
+        
+
+    // },//testi
+    // chargingButton2: { 
+    //     backgroundColor: '#094F44',
+    //     padding: 10,
+    //     borderRadius: 8,
+    //     alignItems: 'center',
+    //     margin: 10,
+    //     marginTop: 20,
+    //     borderColor:'#cbb26a',
+    //     borderWidth: 2,
+    //     width: Dimensions.get('window').width * 0.35,
+    //     height: Dimensions.get('window').width * 0.20,
 
     },
     buttonText: {

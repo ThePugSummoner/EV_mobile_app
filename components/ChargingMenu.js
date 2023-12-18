@@ -222,6 +222,7 @@ function ChargingMenu(){
         overScrollMode='never'
     >
         <View style={ChargingMenuStyle.container}>
+        
             { userData && 
             <>
             <View style={ChargingMenuStyle.bigStatusBox}>
@@ -234,6 +235,7 @@ function ChargingMenu(){
             <View style={[MainPageStyle.battery]}>
                 <CircularProgression />
             </View>
+           
             {/* <View style={chargingTableStyle.tableContainer}>
             <View style={chargingTableStyle.row}>
                 <View style={chargingTableStyle.cell}>
@@ -270,7 +272,22 @@ function ChargingMenu(){
             </View>
             <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={ChargingMenuStyle.chargingButton}>
                 <Text style={ChargingMenuStyle.buttonText}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
-            </TouchableOpacity>           
+            </TouchableOpacity>   
+            
+            {/* <View>
+            <View style={{ flex: 1, flexDirection: "row" }}> 
+            <View style={ChargingMenuStyle.bigStatusBox}>
+            <Text style={ChargingMenuStyle.text}>Charging Status:</Text> 
+            <View style={ChargingMenuStyle.StatusBox}>
+           
+            <Text style={ChargingMenuStyle.text2}>{chargingStatus ? 'On Charge': 'Not charging'}</Text>
+            </View>
+            </View>
+            <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={ChargingMenuStyle.chargingButton2}>
+                <Text style={ChargingMenuStyle.buttonText}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
+            </TouchableOpacity>  
+            </View>      
+            </View>   */}
             </>
             }
             
