@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator()
 
 function CustomStackNavigator(){
     return(
-        <Stack.Navigator screenOptions={{headerTitleAlign:"center",headerTintColor:"white",headerStyle:{backgroundColor:"#1D1A39"},contentStyle:{borderTopColor:"#BE9E44",borderTopWidth:2}}}>
+        <Stack.Navigator screenOptions={{headerTitleAlign:"center",headerTintColor:"white",headerStyle:{backgroundColor:"#1D1A39"},contentStyle:{borderTopColor:"#cbb26a",borderTopWidth:2}}}>
             <Stack.Screen name="My Profile" component={Profile}/> 
             <Stack.Screen name="Profile Info" component={ProfileInfo}/> 
             <Stack.Screen name="Car Info" component={CarInfo} /> 
