@@ -25,7 +25,7 @@ const CharginStationsStyle = StyleSheet.create({
     markerColorSelected: "orange",
     markerSize: 24,
     container: {
-        paddingTop: Constants.statusBarHeight + 5,
+        paddingTop:Dimensions.get("window").height * 0.135,
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
@@ -407,7 +407,7 @@ const ePriceStyle = StyleSheet.create({
         justifyContent: "center",
     },
     pressableSelected: {
-        backgroundColor: "#9315b9ff",
+        backgroundColor: "#1ED1B1",
 
     },
     pressableNotSelected: {
@@ -581,7 +581,8 @@ const ChargingMenuStyle = StyleSheet.create({
         flex: 1,
         backgroundColor: '#1D1A39',
         /* alignItems: 'center', */
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
+
     },
     bigStatusBox: {
         /* height: Dimensions.get('window').width * 0.39,
@@ -602,13 +603,15 @@ const ChargingMenuStyle = StyleSheet.create({
     },
     StatusBox: {
         borderRadius: 8,
-        width: Dimensions.get('window').width * 0.50,
-        height: Dimensions.get('window').width * 0.20,
+        width: Dimensions.get('window').width * 0.48,
+        height: Dimensions.get('window').width * 0.18,
         backgroundColor: '#094F44', //'#cbb26a',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        
+        margin: 5,
+        // marginTop: 10,
+        // marginBottom: 15,
         //borderWidth: 3,
         //borderColor: '#cbb26a',
         alignSelf: 'center',
@@ -656,7 +659,7 @@ const ChargingMenuStyle = StyleSheet.create({
         margin: 10
     },
     text2: {
-        color: 'white',
+        color: '#E5D9B6',
         fontSize: getFontSize(24),
         margin: 10,
         fontWeight:'500',
