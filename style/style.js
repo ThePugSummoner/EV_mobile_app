@@ -25,7 +25,7 @@ const CharginStationsStyle = StyleSheet.create({
     markerColorSelected: "orange",
     markerSize: 24,
     container: {
-        paddingTop: Constants.statusBarHeight + 5,
+        paddingTop:Dimensions.get("window").height * 0.135,
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',

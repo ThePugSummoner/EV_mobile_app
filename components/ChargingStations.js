@@ -85,7 +85,7 @@ export default ChargingStation = ({ navigation }) => {
                                 latitude: Number(FinCities[i].lat),
                                 longitude: Number(FinCities[i].lng)
                             })
-                            console.log("tapahtuu")
+                            
                         } else if (cityMarkersData.length > 0 && -1 === cityMarkersData.findIndex(marker => marker.city === FinCities[i].city) && FinCities[i].population>20000) {
                             cityMarkersData.push({
                                 id:FinCities[i].city,
@@ -106,10 +106,10 @@ export default ChargingStation = ({ navigation }) => {
  
         if(longitudeDelta<=5 && isLoadingData===false){
             setMarkersData(citiesMarkers)
-            console.log("Tapahtuu elsen alla oleva if ")
+            //console.log("Tapahtuu elsen alla oleva if ")
         }
         else if(longitudeDelta>=6 && longitudeDelta<8){
-            console.log("KESKIVAIHE")
+            //console.log("KESKIVAIHE")
             const zoomInMarkersData=[]
             data.map(data=>{
                     if(-1===dataClose.findIndex(marker => marker.id === data.id)){
@@ -133,7 +133,7 @@ export default ChargingStation = ({ navigation }) => {
             setMarkersData(zoomInMarkersData)
         }
         else {
-            console.log("tapahtuu else if")
+            //console.log("tapahtuu else if")
             const zoomInMarkersData=[]
             data.map(data=>{
                 if(50000>haversineDistanceBetweenPoints(data.latitude,data.longitude,latitude,longitude)){
@@ -188,7 +188,7 @@ export default ChargingStation = ({ navigation }) => {
             });
             let answer = await api.json();
             answer = answer.elements
-            console.log(answer.length, "length")
+            //console.log(answer.length, "length")
             const arr = []
             for (let i = 0; i < answer.length; i++) {
                 if (answer[i].type === "node" && answer[i].tags.name!==undefined) {
@@ -236,7 +236,7 @@ export default ChargingStation = ({ navigation }) => {
         setLatitude(region.latitude)
         setLongitude(region.longitude)
 
-        console.log(region)
+        //console.log(region)
     }
 
 
@@ -432,7 +432,7 @@ export default ChargingStation = ({ navigation }) => {
     //console.log(data,"kaikki data")
     //console.log(citiesMarkers)
     //console.log(markersData.length,"pituus marker")
-    console.log(longitudeDelta, "longis")
+    //console.log(longitudeDelta, "longis")
     if (isLoading && isLoadingData) {
         return <View style={CharginStationsStyle.container}><Text style={CharginStationsStyle.loadingText}>Please wait a moment</Text></View>
     } else {
@@ -444,7 +444,7 @@ export default ChargingStation = ({ navigation }) => {
                     <MapView
                         style={{
                              width: Dimensions.get("window").width,
-                              height: Dimensions.get("window").height - Constants.statusBarHeight }}
+                              height: Dimensions.get("window").height}}
                         ref={map}
                         initialRegion={{
                             latitude: latitude,
