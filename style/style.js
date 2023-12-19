@@ -648,7 +648,7 @@ const ChargingMenuStyle = StyleSheet.create({
 
     },
     buttonText: {
-        fontSize: 20,
+        fontSize: getFontSize(20),
         color: '#1D1A39'
         //fontWeight: 'bold'
     },
