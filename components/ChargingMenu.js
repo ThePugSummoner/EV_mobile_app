@@ -217,51 +217,53 @@ function ChargingMenu(){
 
     return(
 
-        <ScrollView style={{ flex: 1, }}
+       /*  <ScrollView style={{ flex: 1, }}
         contentContainerStyle={{ justifyContent: "flex-start", alignItems: "stretch" }}
         overScrollMode='never'
-    >
+    > */
         <View style={ChargingMenuStyle.container}>
         
             { userData && 
             <>
-            <View style={ChargingMenuStyle.bigStatusBox}>
-            {/* <Text style={ChargingMenuStyle.text}>Charging Status:</Text>  */}
-            <View style={ChargingMenuStyle.StatusBox}>
-           
-            <Text style={ChargingMenuStyle.text2}>{chargingStatus ? 'On Charge': 'Not charging'}</Text>
-            </View>
-            </View>
-            <View style={[MainPageStyle.battery]}>
-                <CircularProgression />
-            </View>  
-            <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={[ChargingMenuStyle.chargingButton, {backgroundColor: chargingStatus ? '#9315b9ff' : '#094F44'}]}>
-                <Text style={[ChargingMenuStyle.buttonText]}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
-            </TouchableOpacity>   
-                <View style = {chargingTableStyle.bigCSquare}>
-                <View style={{ flex: 1, flexDirection: "row" }}>
-                <View style = {chargingTableStyle.cSquare}> 
-                <Text style={chargingTableStyle.label}>Finishing Time:</Text>
-                <Text style={chargingTableStyle.value}>{formattedChargingFinishTime}</Text>
+            <View style={ChargingMenuStyle.container}>
+                <View style={ChargingMenuStyle.bigStatusBox}>
+                {/* <Text style={ChargingMenuStyle.text}>Charging Status:</Text>  */}
+                    <View style={[ChargingMenuStyle.StatusBox, {backgroundColor: chargingStatus ? '#1ED1B1' : '#094f44'}]}>
+                        <Text style={[ChargingMenuStyle.text2, {color: chargingStatus ? '#1D1A39' : '#ffffff'}]}>{chargingStatus ? 'On Charge': 'Not charging'}</Text>
+                    </View>
                 </View>
-                <View style = {chargingTableStyle.cSquare}>
-                <Text style={chargingTableStyle.label}>Charging Power:</Text>
-                <Text style={chargingTableStyle.value}>{userData.car.chargePower} kW</Text>
+                <View style={[MainPageStyle.battery, {margin: 0, padding: 0}]}>
+                    <CircularProgression />
+                </View>  
+                <TouchableOpacity onPress={() => {ChargingTimeCalculation()}} style={[ChargingMenuStyle.chargingButton, {backgroundColor: chargingStatus ? '#1ED1B1' : '#cbb26a', marginTop: 0}]}>
+                    <Text style={[ChargingMenuStyle.buttonText, {color: chargingStatus ? '#1D1A39' : '#1D1A39'}]}>{chargingStatus ? 'Stop Charging': 'Start Charging'}</Text>
+                </TouchableOpacity>   
+                {/* <View style = {chargingTableStyle.bigCSquare}> */}
+                <View style={{backgroundColor: '#094f458f', padding: 5, margin: 10, marginBottom: 20, borderRadius: 8,}}>
+                    <View style={chargingTableStyle.row}>
+                        <View style = {chargingTableStyle.cSquare}> 
+                            <Text style={chargingTableStyle.label}>Finishing Time:</Text>
+                            <Text style={chargingTableStyle.value}>{formattedChargingFinishTime}</Text>
+                        </View>
+                    <View style = {chargingTableStyle.cSquare}>
+                        <Text style={chargingTableStyle.label}>Charging Power:</Text>
+                        <Text style={chargingTableStyle.value}>{userData.car.chargePower} kW</Text>
+                    </View>
+                    <View style = {chargingTableStyle.cSquare}>
+                        <Text style={chargingTableStyle.label}>Charging Total Price:</Text>
+                        <Text style={chargingTableStyle.value}>{totalPrice} €</Text>
+                    </View>
+                    </View>
                 </View>
-                <View style = {chargingTableStyle.cSquare}>
-                <Text style={chargingTableStyle.label}>Charging Total Price:</Text>
-                <Text style={chargingTableStyle.value}>{totalPrice} €</Text>
                 </View>
-                </View>
-            </View>
-                   
+            {/* </View> */}
             </>
             } 
             
             
         </View>
     
-    </ScrollView>
+    /* </ScrollView> */
         )
     }
 

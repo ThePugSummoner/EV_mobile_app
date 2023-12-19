@@ -586,7 +586,7 @@ const ChargingMenuStyle = StyleSheet.create({
     bigStatusBox: {
         /* height: Dimensions.get('window').width * 0.39,
         width: Dimensions.get('window').width * 0.65, */
-        margin: 10,
+        /* margin: 10, */
         marginTop: 20,
         flex: 1,
         flexDirection: "column",
@@ -597,7 +597,8 @@ const ChargingMenuStyle = StyleSheet.create({
         borderRadius: 8,
         borderColor: "#cbb26a", //reunan kanssa tai ilman
         borderWidth: 0,
-        padding: 15
+        padding: 20
+
     },
     StatusBox: {
         borderRadius: 8,
@@ -614,13 +615,19 @@ const ChargingMenuStyle = StyleSheet.create({
 
     },
     chargingButton: { //en hoksaa mikä asetus määrittelee tämän buttonin "pieneksi"
-        backgroundColor: '#094F44',
+        /* padding: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+        margin: 10,
+        borderColor:'#cbb26a',
+        borderWidth: 2, */
+        ...ButtonShadow,
+        backgroundColor: '#cbb26a',
         padding: 10,
         borderRadius: 8,
         alignItems: 'center',
-        margin: 20,
-        borderColor:'#cbb26a',
-        borderWidth: 2,
+        margin: 10,
+        
         
 
     // },//testi
@@ -639,7 +646,7 @@ const ChargingMenuStyle = StyleSheet.create({
     },
     buttonText: {
         fontSize: 20,
-        color: '#E5D9B6',
+        color: '#1D1A39'
         //fontWeight: 'bold'
     },
 
@@ -667,7 +674,8 @@ const chargingTableStyle = StyleSheet.create({
     },
     row: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'space-around',
+      marginBottom: 10
     },
     cell: {
       flex: 1,
@@ -675,9 +683,8 @@ const chargingTableStyle = StyleSheet.create({
     },
     label: {
       fontWeight: '500',
-      marginTop: 5,
-      marginBottom: 5,
-      margin: 5,
+      
+      margin: 3,
       color: '#E5D9B6',
       fontSize: getFontSize(16),
       textAlign: 'center',
@@ -686,14 +693,14 @@ const chargingTableStyle = StyleSheet.create({
       color: 'white',
       fontSize: getFontSize(20),
       textAlign: 'center',
-      margin: 5,
+      
 
     },
     bigCSquare: {
-        height: Dimensions.get('window').width * 0.33,
+        height: Dimensions.get('window').width * 1,
         width: Dimensions.get('window').width * 0.93,
         margin: 10,
-        marginTop: 10,
+        marginTop: 20,
         flex: 1,
         flexDirection: "column",
         justifyContent: 'space-evenly',
@@ -703,16 +710,17 @@ const chargingTableStyle = StyleSheet.create({
         borderRadius: 8,
         borderColor: "#cbb26a",
         borderWidth: 0,
+        padding: 5,
     },
     cSquare: {
         height: Dimensions.get('window').width * 0.26,
         width: Dimensions.get('window').width * 0.28,
         margin: 3,
-        marginTop: 10,
+        marginTop: 12,
         padding: 5,
         backgroundColor: '#094F44',//'#cbb26a',  //#178a62ff
         borderRadius: 8, //joo
-        paddingTop: 5,
+        /* paddingTop: 5, */
          //borderWidth: 2,
          //borderColor: '#094F44',
          //alignItems: "center",
