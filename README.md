@@ -39,20 +39,28 @@
 <br>
 
 ### :iphone: Aloitus / kirjautuminen 
+<br>
+
   Aloitus näkymä | Kirjautuminen| Rekisteröityminen 
   --- | --- | --- 
   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/83446caa-8085-4185-9090-9e5b59129071" width="200" height="350"> |   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/6e4aa3b1-66ec-4e26-82f9-e8dfe81af31f" width="200" height="350"> |   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/40c1943f-cd3a-44fc-9960-28e6785cd880" width="200" height="350"> 
+  
 
 ### :car: Main Page 
+<br>
+
   Main page | main page ovet auki| Main page modal alerter 
   --- | --- | --- 
   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/3f059d35-65c6-4b35-b26c-1af9f0424d5d" width="200" height="350"> |   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/c01d1654-31bc-4e72-951b-54611ec89984" width="200" height="350"> |   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/5eaa3d00-9627-49de-9687-ede4c667a0e9" width="200" height="350"> 
+  
 
 ### :page_facing_up: Profiili 
+<br>
   
   Profiili | Profiili info| Car info 
   --- | --- | --- 
   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/ece3355d-9842-4111-8a0a-caea608b42c7" width="200" height="350"> |   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/515c5b73-d20a-4581-834a-1fe7399e6b7d" width="200" height="350"> |   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/15c9d746-3e72-4e2a-835a-859fa5c1f9bf" width="200" height="350"> 
+  <br>
 
   Chargin Menu | Chargin Menu on charge| Logout 
   --- | --- | --- 
@@ -60,6 +68,7 @@
 
 
 ### :earth_americas: Karttanäkymä 
+<br>
 
  Kartta sijainnin käyttö lupa | Sijainnin lupa google | Karttanäkymä
   --- | --- | --- 
@@ -70,6 +79,7 @@ Kartan slider | Kartan marker kosketus | Kartan sliderin päivitys
   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/81e3c2ed-3d13-47a8-ab3c-250274a07a08" width="200" height="350"> |   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/ff765618-ee8e-4696-ba54-dae3d9550fe6" width="200" height="350"> |   <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/19417d74-e37c-41ad-804a-82e9830802c1" width="200" height="350"> 
 
 ### :bar_chart: Pörssisähkön hinta 
+<br>
 
 Tämän hetken hinta | Pylväsdiagrammi  | Pylväsdiagrammi
   --- | --- | --- 
