@@ -1,8 +1,7 @@
-# <p align="center">Volterra - sovellus</p>
-
+#  Volterra - sovellus
 <br>
 
-## <p align="center">Mobile Project kurssintyö</p>
+## Mobile Project kurssintyö
 <br>
 
 
@@ -27,7 +26,7 @@
 <br>
 <br>
 
-## <p align="center">:art: UI / UX suunnittelu</p> 
+## :art: UI / UX suunnittelu
 <br>
 
   Wireframe | Mid-fidelity wireframe | Protype 
@@ -36,7 +35,7 @@
 ### Käytettävät värit:
 <img src="https://github.com/ThePugSummoner/EV_mobile_app/assets/101732234/ec4c7ff5-91be-4c9a-a779-4d1bab5e25d6">
 
-## <p align="center"> :camera: Kuvia sovelluksesta </p>
+## :camera: Kuvia sovelluksesta 
 <br>
 
 ### :iphone: Aloitus / kirjautuminen 
@@ -78,7 +77,7 @@ Tämän hetken hinta | Pylväsdiagrammi  | Pylväsdiagrammi
 <br>
 <br>
 
-## <p align="center"> :file_folder: Sovelluksessa käytetyt API:t</p>
+## :file_folder: Sovelluksessa käytetyt API:t
 <br>
 
 ### OpenStreetMap
@@ -92,7 +91,7 @@ Yksittäisen tunnin hinta ja 48h tiedot https://porssisahko.net/api
 <br>
 <br>
 
-## <p align="center"> :octocat: Sovelluksen kehittäjien GitHub </p>
+## :octocat: Sovelluksen kehittäjien GitHub
 <br>
 
 - [Jenny Kari](https://github.com/Jennynny)
