@@ -82,7 +82,7 @@ const CircularProgression = () => {
                     title={titleShow}
                     titleColor={titleColor}
                     titleStyle={{fontSize: 28, marginBottom: 3}}
-                    progressValueStyle={{fontWeight: 'bold'}}
+                    progressValueStyle={{fontWeight: 'normal'}}
                 />
             </View>
         </View>
