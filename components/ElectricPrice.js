@@ -40,7 +40,12 @@ export default ElectricPrice = ({ navigation }) => {
                 fetchPrices()
                 console.log("Data päivitetty!");
 
-            } else {
+            }else if(endDateDb < date1){
+                fetchPrices()
+                console.log("Datan päivitys onnistui!");
+            }
+            
+            else {
                 console.log("Ei päivitettävää!")
             }
         }
