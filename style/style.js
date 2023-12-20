@@ -388,7 +388,7 @@ const ePriceStyle = StyleSheet.create({
     },
     pressablesContainer: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row-reverse",
         justifyContent: "space-evenly",
         alignItems: "center",
         marginBottom: 10,
@@ -648,7 +648,7 @@ const ChargingMenuStyle = StyleSheet.create({
 
     },
     buttonText: {
-        fontSize: 20,
+        fontSize: getFontSize(20),
         color: '#1D1A39'
         //fontWeight: 'bold'
     },
