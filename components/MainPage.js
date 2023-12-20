@@ -107,7 +107,7 @@ export default function MainPage ({ route, navigation }) {
             setToggleValueAirConditioner(true)
             setAirConditionerText("AC on")
             setModalVisible(true)
-            setModalText("Air conditioner is turned ON")
+            setModalText("For the safety, vehicle will turn off the air conditioner in 10 minutes")
             //console.log("AC is true")
         }
     }
@@ -270,7 +270,7 @@ export default function MainPage ({ route, navigation }) {
                         <Pressable
                         style={[MainPageStyle.button, MainPageStyle.buttonClose]}
                         onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={MainPageStyle.modalPressableText}>Understood</Text>
+                        <Text style={MainPageStyle.modalPressableText}>OK</Text>
                         </Pressable>
                     </View>
                     </View>

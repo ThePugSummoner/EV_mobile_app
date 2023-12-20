@@ -11,7 +11,8 @@ const carOptions = [
   { label: 'Flash EV', value: 'Flash EV', drive: 'rear', totalPower: 150, torque: 250, range: 374, capacity: 64, chargePower: 6.6, consumption: 17.1, capacityLeft: 40},
   { label: 'Lightning EV', value: 'Lightning EV', drive: 'dual motor AWD', totalPower: 340, torque: 510, range: 400, capacity: 75, chargePower: 11, consumption: 18.7, capacityLeft: 20},
   { label: 'Bolt EV', value: 'Bolt EV', drive: 'rear',  totalPower: 250, torque: 320, range: 384, capacity: 70, chargePower: 9.2, consumption: 18.2, capacityLeft: 60},
-
+  { label: 'Bolt EV', value: 'Amper EV', drive: 'dual motor AWD',  totalPower: 360, torque: 530, range: 412, capacity: 75, chargePower: 13.5, consumption: 18.2, capacityLeft: 5},
+  { label: 'Bolt EV', value: 'Om EV', drive: 'rear',  totalPower: 250, torque: 320, range: 384, capacity: 70, chargePower: 7.5, consumption: 18.2, capacityLeft: 100},
 ];
 
 export default function Register ({ navigation }) {

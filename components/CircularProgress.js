@@ -71,8 +71,8 @@ const CircularProgression = () => {
                     valueSuffix={'%'}
                     inActiveStrokeColor={titleColor}
                     inActiveStrokeOpacity={0.2}
-                    inActiveStrokeWidth={25}
-                    activeStrokeWidth={25}
+                    inActiveStrokeWidth={5}
+                    activeStrokeWidth={5}
                     
                     dashedStrokeConfig={{
                         count: 50,
@@ -81,7 +81,7 @@ const CircularProgression = () => {
                     }} 
                     title={titleShow}
                     titleColor={titleColor}
-                    titleStyle={{fontWeight: 'bold', fontSize: 28, marginBottom: 3}}
+                    titleStyle={{fontSize: 28, marginBottom: 3}}
                     progressValueStyle={{fontWeight: 'bold'}}
                 />
             </View>
