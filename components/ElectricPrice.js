@@ -44,7 +44,7 @@ export default ElectricPrice = ({ navigation }) => {
                 console.log("Ei päivitettävää!")
             }
         }
-    }, [isFocused]);
+    }, [isFocused,isLoading]);
 
 
     function addZero(i) {
