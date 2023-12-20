@@ -267,11 +267,11 @@ export default function MainPage ({ route, navigation }) {
                     <View style={MainPageStyle.centeredView}>
                     <View style={MainPageStyle.modalView}>
                         <Text style={MainPageStyle.modalText}>{modalText}</Text>
-                        <Pressable
+                        <TouchableOpacity
                         style={[MainPageStyle.button, MainPageStyle.buttonClose]}
                         onPress={() => setModalVisible(!modalVisible)}>
                         <Text style={MainPageStyle.modalPressableText}>OK</Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
                     </View>
                 </Modal>

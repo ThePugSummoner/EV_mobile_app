@@ -562,6 +562,9 @@ const MainPageStyle = StyleSheet.create({
     },
     buttonClose: {
         backgroundColor: '#1D1A39',
+        padding: 10,
+        paddingLeft: 20,
+        paddingRight: 20
     },
     modalPressableText: {
         color: 'white',
