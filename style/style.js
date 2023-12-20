@@ -388,7 +388,7 @@ const ePriceStyle = StyleSheet.create({
     },
     pressablesContainer: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row-reverse",
         justifyContent: "space-evenly",
         alignItems: "center",
         marginBottom: 10,

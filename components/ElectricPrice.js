@@ -20,7 +20,7 @@ export default ElectricPrice = ({ navigation }) => {
     const [allFirstDayPrices, setAllFirstDayPrices] = useState()
     const [allSecondDayPrices, setAllSecondDayPrices] = useState()
     const [barChartFirstData, setBarChartFirstData] = useState([])
-    const [barChartFirstDataSelected, setBarChartFirstDataSelected] = useState(true)
+    const [barChartFirstDataSelected, setBarChartFirstDataSelected] = useState(false)
 
 
     const isFocused = useIsFocused();
@@ -31,7 +31,7 @@ export default ElectricPrice = ({ navigation }) => {
         if (isFocused && isLoading === false) {
             const time = checkTime()
             const endDateDb = allPrices[0].endDate
-            
+
             const date1 = date()
 
             console.log(date1, 'date1')
@@ -44,7 +44,7 @@ export default ElectricPrice = ({ navigation }) => {
                 console.log("Ei päivitettävää!")
             }
         }
-    }, [isFocused,isLoading]);
+    }, [isFocused, isLoading]);
 
 
     function addZero(i) {
@@ -206,7 +206,7 @@ export default ElectricPrice = ({ navigation }) => {
         setSecondDayPrice({ maxPrice: secondDayMaxPrice, minPrice: secondDayMinPrice })
         setAllFirstDayPrices(updatedFirstDayPrices)
         setAllSecondDayPrices(updatedSecondDayPrices)
-        setBarChartFirstData(updatedFirstDayPrices)
+        setBarChartFirstData(updatedSecondDayPrices)
         console.log(firstDayMaxPrice, "isoin hinta")
         console.log(firstDayMinPrice, "Pienin hinta")
         console.log(secondDayMaxPrice, "isoin hinta")
@@ -234,16 +234,20 @@ export default ElectricPrice = ({ navigation }) => {
         remove(ref(db, PRICES_REF));
 
     }
-    function negativeXAxis(){
-        const result = barChartFirstData.find(({ value }) => value < 0 )
-        if(result!==undefined){
-            const temp=[...barChartFirstData]
-           const lovestPrice= temp.sort(({ value: a }, { value: b }) => a - b)
+    function negativeXAxis() {
+        const result = barChartFirstData.find(({ value }) => value < 0)
+        if (result !== undefined) {
+            const temp = [...barChartFirstData]
+            const lovestPrice = temp.sort(({ value: a }, { value: b }) => a - b)
             return lovestPrice[0].value
         }
-        else{
+        else {
             return 0
         }
+    }
+    function dateFormat(date) {
+        const newDate = date.split("-")
+        return `${newDate[2]}.${newDate[1]}.${newDate[0]}`
     }
 
     // console.log(isLoading)
@@ -253,7 +257,7 @@ export default ElectricPrice = ({ navigation }) => {
     //console.log(allPrices,"kaikki hinnat")
     //console.log(allFirstDayPrices,"ekan kaikki")
     //console.log(allSecondDayPrices,"tokan kaikki")
-    console.log(negativeXAxis(),"jotain")
+    console.log(negativeXAxis(), "jotain")
     return (
 
         <ScrollView style={{ flex: 1, }}
@@ -294,7 +298,7 @@ export default ElectricPrice = ({ navigation }) => {
 
                 <View style={ePriceStyle.boxes}>
                     <View>
-                        <Text style={ePriceStyle.headline3}>Day: {secondDayPrice?.minPrice.startDate}</Text>
+                        <Text style={ePriceStyle.headline3}>Day: {secondDayPrice ? dateFormat(secondDayPrice?.minPrice.startDate) : ""}</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
@@ -320,7 +324,7 @@ export default ElectricPrice = ({ navigation }) => {
                 </View>
                 <View style={ePriceStyle.boxes}>
                     <View>
-                        <Text style={ePriceStyle.headline3}>Day: {firstDayPrice?.minPrice.startDate}</Text>
+                        <Text style={ePriceStyle.headline3}>Day: {firstDayPrice ? dateFormat(firstDayPrice?.minPrice.startDate) : ""}</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: "row" }}>
                         <View style={ePriceStyle.square}>
@@ -348,12 +352,12 @@ export default ElectricPrice = ({ navigation }) => {
                         <Pressable style={[ePriceStyle.pressable, barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]}
                             onPress={() => handlePress(allFirstDayPrices, true)}
                         >
-                            <Text style={ePriceStyle.pressableText}>{firstDayPrice?.minPrice.startDate}</Text>
+                            <Text style={ePriceStyle.pressableText}>{firstDayPrice ? dateFormat(firstDayPrice?.minPrice.startDate) : ""}</Text>
                         </Pressable>
                         <Pressable style={[ePriceStyle.pressable, !barChartFirstDataSelected ? ePriceStyle.pressableSelected : ePriceStyle.pressableNotSelected]}
                             onPress={() => handlePress(allSecondDayPrices, false)}
                         >
-                            <Text style={ePriceStyle.pressableText}>{secondDayPrice?.minPrice.startDate}</Text>
+                            <Text style={ePriceStyle.pressableText}>{secondDayPrice ? dateFormat(secondDayPrice?.minPrice.startDate) : ""}</Text>
                         </Pressable>
                     </View>
                     <View style={ePriceStyle.ckwhLoc}>
@@ -379,11 +383,11 @@ export default ElectricPrice = ({ navigation }) => {
                         xAxisLength={Dimensions.get("window").width * 0.85}
                         rulesLength={Dimensions.get("window").width * 0.85}
                         autoShiftLabels
-                        noOfSectionsBelowXAxis={negativeXAxis()<0 ? 2 : 0}
+                        noOfSectionsBelowXAxis={negativeXAxis() < 0 ? 2 : 0}
 
 
                     />
-                    <Text style={ePriceStyle.dateText}>{barChartFirstData[0]?.date}</Text>
+                    <Text style={ePriceStyle.dateText}>{barChartFirstData[0] ? dateFormat(barChartFirstData[0]?.date) : ""}</Text>
 
 
 
@@ -392,7 +396,7 @@ export default ElectricPrice = ({ navigation }) => {
 
 
             </View>
-            
+
         </ScrollView>
 
     );
